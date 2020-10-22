@@ -11,7 +11,7 @@ An in-depth paragraph about your project and overview of use.
 
 ## Inspiration
 
-Insipration
+Inspiration: https://www.yorkrotary.co.uk/dragon-boat-challenge
 
 ## Authors
 
