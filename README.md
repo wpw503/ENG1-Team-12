@@ -1,4 +1,4 @@
-![logo](https://github.com/wpw503/ENG1-Team-12/blob/main/res/logo_t.png?raw=true)
+![logo](https://github.com/wpw503/ENG1-Team-12/blob/main/res/new_logo_t.png?raw=true)
 
 # ENG1-Team-12
 
