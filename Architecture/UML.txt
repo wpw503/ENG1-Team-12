@@ -1,0 +1,31 @@
+@startuml
+GameObject <|-- Boat
+Boat <|-- PlayerBoat
+Boat <|-- AIBoat
+GameObject <|-- Obstacle
+Obstacle <|-- ObstacleDuck 
+Obstacle <|-- ObstacleWood
+
+GameObject : x
+GameObject : y
+GameObject : terminal_speed
+GameObject : speed
+GameObject : rotation
+
+Boat : health
+Boat : durability
+Boat : leg_times[]
+Boat : _start_time
+Boat : stamina_max
+Boat : stamina
+
+Boat : move()
+Boat : turn_left()
+Boat : turn_right()
+Boat : start_race()
+Boat : end_race()
+
+AIBoat : ray_stuff_or_smth_idk_im_dumb()
+
+PlayerBoat : read_input()
+@enduml
