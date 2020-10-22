@@ -2,11 +2,11 @@
 
 # ENG1-Team-12
 
-Simple overview of use/purpose.
+This repository is for developing the single player, Java-based game inspired by the Annual Dragon Boat Race in York.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+This repository contains documentation and Java code for the single player, Java-based game inspired by the Annual Dragon Boat Race in York. It aims to capture the excitement of the real event and satisfy the needs of a client at the University of York Computer Science Department.
 
 ## Documentation
 * [User Requirements](https://github.com/wpw503/ENG1-Team-12/blob/main/Documentation/Req1.pdf)
@@ -24,7 +24,15 @@ Inspiration: https://www.yorkrotary.co.uk/dragon-boat-challenge
 
 Contributors names and contact info
 
+University of York Engineering 1 Cohort 2 Team 12:
+
 * [@UmerFakher](https://github.com/UmerFakher)
 * [@JamesFrost](https://github.com/Fritzbox2000)
 * [@WilliamWalton](https://github.com/wpw503)
 * [@RichardLiiv](https://github.com/sumsare)
+* @OllyWortley
+* @JoeCambridge
+
+## References
+
+* Software Engineering Skills Development: I. Sommerville, Software Engineering, Pearson Education, 2008
