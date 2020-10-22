@@ -10,10 +10,10 @@ An in-depth paragraph about your project and overview of use.
 
 ## Documentation
 * [User Requirements](https://github.com/wpw503/ENG1-Team-12/blob/main/Documentation/Req1.pdf)
-* [Architecture]()
-* [Method selection and planning]()
-* [Risk assessment and mitigation]()
-* [Implementation]()
+* Architecture (Work In Progress)
+* Method selection and planning (Work In Progress)
+* Risk assessment and mitigation (Work In Progress)
+* Implementation (Work In Progress)
 
 
 ## Inspiration
@@ -28,4 +28,3 @@ Contributors names and contact info
 * [@JamesFrost](https://github.com/Fritzbox2000)
 * [@WilliamWalton](https://github.com/wpw503)
 * [@RichardLiiv](https://github.com/sumsare)
-* [@OllyWortley](https://github.com/orw511)
