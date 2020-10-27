@@ -3,16 +3,16 @@ package com.teamonehundred.pixelboat;
 import java.util.List;
 
 // generic boat class, never instantiated
-public abstract class Boat {
+public abstract class Boat extends GameObject implements CollisionObject{
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
 
     String name;
-    float durability;  // from 0 to 1
+    float durability = 1.f;  // from 0 to 1
     List<Float>[] leg_times;  // times for every previous leg
     int stamina_max;
-    float stamina;  // from 0 to 1, percentage of stamina max
+    float stamina = 1.f;  // from 0 to 1, percentage of stamina max
 
     int start_time, end_time;  // Seconds since epoch when starting and finishing current leg
 
@@ -21,13 +21,11 @@ public abstract class Boat {
     // ################################### */
 
     //constructor
-    Boat() {
-        //todo implement this
+    Boat(int x, int y, int w, int h, String texture_path) {
+        super(x, y,  w,  h, texture_path);
     }
 
-    public void draw(){
-        //todo work out how to do this
+    public void hasCollided(){
+        durability -= 0.2f;
     }
-
-
 }
