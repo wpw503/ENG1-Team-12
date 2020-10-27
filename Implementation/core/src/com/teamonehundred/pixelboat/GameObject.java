@@ -3,7 +3,6 @@ package com.teamonehundred.pixelboat;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import jdk.nashorn.internal.objects.annotations.Getter;
 
 public abstract class GameObject {
     /* ################################### //
@@ -49,5 +48,7 @@ public abstract class GameObject {
         return sprite;
     }
 
-    public Rectangle getBounds(){return sprite.getBoundingRectangle();}
+    public Rectangle getBounds() {
+        return sprite.getBoundingRectangle();
+    }
 }

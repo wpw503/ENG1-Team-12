@@ -67,11 +67,13 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void render() {
         // run the current game method
-        switch(game_state){
-            case 0: menuLoop();
-                    break;
-            case 1: gameLoop();
-                    break;
+        switch (game_state) {
+            case 0:
+                menuLoop();
+                break;
+            case 1:
+                gameLoop();
+                break;
         }
     }
 
@@ -86,7 +88,7 @@ public class PixelBoat extends ApplicationAdapter {
     // ################################################ */
 
     // the actual boat game bit
-    private void gameLoop(){
+    private void gameLoop() {
         // user input
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.accelerate();
@@ -129,7 +131,7 @@ public class PixelBoat extends ApplicationAdapter {
         batch.draw(bg, -500, -70, 1000, 1000);
         if (player.isShown()) {
             player.getSprite().draw(batch);
-            for(Sprite ui_element : player.getUISprites())
+            for (Sprite ui_element : player.getUISprites())
                 ui_element.draw(batch);
         }
         for (Obstacle obs : obstacles)
@@ -138,8 +140,8 @@ public class PixelBoat extends ApplicationAdapter {
     }
 
     // the initial menu where you press start
-    private void menuLoop(){
-        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY))
+    private void menuLoop() {
+        if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY))
             game_state = 1;
 
         batch.begin();

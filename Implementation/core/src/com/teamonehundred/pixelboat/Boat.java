@@ -3,7 +3,7 @@ package com.teamonehundred.pixelboat;
 import java.util.List;
 
 // generic boat class, never instantiated
-public abstract class Boat extends MovableObject implements CollisionObject{
+public abstract class Boat extends MovableObject implements CollisionObject {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -25,12 +25,12 @@ public abstract class Boat extends MovableObject implements CollisionObject{
 
     //default specs
     Boat(int x, int y, int w, int h, String texture_path) {
-        super(x, y,  w,  h, texture_path);
+        super(x, y, w, h, texture_path);
     }
 
     //specify specs
     Boat(int x, int y, int w, int h, String texture_path, String name, float durability_per_hit, float stamina_usage, float stamina_regen) {
-        super(x, y,  w,  h, texture_path);
+        super(x, y, w, h, texture_path);
 
         this.name = name;
         this.durability_per_hit = durability_per_hit;
@@ -42,19 +42,19 @@ public abstract class Boat extends MovableObject implements CollisionObject{
                     METHODS
     // ################################### */
 
-    public void hasCollided(){
+    public void hasCollided() {
         durability -= durability_per_hit;
     }
 
     @Override
-    public void accelerate(){
+    public void accelerate() {
         stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
         if (stamina > 0)
             super.accelerate();
     }
 
     @Override
-    public double updatePosition(){
+    public double updatePosition() {
         stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
         return super.updatePosition();
     }

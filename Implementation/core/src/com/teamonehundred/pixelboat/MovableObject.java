@@ -16,7 +16,7 @@ public abstract class MovableObject extends GameObject {
     // ################################### */
 
     MovableObject(int x, int y, int w, int h, String texture_path) {
-        super(x, y,  w,  h, texture_path);
+        super(x, y, w, h, texture_path);
     }
 
     /* ################################### //
@@ -25,7 +25,7 @@ public abstract class MovableObject extends GameObject {
 
     // turn left (1) or right (-1)
     public void turn(int amount) {
-        sprite.rotate(amount*rotation_speed);
+        sprite.rotate(amount * rotation_speed);
     }
 
     // move forwards x in whatever direction currently facing
@@ -39,13 +39,13 @@ public abstract class MovableObject extends GameObject {
         return dy;
     }
 
-    public double updatePosition(){
+    public double updatePosition() {
         double ret = move(speed);
         speed -= speed - drag < 0 ? speed : drag;
         return ret;
     }
 
-    public void accelerate(){
+    public void accelerate() {
         speed += speed >= max_speed ? 0 : acceleration;
     }
 }
