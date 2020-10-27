@@ -1,18 +1,31 @@
 package com.teamonehundred.pixelboat;
 
 public abstract class MovableObject extends GameObject {
-    // drag is amount speed is reduced by every frame naturally
-    float terminal_speed = 10;
+    /* ################################### //
+                   ATTRIBUTES
+    // ################################### */
+
+    float max_speed = 10;
     float speed = 0;
-    float drag = .05f;
+    float drag = .05f;  // amount speed is reduced by every frame naturally
     float acceleration = .2f;
+    float rotation_speed = 2.f;
+
+    /* ################################### //
+                  CONSTRUCTORS
+    // ################################### */
 
     MovableObject(int x, int y, int w, int h, String texture_path) {
         super(x, y,  w,  h, texture_path);
     }
 
-    public void turn(float amount) {
-        sprite.rotate(amount);
+    /* ################################### //
+                    METHODS
+    // ################################### */
+
+    // turn left (1) or right (-1)
+    public void turn(int amount) {
+        sprite.rotate(amount*rotation_speed);
     }
 
     // move forwards x in whatever direction currently facing
@@ -33,6 +46,6 @@ public abstract class MovableObject extends GameObject {
     }
 
     public void accelerate(){
-        speed += speed >= terminal_speed ? 0 : acceleration;
+        speed += speed >= max_speed ? 0 : acceleration;
     }
 }

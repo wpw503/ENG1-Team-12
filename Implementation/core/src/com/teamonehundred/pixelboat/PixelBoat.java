@@ -19,6 +19,10 @@ public class PixelBoat extends ApplicationAdapter {
 
     Texture start_screen;
 
+    /* ################################################ //
+                     Main Game Attributes
+    // ################################################ */
+
     PlayerBoat player;
     List<Obstacle> obstacles;
     Texture bg;
@@ -26,11 +30,19 @@ public class PixelBoat extends ApplicationAdapter {
     SpriteBatch batch;
     OrthographicCamera camera;
 
+    /* ################################################ //
+                     Game State Attributes
+    // ################################################ */
+
     // id of current game state
     // 0 = start menu
     // 1 = game
     // 2 = ...
     int game_state = 0;
+
+    /* ################################################ //
+                    GDX Override Methods
+    // ################################################ */
 
     // ran when the game starts
     @Override
@@ -54,6 +66,7 @@ public class PixelBoat extends ApplicationAdapter {
     // ran every frame
     @Override
     public void render() {
+        // run the current game method
         switch(game_state){
             case 0: menuLoop();
                     break;
@@ -67,6 +80,10 @@ public class PixelBoat extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
     }
+
+    /* ################################################ //
+                      Game Loop Methods
+    // ################################################ */
 
     // the actual boat game bit
     private void gameLoop(){
@@ -85,9 +102,9 @@ public class PixelBoat extends ApplicationAdapter {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.turn(5);
+            player.turn(1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.turn(-5);
+            player.turn(-1);
         }
 
         // update motion
