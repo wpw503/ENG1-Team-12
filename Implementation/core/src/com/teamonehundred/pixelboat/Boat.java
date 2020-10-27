@@ -3,7 +3,7 @@ package com.teamonehundred.pixelboat;
 import java.util.List;
 
 // generic boat class, never instantiated
-public abstract class Boat extends GameObject{
+public abstract class Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */

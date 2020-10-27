@@ -1,23 +1,47 @@
 package com.teamonehundred.pixelboat;
 
-import java.lang.Math;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public abstract class GameObject {
-    // coordinates are world coordinates relative to the object's lane
-    // rotation is in radians, 0 being up, -n being some amount left, n being some amount right
-    int x, y, terminal_speed, speed;
-    float rotation;
+public class GameObject {
+    // coordinates are world coordinates relative to the bottom left of object
+    // rotation is in degrees
+    // width, height, x, y, and rotation are stored in sprite
+    int terminal_speed, speed;
 
-    public void turn(float amount){
-        rotation += amount;
+    Texture texture;
+    Sprite sprite;
+
+    GameObject(int x, int y, int w, int h, String texture_path) {
+        texture = new Texture(texture_path);
+        sprite = new Sprite(texture);
+
+        sprite.setPosition(x, y);
+        sprite.setSize(w, h);
+        sprite.setOriginCenter();
+    }
+
+    // destructor
+    protected void finalize() {
+        texture.dispose();
+    }
+
+    public void turn(float amount) {
+        sprite.rotate(amount);
     }
 
     // move forwards x in whatever direction currently facing
-    public void move(int distance){
-        double dx = Math.cos((Math.PI/2) - Math.abs(rotation)) * distance;
-        double dy = Math.sin((Math.PI/2) - Math.abs(rotation)) * distance;
+    // return amount moved in y for camera scrolling
+    public double move(int distance) {
+        double dy = Math.cos( (Math.toRadians(sprite.getRotation()))) * distance;
+        double dx = Math.sin( (Math.toRadians(sprite.getRotation()))) * distance;
 
-        x += rotation < 0 ? -dx : dx;
-        y += dy;
+        sprite.translate((float)(-dx), (float)dy);
+
+        return dy;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }
