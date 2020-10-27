@@ -13,11 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PixelBoat extends ApplicationAdapter {
+    /* ################################################ //
+                    Start Screen Attributes
+    // ################################################ */
+
+    Texture start_screen;
+
     PlayerBoat player;
     List<Obstacle> obstacles;
     Texture bg;
+
     SpriteBatch batch;
     OrthographicCamera camera;
+
+    // id of current game state
+    // 0 = start menu
+    // 1 = game
+    // 2 = ...
+    int game_state = 0;
 
     // ran when the game starts
     @Override
@@ -30,7 +43,7 @@ public class PixelBoat extends ApplicationAdapter {
         obstacles.add(new Obstacle(100, 400, 40, 40, "obstacle.png"));
         obstacles.add(new Obstacle(-100, 400, 40, 40, "obstacle.png"));
         bg = new Texture("temp_background.png");
-
+        start_screen = new Texture("start_screen.png");
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -41,6 +54,22 @@ public class PixelBoat extends ApplicationAdapter {
     // ran every frame
     @Override
     public void render() {
+        switch(game_state){
+            case 0: menuLoop();
+                    break;
+            case 1: gameLoop();
+                    break;
+        }
+    }
+
+    // ran when the game closes
+    @Override
+    public void dispose() {
+        batch.dispose();
+    }
+
+    // the actual boat game bit
+    private void gameLoop(){
         // user input
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.accelerate();
@@ -84,16 +113,20 @@ public class PixelBoat extends ApplicationAdapter {
         if (player.isShown()) {
             player.getSprite().draw(batch);
             for(Sprite ui_element : player.getUISprites())
-            	ui_element.draw(batch);
+                ui_element.draw(batch);
         }
         for (Obstacle obs : obstacles)
             if (obs.isShown()) obs.getSprite().draw(batch);
         batch.end();
     }
 
-    // ran when the game closes
-    @Override
-    public void dispose() {
-        batch.dispose();
+    // the initial menu where you press start
+    private void menuLoop(){
+        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY))
+            game_state = 1;
+
+        batch.begin();
+        batch.draw(start_screen, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.end();
     }
 }
