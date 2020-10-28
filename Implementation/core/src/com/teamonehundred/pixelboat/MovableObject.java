@@ -30,19 +30,20 @@ public abstract class MovableObject extends GameObject {
 
     // move forwards x in whatever direction currently facing
     // return amount moved in y for camera scrolling
-    private double move(float distance) {
+    private void move(float distance) {
         double dy = Math.cos((Math.toRadians(sprite.getRotation()))) * distance;
         double dx = Math.sin((Math.toRadians(sprite.getRotation()))) * distance;
 
         sprite.translate((float) (-dx), (float) dy);
 
-        return dy;
+
     }
 
-    public double updatePosition() {
-        double ret = move(speed);
+    public void updatePosition() {
+        move(speed);
         speed -= speed - drag < 0 ? speed : drag;
-        return ret;
+
+
     }
 
     public void accelerate() {

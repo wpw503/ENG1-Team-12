@@ -11,9 +11,9 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     String name;
 
     float durability = 1.f;  // from 0 to 1
-    float durability_per_hit = -.2f;
+    float durability_per_hit = .2f;
     float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    float stamina_usage = .01f;
+    float stamina_usage = .005f;
     float stamina_regen = .002f;
 
     List<Float>[] leg_times;  // times for every previous leg
@@ -54,8 +54,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     @Override
-    public double updatePosition() {
+    public void updatePosition() {
+        super.updatePosition();
         stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
-        return super.updatePosition();
     }
 }

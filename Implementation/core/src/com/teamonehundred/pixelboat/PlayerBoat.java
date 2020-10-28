@@ -1,5 +1,8 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -10,6 +13,8 @@ public class PlayerBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
+
+    OrthographicCamera camera;
 
     Texture stamina_texture;
     Texture durability_texture;
@@ -52,6 +57,51 @@ public class PlayerBoat extends Boat {
 
         stamina_bar.setPosition(-ui_bar_width / 2, 5);
         durability_bar.setPosition(-ui_bar_width / 2, 20);
+
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set(0, Gdx.graphics.getHeight() / 3, 0);
+        camera.update();
+    }
+
+    @Override
+    public void updatePosition() {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            this.accelerate();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            // boat cannot go back, there is only moving forwards, just like life...
+            // in that sense, the game is a very good analogy for the struggles of life
+            // constantly having ot move forward, unable to return to what was
+            // constantly dodging obstacles, trying to keep moving forwards
+            // maybe programming at 3am isn't such a good idea after all...
+
+            //obj.move(-5);
+            // but it can for testing
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            this.turn(1);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            this.turn(-1);
+        }
+
+        float old_x = sprite.getX();
+        float old_y = sprite.getY();
+
+        super.updatePosition();
+
+        //only follow player in x axis if they go off screen
+        float dx = Math.abs(sprite.getX()) > Gdx.graphics.getWidth() / 3 ? sprite.getX() - old_x : 0;
+        float dy = sprite.getY() - old_y;
+
+        // move camera to follow player
+        camera.translate(dx, dy, 0);
+    }
+
+    public void checkCollisions(CollisionObject object) {
+        if (object.getBounds().overlaps(getBounds()) && object.isShown()) {
+            hasCollided();
+            object.hasCollided();
+        }
     }
 
     public List<Sprite> getUISprites() {
@@ -61,6 +111,10 @@ public class PlayerBoat extends Boat {
         ret.add(stamina_bar);
         ret.add(durability_bar);
         return ret;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 
     private void updateUISprites() {

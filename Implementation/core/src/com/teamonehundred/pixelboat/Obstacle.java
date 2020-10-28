@@ -1,6 +1,6 @@
 package com.teamonehundred.pixelboat;
 
-public class Obstacle extends MovableObject {
+public class Obstacle extends MovableObject implements CollisionObject{
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */

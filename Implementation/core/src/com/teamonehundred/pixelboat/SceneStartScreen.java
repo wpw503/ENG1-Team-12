@@ -1,0 +1,35 @@
+package com.teamonehundred.pixelboat;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class SceneStartScreen implements Scene {
+    int scene_id = 0;
+
+    Texture start_screen;
+
+    SceneStartScreen() {
+        start_screen = new Texture("start_screen.png");
+    }
+
+    public void draw(SpriteBatch batch) {
+        Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        batch.draw(start_screen, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.end();
+    }
+
+    public void update() {
+        if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY))
+            scene_id = 1;
+    }
+
+    public int getCurrentSceneID() {
+        return scene_id;
+    }
+}

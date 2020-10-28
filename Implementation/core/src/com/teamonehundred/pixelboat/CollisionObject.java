@@ -7,4 +7,6 @@ public interface CollisionObject {
     void hasCollided();
     // returns a libgdx rectangle for intersection checking
     Rectangle getBounds();
+    // if the object should be considered for collision checking
+    boolean isShown();
 }
