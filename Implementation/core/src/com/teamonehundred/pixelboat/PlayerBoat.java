@@ -130,4 +130,8 @@ class PlayerBoat extends Boat {
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);
     }
+    //TimingTest
+    public float tempGetY(){
+        return sprite.getY();
+    }
 }

@@ -1,8 +1,10 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,10 +16,21 @@ class SceneMainGame implements Scene {
 
     BoatRace race;
 
+
+    //TimingTest
+    BitmapFont font;
+
+
     SceneMainGame() {
         player = new PlayerBoat(-15, 0, 30, 100, "object_placeholder.png");
         bg = new Texture("temp_background.png");
         race = new BoatRace(player);
+
+        //Timing Test
+        player.setStartTime();
+        font = new BitmapFont();
+        font.setColor(Color.RED);
+
     }
 
     // destructor
@@ -36,6 +49,12 @@ class SceneMainGame implements Scene {
         batch.draw(bg, -500, -70, 1000, 1000);
         for (Sprite sp : race.getSprites())
             sp.draw(batch);
+        batch.end();
+
+        //Timing Test
+        batch.begin();
+        long i = (player.getCurrentTime()- player.getStartTime(false));
+        font.draw(batch,  String.format("Time (min:sec) = %02d:%02d", i/60000, i/1000%60),-player.ui_bar_width / 2, -50 + player.tempGetY());//TimingTest
         batch.end();
     }
 
