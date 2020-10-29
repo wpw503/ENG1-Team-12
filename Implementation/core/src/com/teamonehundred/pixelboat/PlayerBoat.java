@@ -21,6 +21,7 @@ class PlayerBoat extends Boat {
 
     Sprite stamina_bar;
     Sprite durability_bar;
+    Sprite time_bar;
 
     int ui_bar_width = 500;
 
@@ -57,14 +58,16 @@ class PlayerBoat extends Boat {
 
         stamina_bar = new Sprite(stamina_texture);
         durability_bar = new Sprite(durability_texture);
+        time_bar = new Sprite(durability_texture);
 
         stamina_bar.setSize(ui_bar_width, 10);
         durability_bar.setSize(ui_bar_width, 10);
-
+        time_bar.setSize(ui_bar_width/5, 20);
 
 
         stamina_bar.setPosition(-ui_bar_width / 2, 5);
         durability_bar.setPosition(-ui_bar_width / 2, 20);
+        time_bar.setPosition(-ui_bar_width /2, 35);
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(0, Gdx.graphics.getHeight() / 3, 0);
@@ -111,6 +114,7 @@ class PlayerBoat extends Boat {
         List<Sprite> ret = new ArrayList<Sprite>();
         ret.add(stamina_bar);
         ret.add(durability_bar);
+        ret.add(time_bar);
         return ret;
     }
 
@@ -121,6 +125,7 @@ class PlayerBoat extends Boat {
     private void updateUISprites() {
         stamina_bar.setPosition(-ui_bar_width / 2, -50 + sprite.getY());
         durability_bar.setPosition(-ui_bar_width / 2, -35 + sprite.getY());
+        time_bar.setPosition(-ui_bar_width / 2, -20 + sprite.getY());
 
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);
