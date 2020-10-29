@@ -76,14 +76,7 @@ public class PlayerBoat extends Boat {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             this.accelerate();
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            // boat cannot go back, there is only moving forwards, just like life...
-            // in that sense, the game is a very good analogy for the struggles of life
-            // constantly having ot move forward, unable to return to what was
-            // constantly dodging obstacles, trying to keep moving forwards
-            // maybe programming at 3am isn't such a good idea after all...
-
-            //obj.move(-5);
-            // but it can for testing
+            // nothing atm
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
