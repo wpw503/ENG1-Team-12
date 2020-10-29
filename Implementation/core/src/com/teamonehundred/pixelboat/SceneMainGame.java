@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class SceneMainGame implements Scene {
     int scene_id = 1;
 
@@ -17,7 +20,7 @@ public class SceneMainGame implements Scene {
     SceneMainGame() {
         player = new PlayerBoat(-15, 0, 30, 100, "object_placeholder.png");
         bg = new Texture("temp_background.png");
-        race = new BoatRace(player);
+        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player)));
     }
 
     // destructor
