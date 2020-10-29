@@ -1,0 +1,124 @@
+body {
+    margin: 0 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.top-container {
+    width: 100%;
+    margin: 0 auto;
+    top: 0;
+    background: #000046;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #1CB5E0 35%, #000046);
+    background: linear-gradient(to right, #1CB5E0 35%, #000046);
+}
+
+#logo {
+    width: 600px;
+    margin-left: 20px;
+    margin-top: 0px;
+    height: auto;
+}
+
+#top-info {
+    float: right;
+    color: white;
+    margin-top: 15px;
+    margin-right: 20px;
+    font-family: Rubik, sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    text-align: right;
+}
+
+.nav {
+    position: relative;
+    display: block;
+    top: 10px;
+    margin-left: 20px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.nav > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav > ul > li {
+    display: inline-block;
+    margin: 0 14px;
+}
+
+.navlinks:hover {
+    cursor: pointer;
+}
+
+.navlinks::after {
+    display: block;
+    content: '';
+    width:0;
+    height: 0;
+    padding-top: 2px;
+    border-bottom: 2px solid black;
+    -webkit-transition: width 0.4s;
+    -o-transition: width 0.4s;
+    transition: width 0.4s;
+}
+
+.navlinks:hover::after {
+    width: 100%;
+}
+
+.active::after {
+    width: 100%;
+}
+
+.main {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    display: block;
+}
+
+.section {
+    display: none;
+    background-color: #f3f3f3;
+    margin-top: 25px;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 15px;
+    font-family: Rubik, sans-serif;
+    overflow: hidden;
+    -webkit-animation: tabFade 1s;
+    animation: tabFade 1s;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+
+#docs {
+    display: block;
+}
+
+.section > h4 {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.section > ul {
+    font-size: 14px;
+}
+
+@-webkit-keyframes tabFade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes tabFade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
