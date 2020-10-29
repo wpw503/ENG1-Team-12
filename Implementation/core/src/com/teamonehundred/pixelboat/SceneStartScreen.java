@@ -9,10 +9,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SceneStartScreen implements Scene {
     int scene_id = 0;
 
-    Texture start_screen;
+    Texture bg;
 
     SceneStartScreen() {
-        start_screen = new Texture("start_screen.png");
+        bg = new Texture("start_screen.png");
+    }
+
+    // destructor
+    protected void finalize() {
+        bg.dispose();
     }
 
     public void draw(SpriteBatch batch) {
@@ -20,7 +25,7 @@ public class SceneStartScreen implements Scene {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        batch.draw(start_screen, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
     }
 

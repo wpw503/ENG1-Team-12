@@ -20,6 +20,11 @@ public class SceneMainGame implements Scene {
         race = new BoatRace(player);
     }
 
+    // destructor
+    protected void finalize() {
+        bg.dispose();
+    }
+
     public void draw(SpriteBatch batch) {
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -7,7 +7,7 @@ public abstract class MovableObject extends GameObject {
 
     float max_speed = 10;
     float speed = 0;
-    float drag = .05f;  // amount speed is reduced by every frame naturally
+    float drag = .04f;  // amount speed is reduced by every frame naturally
     float acceleration = .2f;
     float rotation_speed = 2.f;
 
@@ -35,15 +35,11 @@ public abstract class MovableObject extends GameObject {
         double dx = Math.sin((Math.toRadians(sprite.getRotation()))) * distance;
 
         sprite.translate((float) (-dx), (float) dy);
-
-
     }
 
     public void updatePosition() {
         move(speed);
         speed -= speed - drag < 0 ? speed : drag;
-
-
     }
 
     public void accelerate() {

@@ -40,6 +40,12 @@ public class PlayerBoat extends Boat {
         initialise();
     }
 
+    // destructor
+    protected void finalize() {
+        stamina_texture.dispose();
+        durability_texture.dispose();
+    }
+
     /* ################################### //
                     METHODS
     // ################################### */
@@ -54,6 +60,8 @@ public class PlayerBoat extends Boat {
 
         stamina_bar.setSize(ui_bar_width, 10);
         durability_bar.setSize(ui_bar_width, 10);
+
+
 
         stamina_bar.setPosition(-ui_bar_width / 2, 5);
         durability_bar.setPosition(-ui_bar_width / 2, 20);
