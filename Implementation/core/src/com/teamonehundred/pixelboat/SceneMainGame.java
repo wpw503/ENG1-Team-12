@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SceneMainGame implements Scene {
+class SceneMainGame implements Scene {
     int scene_id = 1;
 
     PlayerBoat player;

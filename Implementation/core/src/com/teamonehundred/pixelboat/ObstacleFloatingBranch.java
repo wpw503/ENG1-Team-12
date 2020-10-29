@@ -1,6 +1,6 @@
 package com.teamonehundred.pixelboat;
 
-public class ObstacleFloatingBranch extends ObstacleBranch{
+class ObstacleFloatingBranch extends ObstacleBranch{
     ObstacleFloatingBranch(int x, int y){
         super(x, y);
         // have the branch move at a constant speed

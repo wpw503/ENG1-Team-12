@@ -1,6 +1,6 @@
 package com.teamonehundred.pixelboat;
 
-public abstract class MovableObject extends GameObject {
+abstract class MovableObject extends GameObject {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerBoat extends Boat {
+class PlayerBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */

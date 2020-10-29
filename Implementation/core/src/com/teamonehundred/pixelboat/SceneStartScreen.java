@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SceneStartScreen implements Scene {
+class SceneStartScreen implements Scene {
     int scene_id = 0;
 
     Texture bg;

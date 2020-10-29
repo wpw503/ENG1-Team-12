@@ -3,7 +3,7 @@ package com.teamonehundred.pixelboat;
 import com.teamonehundred.pixelboat.CollisionObject;
 import com.teamonehundred.pixelboat.MovableObject;
 
-public abstract class Obstacle extends MovableObject implements CollisionObject {
+abstract class Obstacle extends MovableObject implements CollisionObject {
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
-public abstract class GameObject {
+abstract class GameObject {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */

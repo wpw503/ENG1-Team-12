@@ -2,7 +2,7 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.math.Rectangle;
 
-public interface CollisionObject {
+interface CollisionObject {
     // called when this object collides with something
     void hasCollided();
     // returns a libgdx rectangle for intersection checking

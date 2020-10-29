@@ -3,7 +3,7 @@ package com.teamonehundred.pixelboat;
 import java.util.List;
 
 // generic boat class, never instantiated
-public abstract class Boat extends MovableObject implements CollisionObject {
+abstract class Boat extends MovableObject implements CollisionObject {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -43,7 +43,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     // ################################### */
 
     public void hasCollided() {
-        durability -= durability_per_hit;
+        durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
     }
 
     @Override

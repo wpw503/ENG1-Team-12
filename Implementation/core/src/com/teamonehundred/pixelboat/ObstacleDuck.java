@@ -1,6 +1,6 @@
 package com.teamonehundred.pixelboat;
 
-public class ObstacleDuck extends Obstacle{
+class ObstacleDuck extends Obstacle{
     ObstacleDuck(int x, int y) {
         super(x, y, 30, 30, "obstacle_duck.png");
         // give each duck a random rotation
