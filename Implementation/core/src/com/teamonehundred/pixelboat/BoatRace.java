@@ -15,16 +15,26 @@ public class BoatRace {
         this.player = player;
 
         obstacles = new ArrayList<>();
-        obstacles.add( new Obstacle(40, 400, 40, 40, "obstacle.png"));
-        obstacles.add( new Obstacle(40, 600, 40, 40, "obstacle.png"));
-        obstacles.add( new Obstacle(40, 100, 40, 40, "obstacle.png"));
-        obstacles.add( new Obstacle(100, 400, 40, 40, "obstacle.png"));
-        obstacles.add( new Obstacle(-100, 400, 40, 40, "obstacle.png"));
+
+        // add some random obstacles
+        for (int i = 0; i < 5; i++)
+            obstacles.add(new ObstacleBranch((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+
+        for (int i = 0; i < 5; i++)
+            obstacles.add(new ObstacleFloatingBranch((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+
+        for (int i = 0; i < 5; i++)
+            obstacles.add(new ObstacleDuck((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
     }
 
     public void runStep() {
         // update player's boat (handles inputs, etc)
         player.updatePosition();
+        //update all obstacle positions
+        for(CollisionObject obs : obstacles){
+            if (obs instanceof Obstacle)
+                ((Obstacle)obs).updatePosition();
+        }
 
         // check for collisions
         for(CollisionObject obstacle : obstacles)
