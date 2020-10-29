@@ -4,6 +4,12 @@
 
 This repository is for developing the single player, Java-based game inspired by the Annual Dragon Boat Race in York.
 
+
+## [Website](https://wpw503.github.io/ENG1-Team-12/)
+
+Team 12 Assessment Website.
+Please click the link: https://wpw503.github.io/ENG1-Team-12/
+
 ## Description
 
 This repository contains documentation and Java code for the single player, Java-based game inspired by the Annual Dragon Boat Race in York. It aims to capture the excitement of the real event and satisfy the needs of a client at the University of York Computer Science Department.
