@@ -16,7 +16,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     float stamina_usage = .005f;
     float stamina_regen = .002f;
 
-    List<Float>[] leg_times;  // times for every previous leg
+    List<Float> leg_times;  // times for every previous leg
     int start_time, end_time;  // Seconds since epoch when starting and finishing current leg
 
     /* ################################### //
@@ -58,4 +58,29 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         super.updatePosition();
         stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
     }
+
+
+    /**
+     * Returns System Time in Milliseconds.
+     */
+    public long getTime(){
+        return System.currentTimeMillis();
+    }
+
+    public void setStartTime(){
+        this.start_time = (int) getTime()/1000; // Milliseconds to Seconds conversion 1000:1
+    }
+
+    public void setEndTime(){
+        this.start_time = (int) getTime()/1000;
+    }
+
+    public int getCalcTime(){
+        return this.end_time - this.start_time;
+    }
+
+    public void setLegTime(){
+        this.leg_times.add((float)this.getCalcTime());
+    }
+
 }
