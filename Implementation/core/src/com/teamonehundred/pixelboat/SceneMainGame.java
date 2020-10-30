@@ -15,7 +15,7 @@ class SceneMainGame implements Scene {
     BoatRace race;
 
     SceneMainGame() {
-        player = new PlayerBoat(-15, 0, 30, 100, "object_placeholder.png");
+        player = new PlayerBoat(-15, 0, 30, 100, "boat.png");
         bg = new Texture("temp_background.png");
         race = new BoatRace(player);
     }
