@@ -1,6 +1,9 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.List;
 class BoatRace {
     PlayerBoat player;
     //todo add ai boats
+
+    BitmapFont font; //TimingTest
 
     List<CollisionObject> obstacles;
 
@@ -25,6 +30,11 @@ class BoatRace {
 
         for (int i = 0; i < 5; i++)
             obstacles.add(new ObstacleDuck((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+
+        //Timing Test
+        player.setStartTime(System.currentTimeMillis());
+        font = new BitmapFont();
+        font.setColor(Color.RED);
     }
 
     public void runStep() {
@@ -55,4 +65,15 @@ class BoatRace {
 
         return all_sprites;
     }
+
+    public void draw(SpriteBatch batch){
+        // Timing Testing
+        long i = (System.currentTimeMillis() - player.getStartTime(false));
+        for (Sprite sp : getSprites())
+            sp.draw(batch);
+        font.draw(batch,  String.format("Time (min:sec) = %02d:%02d", i/60000, i/1000%60),-player.ui_bar_width / 2, -50 + player.getSprite().getY());//TimingTest
+
+    }
+
+
 }

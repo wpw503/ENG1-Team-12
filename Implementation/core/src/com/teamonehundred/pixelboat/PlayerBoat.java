@@ -62,12 +62,12 @@ class PlayerBoat extends Boat {
 
         stamina_bar.setSize(ui_bar_width, 10);
         durability_bar.setSize(ui_bar_width, 10);
-        time_bar.setSize(ui_bar_width/5, 20);
+        time_bar.setSize(ui_bar_width / 5, 20);
 
 
         stamina_bar.setPosition(-ui_bar_width / 2, 5);
         durability_bar.setPosition(-ui_bar_width / 2, 20);
-        time_bar.setPosition(-ui_bar_width /2, 35);
+        time_bar.setPosition(-ui_bar_width / 2, 35);
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(0, Gdx.graphics.getHeight() / 3, 0);
@@ -130,8 +130,5 @@ class PlayerBoat extends Boat {
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);
     }
-    //TimingTest
-    public float tempGetY(){
-        return sprite.getY();
-    }
+
 }

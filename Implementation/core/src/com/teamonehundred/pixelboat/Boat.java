@@ -60,15 +60,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
 
-    /**
-     * Returns System Time in Milliseconds.
-     */
-    public long getCurrentTime(){
-        return System.currentTimeMillis();
-    }
-
-    public void setStartTime(){
-        this.start_time = getCurrentTime();
+    public void setStartTime(long start_time){
+        this.start_time = start_time;
     }
 
     public long getStartTime(boolean inSeconds){
@@ -78,9 +71,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return this.start_time;
     }
 
-
-    public void setEndTime(){
-        this.start_time = getCurrentTime();
+    public void setEndTime(long end_time){
+        this.start_time = end_time;
     }
 
     public long getEndTime(boolean inSeconds){
@@ -97,6 +89,5 @@ abstract class Boat extends MovableObject implements CollisionObject {
     public void setLegTime(){
         this.leg_times.add(this.getCalcTime());
     }
-
 
 }
