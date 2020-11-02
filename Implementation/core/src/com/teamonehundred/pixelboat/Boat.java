@@ -53,8 +53,18 @@ abstract class Boat extends MovableObject implements CollisionObject {
                     METHODS
     // ################################### */
 
+    public void hasCollided() {
+        durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
+    }
+
     @Override
-    public Sprite getSprite() {
+    public void accelerate() {
+        stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
+        if (stamina > 0) {
+            super.accelerate();
+            frames_to_animate += 1;
+        }
+
         if (frames_to_animate > 0) {
             setAnimationFrame(current_animation_frame);
             frames_elapsed++;
@@ -67,21 +77,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
             current_animation_frame = 0;
             frames_elapsed = 0;
             frames_to_animate = 0;
-        }
-
-        return super.getSprite();
-    }
-
-    public void hasCollided() {
-        durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
-    }
-
-    @Override
-    public void accelerate() {
-        stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
-        if (stamina > 0) {
-            super.accelerate();
-            frames_to_animate += 1;
         }
     }
 
