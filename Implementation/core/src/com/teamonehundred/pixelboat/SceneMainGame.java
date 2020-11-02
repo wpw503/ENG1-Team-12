@@ -1,6 +1,7 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,8 +35,7 @@ class SceneMainGame implements Scene {
 
         batch.begin();
         batch.draw(bg, -500, -70, 1000, 1000);
-        for (Sprite sp : race.getSprites())
-            sp.draw(batch);
+        race.draw(batch);
         batch.end();
     }
 
