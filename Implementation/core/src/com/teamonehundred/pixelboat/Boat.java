@@ -23,14 +23,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
     List<Float> leg_times;  // times for every previous leg
     int start_time, end_time;  // Seconds since epoch when starting and finishing current leg
 
-    Texture rowing_animation_frame_1;
-    Texture rowing_animation_frame_2;
-    Texture rowing_animation_frame_3;
-
     int frames_to_animate = 0;
     int current_animation_frame = 0;
+    int frames_elapsed = 0;
 
-    Animation rowing_animation;
+    Animation<Texture> rowing_animation;
 
     /* ################################### //
                   CONSTRUCTORS
@@ -38,32 +35,18 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     //default specs
     Boat(int x, int y, int w, int h, String texture_path) {
-        super(x, y, w, h, texture_path);
-
-        initialise();
+        super(x, y, w, h, texture_path, 4);
     }
 
     //specify specs
     Boat(int x, int y, int w, int h, String texture_path, String name,
          float durability_per_hit, float stamina_usage, float stamina_regen) {
-        super(x, y, w, h, texture_path);
+        super(x, y, w, h, texture_path, 4);
 
         this.name = name;
         this.durability_per_hit = durability_per_hit;
         this.stamina_usage = stamina_usage;
         this.stamina_regen = stamina_regen;
-
-        initialise();
-    }
-
-    private void initialise() {
-        rowing_animation_frame_1 = new Texture("boat_animation_1.png");
-        rowing_animation_frame_2 = new Texture("boat_animation_2.png");
-        rowing_animation_frame_3 = new Texture("boat_animation_3.png");
-
-        rowing_animation = new Animation(1f, rowing_animation_frame_1,
-                rowing_animation_frame_2,
-                rowing_animation_frame_3);
     }
 
     /* ################################### //
@@ -73,14 +56,19 @@ abstract class Boat extends MovableObject implements CollisionObject {
     @Override
     public Sprite getSprite() {
         if (frames_to_animate > 0) {
-            // change sprite to current animation frame
-            sprite.setTexture((Texture) rowing_animation.getKeyFrame((current_animation_frame++) / 30,
-                    true));
+            setAnimationFrame(current_animation_frame);
+            frames_elapsed++;
+            if (frames_elapsed % 15 == 0)
+                current_animation_frame++;
             frames_to_animate--;
         } else {
-            sprite.setTexture(texture);  // reset texture
+            // reset everything
+            setAnimationFrame(0);
             current_animation_frame = 0;
+            frames_elapsed = 0;
+            frames_to_animate = 0;
         }
+
         return super.getSprite();
     }
 
@@ -91,9 +79,10 @@ abstract class Boat extends MovableObject implements CollisionObject {
     @Override
     public void accelerate() {
         stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
-        if (stamina > 0)
+        if (stamina > 0) {
             super.accelerate();
-        frames_to_animate += 1;
+            frames_to_animate += 1;
+        }
     }
 
     @Override
