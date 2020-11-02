@@ -94,6 +94,7 @@ abstract class GameObject {
     }
 
     public void setAnimationFrame(int i){
-        sprite.setRegion(animation_regions[i%animation_regions.length]);
+        if(animation_regions != null)
+            sprite.setRegion(animation_regions[i%animation_regions.length]);
     }
 }
