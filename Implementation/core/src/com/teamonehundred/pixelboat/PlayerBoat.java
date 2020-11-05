@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerBoat extends Boat {
+class PlayerBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -21,6 +21,7 @@ public class PlayerBoat extends Boat {
 
     Sprite stamina_bar;
     Sprite durability_bar;
+    Sprite time_bar;
 
     int ui_bar_width = 500;
 
@@ -57,14 +58,16 @@ public class PlayerBoat extends Boat {
 
         stamina_bar = new Sprite(stamina_texture);
         durability_bar = new Sprite(durability_texture);
+        time_bar = new Sprite(durability_texture);
 
         stamina_bar.setSize(ui_bar_width, 10);
         durability_bar.setSize(ui_bar_width, 10);
-
+        time_bar.setSize(ui_bar_width / 5, 20);
 
 
         stamina_bar.setPosition(-ui_bar_width / 2, 5);
         durability_bar.setPosition(-ui_bar_width / 2, 20);
+        time_bar.setPosition(-ui_bar_width / 2, 35);
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(0, Gdx.graphics.getHeight() / 3, 0);
@@ -76,14 +79,7 @@ public class PlayerBoat extends Boat {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             this.accelerate();
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            // boat cannot go back, there is only moving forwards, just like life...
-            // in that sense, the game is a very good analogy for the struggles of life
-            // constantly having ot move forward, unable to return to what was
-            // constantly dodging obstacles, trying to keep moving forwards
-            // maybe programming at 3am isn't such a good idea after all...
-
-            //obj.move(-5);
-            // but it can for testing
+            // nothing atm
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -118,6 +114,7 @@ public class PlayerBoat extends Boat {
         List<Sprite> ret = new ArrayList<Sprite>();
         ret.add(stamina_bar);
         ret.add(durability_bar);
+        ret.add(time_bar);
         return ret;
     }
 
@@ -128,8 +125,10 @@ public class PlayerBoat extends Boat {
     private void updateUISprites() {
         stamina_bar.setPosition(-ui_bar_width / 2, -50 + sprite.getY());
         durability_bar.setPosition(-ui_bar_width / 2, -35 + sprite.getY());
+        time_bar.setPosition(-ui_bar_width / 2, -20 + sprite.getY());
 
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);
     }
+
 }

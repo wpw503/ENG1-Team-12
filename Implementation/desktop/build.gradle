@@ -37,3 +37,8 @@ task dist(type: Jar) {
 dist.dependsOn classes
 
 eclipse.project.name = appName + "-desktop"
+
+tasks.withType(JavaCompile) {
+    targetCompatibility = '1.7'
+    sourceCompatibility = '1.7'
+}

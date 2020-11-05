@@ -1,12 +1,17 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoatRace {
     List<Boat> boats;
+
+    BitmapFont font; //TimingTest
 
     List<CollisionObject> obstacles;
 
@@ -15,11 +20,21 @@ public class BoatRace {
         boats.addAll(race_boats);
 
         obstacles = new ArrayList<>();
-        obstacles.add(new Obstacle(40, 400, 40, 40, "obstacle.png"));
-        obstacles.add(new Obstacle(40, 600, 40, 40, "obstacle.png"));
-        obstacles.add(new Obstacle(40, 100, 40, 40, "obstacle.png"));
-        obstacles.add(new Obstacle(100, 400, 40, 40, "obstacle.png"));
-        obstacles.add(new Obstacle(-100, 400, 40, 40, "obstacle.png"));
+        
+      // add some random obstacles
+        for (int i = 0; i < 5; i++)
+            obstacles.add(new ObstacleBranch((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+
+        for (int i = 0; i < 5; i++)
+            obstacles.add(new ObstacleFloatingBranch((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+
+        for (int i = 0; i < 5; i++)
+            obstacles.add(new ObstacleDuck((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+
+        //Timing Test
+        player.setStartTime(System.currentTimeMillis());
+        font = new BitmapFont();
+        font.setColor(Color.RED);
     }
 
     public void runStep() {
@@ -34,6 +49,10 @@ public class BoatRace {
                     ((PlayerBoat) b).checkCollisions(obstacle);
             }
         }
+
+        
+    
+
     }
 
 
@@ -54,4 +73,15 @@ public class BoatRace {
 
         return all_sprites;
     }
+
+    public void draw(SpriteBatch batch){
+        // Timing Testing
+        long i = (System.currentTimeMillis() - player.getStartTime(false));
+        for (Sprite sp : getSprites())
+            sp.draw(batch);
+        font.draw(batch,  String.format("Time (min:sec) = %02d:%02d", i/60000, i/1000%60),-player.ui_bar_width / 2, -50 + player.getSprite().getY());//TimingTest
+
+    }
+
+
 }

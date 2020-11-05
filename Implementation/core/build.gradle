@@ -4,3 +4,8 @@ sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 eclipse.project.name = appName + "-core"
+
+tasks.withType(JavaCompile) {
+    targetCompatibility = '1.7'
+    sourceCompatibility = '1.7'
+}

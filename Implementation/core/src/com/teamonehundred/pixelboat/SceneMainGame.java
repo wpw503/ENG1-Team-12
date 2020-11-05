@@ -1,6 +1,7 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SceneMainGame implements Scene {
+
     int scene_id = 1;
 
     PlayerBoat player;
@@ -18,7 +20,7 @@ public class SceneMainGame implements Scene {
     BoatRace race;
 
     SceneMainGame() {
-        player = new PlayerBoat(-15, 0, 30, 100, "object_placeholder.png");
+        player = new PlayerBoat(-15, 0, 30, 100, "boat.png");
         bg = new Texture("temp_background.png");
         race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player, new AIBoat(30, 40, 30, 100, "object_placeholder.png"))));
     }
@@ -37,8 +39,7 @@ public class SceneMainGame implements Scene {
 
         batch.begin();
         batch.draw(bg, -500, -70, 1000, 1000);
-        for (Sprite sp : race.getSprites())
-            sp.draw(batch);
+        race.draw(batch);
         batch.end();
     }
 

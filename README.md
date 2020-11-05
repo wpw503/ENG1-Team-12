@@ -1,8 +1,14 @@
-![logo](https://github.com/wpw503/ENG1-Team-12/blob/main/Resources/new_logo_t.png?raw=true)
+![logo](https://github.com/wpw503/ENG1-Team-12/blob/main/images/new_logo_t.png?raw=true)
 
 # ENG1-Team-12
 
 This repository is for developing the single player, Java-based game inspired by the Annual Dragon Boat Race in York.
+
+
+## [Website](https://wpw503.github.io/ENG1-Team-12/)
+
+Team 12 Assessment Website.
+Please click the link: https://wpw503.github.io/ENG1-Team-12/
 
 ## Description
 
@@ -30,7 +36,7 @@ University of York Engineering 1 Cohort 2 Team 12:
 * [@JamesFrost](https://github.com/Fritzbox2000)
 * [@WilliamWalton](https://github.com/wpw503)
 * [@RichardLiiv](https://github.com/sumsare)
-* @OllyWortley
+* [@OllyWortley](https://github.com/orw511)
 * @JoeCambridge
 
 ## References

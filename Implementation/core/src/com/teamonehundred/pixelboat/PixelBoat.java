@@ -42,5 +42,8 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+
+        Gdx.app.exit();
+        System.exit(0);
     }
 }
