@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // generic boat class, never instantiated
@@ -17,11 +18,13 @@ abstract class Boat extends MovableObject implements CollisionObject {
     float durability = 1.f;  // from 0 to 1
     float durability_per_hit = .2f;
     float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    float stamina_usage = .01f;
+    float stamina_usage = .005f;
     float stamina_regen = .002f;
 
-    List<Long> leg_times;  // times for every previous leg
-    long start_time, end_time;  // Seconds since epoch when starting and finishing current leg
+    List<Long> leg_times = new ArrayList<>();  // times for every previous leg
+    long start_time = -1;
+    long end_time = -1;  // ms since epoch when starting and finishing current leg
+    long time_to_add = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
 
     int frames_to_animate = 0;
     int current_animation_frame = 0;
@@ -120,7 +123,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * @param end_time long value which is end time of the boat.
      */
     public void setEndTime(long end_time){
-        this.start_time = end_time;
+        this.end_time = end_time;
     }
 
     /**
@@ -144,7 +147,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * @return long value time difference
      */
     public long getCalcTime(){
-        return this.end_time - this.start_time;
+        return time_to_add + (this.end_time - this.start_time);
     }
 
     /**
@@ -153,9 +156,21 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * @author Umer Fakher
      */
     public void setLegTime(){
-        this.leg_times.add(this.getCalcTime());
+        this.leg_times.add(this.getCalcTime());;
     }
 
+    public List<Long> getLegTimes() {
+        return leg_times;
+    }
+
+    public void setTimeToAdd(long time_to_add) {
+        this.time_to_add = time_to_add;
+    }
+
+    public long getTimeToAdd() {
+        return time_to_add;
+    }
+  
     /**
      * Checks to see if the this boat has collided with the other CollisionObject object passed.
      *
@@ -167,5 +182,4 @@ abstract class Boat extends MovableObject implements CollisionObject {
             object.hasCollided();
         }
     }
-
 }

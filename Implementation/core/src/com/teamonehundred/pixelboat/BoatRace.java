@@ -1,6 +1,7 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,12 @@ public class BoatRace {
     BitmapFont font; //TimingTest
 
     List<CollisionObject> obstacles;
+
+    int start_y = 200;
+    int end_y = 2000;
+
+    int lane_width = 400;
+    int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     BoatRace(List<Boat> race_boats) {
         boats = new ArrayList<>();
@@ -32,10 +39,11 @@ public class BoatRace {
             obstacles.add(new ObstacleDuck((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
 
         //Timing Test
-        for (Boat b : boats) {
-            if (b instanceof PlayerBoat)
-                ((PlayerBoat) b).setStartTime(System.currentTimeMillis());
-        }
+//        for (Boat b : boats) {
+//            if (b instanceof PlayerBoat) {
+//                ((PlayerBoat) b).setStartTime(System.currentTimeMillis());
+//            }
+//        }
 
         font = new BitmapFont();
         font.setColor(Color.RED);
@@ -43,6 +51,20 @@ public class BoatRace {
 
     public void runStep() {
         for (Boat b : boats) {
+            // check if any boats have finished
+            if (b.getEndTime(false) == -1 && b.getSprite().getY() > end_y) {
+                // store the leg time in the object
+                b.setEndTime(System.currentTimeMillis());
+                b.setLegTime();
+
+                System.out.print("a boat ended race with time (ms) ");
+                System.out.println(b.getCalcTime());
+            }
+            // check if any boats have started
+            else if (b.getStartTime(false) == -1 && b.getSprite().getY() > start_y) {
+                b.setStartTime(System.currentTimeMillis());
+            }
+
             // update boat (handles inputs if player, etc)
             if (b instanceof AIBoat) {
                 ((AIBoat) b).updatePosition(obstacles);
@@ -89,6 +111,13 @@ public class BoatRace {
                 font.draw(batch, String.format("Time (min:sec) = %02d:%02d", i / 60000, i / 1000 % 60), -((PlayerBoat) b).ui_bar_width / 2, -50 + ((PlayerBoat) b).getSprite().getY());//TimingTest
             }
         }
+
+        Texture temp = new Texture("object_placeholder.png");
+
+        batch.draw(temp, -400, start_y, 800, 5);
+        batch.draw(temp, -400, end_y, 800, 5);
+
+        temp.dispose();
     }
 
 
