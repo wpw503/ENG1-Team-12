@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.math.Vector2;
+import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +36,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     Animation<Texture> rowing_animation;
 
-    CollisionBounds bounds;
-
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */
@@ -47,8 +47,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     Boat(int x, int y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path, 4);
-
-        bounds = new CollisionBounds(new ArrayList<Shape2D>(Arrays.asList(new Rectangle(0, 0, 1, 2))));
     }
 
     //specify specs
@@ -190,9 +188,29 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * @param object The CollisionObject that will be checked to see if it has hit this boat.
      */
     public void checkCollisions(CollisionObject object) {
-        if (bounds.isColliding(object.getBounds())) {
+        if (this.getBounds().isColliding(object.getBounds())) {
             hasCollided();
             object.hasCollided();
         }
+    }
+
+    @Override
+    public CollisionBounds getBounds() {
+        // create a new collision bounds object representing my current position
+        // see the collision bounds visualisation folder in assets for a visual representation
+        CollisionBounds my_bounds = new CollisionBounds();
+        Rectangle main_rect = new Rectangle(
+                sprite.getX()+(0.32f*sprite.getWidth()),
+                sprite.getY()+(0.117f*sprite.getHeight()),
+                0.32f*sprite.getWidth(),
+                0.77f* sprite.getHeight());
+        my_bounds.addBound(main_rect);
+
+        my_bounds.setOrigin(new Vector2(
+                sprite.getX()+(sprite.getWidth()/2),
+                sprite.getY()+(sprite.getHeight()/2)));
+        my_bounds.setRotation(sprite.getRotation());
+
+        return my_bounds;
     }
 }

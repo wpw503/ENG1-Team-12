@@ -1,5 +1,7 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.math.Shape2D;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,13 +116,15 @@ public class AIBoat extends Boat {
                 double tempy = (Math.sin(Math.toRadians(ray_angle)) * dist) + (start_point.get(1));
                 //check if there is a collision hull (other than self) at (tempx, tempy)
                 for (CollisionObject collideable : collidables) {
-                    if (collideable.getBounds().contains((float) tempx, (float) tempy)) {
-                        if (cheeky_bit_of_coding) {
-                            turn(-1);
-                            return;
-                        } else {
-                            turn(1);
-                            return;
+                    for (Shape2D bound : collideable.getBounds().getShapes()) {
+                        if (bound.contains((float) tempx, (float) tempy)) {
+                            if (cheeky_bit_of_coding) {
+                                turn(-1);
+                                return;
+                            } else {
+                                turn(1);
+                                return;
+                            }
                         }
                     }
 

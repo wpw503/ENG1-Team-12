@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Shape2D;
+
+import java.util.ArrayList;
 
 /**
  * The class that everything visible in the game is derived from.
@@ -89,8 +92,13 @@ abstract class GameObject {
         return sprite;
     }
 
-    public Rectangle getBounds() {
-        return sprite.getBoundingRectangle();
+    public CollisionBounds getBounds() {
+        // create a new collision bounds object representing my current position
+        // see the collision bounds visualisation folder in assets for a visual representation
+        CollisionBounds my_bounds = new CollisionBounds();
+        Rectangle main_rect = sprite.getBoundingRectangle();  // default is to use whole sprite
+        my_bounds.addBound(main_rect);
+        return my_bounds;
     }
 
     public void setAnimationFrame(int i){
