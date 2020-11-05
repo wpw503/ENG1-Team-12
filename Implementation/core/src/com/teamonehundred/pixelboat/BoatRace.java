@@ -71,12 +71,16 @@ public class BoatRace {
             } else if (b instanceof PlayerBoat) {
                 b.updatePosition();
             }
-                // check for collisions
-            for (CollisionObject obstacle : obstacles){
+            // check for collisions
+            for (CollisionObject obstacle : obstacles) {
                 b.checkCollisions(obstacle);
             }
         }
 
+        for (CollisionObject c : obstacles) {
+            if (c instanceof Obstacle)
+                ((Obstacle) c).updatePosition();
+        }
 
     }
 

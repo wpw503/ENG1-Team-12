@@ -21,9 +21,10 @@ public class SceneMainGame implements Scene {
     BoatRace race;
 
     SceneMainGame() {
-        player = new PlayerBoat(-15, 0, 30, 100, "boat.png");
-        bg = new Texture("temp_background.png");
-        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player, new AIBoat(30, 40, 30, 100, "boat.png"))));
+        player = new PlayerBoat(-15, 0);
+        bg = new Texture("water_background.png");
+        bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player, new AIBoat(30, 40))));
     }
 
     // destructor
@@ -39,7 +40,7 @@ public class SceneMainGame implements Scene {
         batch.setProjectionMatrix(player.getCamera().combined);
 
         batch.begin();
-        batch.draw(bg, -500, -70, 1000, 1000);
+        batch.draw(bg, -10000, -200, 0, 0, 1000000, 10000000);
         race.draw(batch);
         batch.end();
     }

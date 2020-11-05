@@ -18,7 +18,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     float durability = 1.f;  // from 0 to 1
     float durability_per_hit = .2f;
     float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    float stamina_usage = .005f;
+    float stamina_usage = .0f;  //todo change this after testing
     float stamina_regen = .002f;
 
     List<Long> leg_times = new ArrayList<>();  // times for every previous leg
@@ -37,6 +37,10 @@ abstract class Boat extends MovableObject implements CollisionObject {
     // ################################### */
 
     //default specs
+    Boat(int x, int y){
+        super(x, y, 80, 100, "boat.png", 4);
+    }
+
     Boat(int x, int y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path, 4);
     }
