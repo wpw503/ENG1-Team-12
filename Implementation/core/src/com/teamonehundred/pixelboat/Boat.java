@@ -2,9 +2,11 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Shape2D;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // generic boat class, never instantiated
@@ -32,6 +34,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     Animation<Texture> rowing_animation;
 
+    CollisionBounds bounds;
+
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */
@@ -39,6 +43,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
     //default specs
     Boat(int x, int y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path, 4);
+
+        bounds = new CollisionBounds(new ArrayList<Shape2D>(Arrays.asList(new Rectangle(0, 0, 1, 2))));
     }
 
     //specify specs
@@ -91,25 +97,26 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     /**
      * Sets the start time of a boat in milliseconds.
-     *
+     * <p>
      * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
-     * @author Umer Fakher
+     *
      * @param start_time long value which is start time of the boat.
+     * @author Umer Fakher
      */
-    public void setStartTime(long start_time){
+    public void setStartTime(long start_time) {
         this.start_time = start_time;
     }
 
     /**
      * Returns the long value start time of the boat.
      *
-     * @author Umer Fakher
      * @param inSeconds boolean to decide if the time should be returned in seconds or in milliseconds.
      * @return the long value start time
+     * @author Umer Fakher
      */
-    public long getStartTime(boolean inSeconds){
-        if (inSeconds){
-            return this.start_time/1000; // Milliseconds to Seconds conversion 1000:1
+    public long getStartTime(boolean inSeconds) {
+        if (inSeconds) {
+            return this.start_time / 1000; // Milliseconds to Seconds conversion 1000:1
         }
         return this.start_time;
     }
@@ -117,25 +124,26 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     /**
      * Sets the end time of a boat in milliseconds.
-     *
+     * <p>
      * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
-     * @author Umer Fakher
+     *
      * @param end_time long value which is end time of the boat.
+     * @author Umer Fakher
      */
-    public void setEndTime(long end_time){
+    public void setEndTime(long end_time) {
         this.end_time = end_time;
     }
 
     /**
      * Returns the long value end time of the boat.
      *
-     * @author Umer Fakher
      * @param inSeconds boolean to decide if the time should be returned in seconds or in milliseconds.
      * @return the long value end time
+     * @author Umer Fakher
      */
-    public long getEndTime(boolean inSeconds){
-        if (inSeconds){
-            return this.end_time/1000; // Milliseconds to Seconds conversion 1000:1
+    public long getEndTime(boolean inSeconds) {
+        if (inSeconds) {
+            return this.end_time / 1000; // Milliseconds to Seconds conversion 1000:1
         }
         return this.end_time;
     }
@@ -143,10 +151,10 @@ abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Returns the difference between the end time and start time in milliseconds.
      *
-     * @author Umer Fakher
      * @return long value time difference
+     * @author Umer Fakher
      */
-    public long getCalcTime(){
+    public long getCalcTime() {
         return time_to_add + (this.end_time - this.start_time);
     }
 
@@ -155,29 +163,30 @@ abstract class Boat extends MovableObject implements CollisionObject {
      *
      * @author Umer Fakher
      */
-    public void setLegTime(){
-        this.leg_times.add(this.getCalcTime());;
+    public void setLegTime() {
+        this.leg_times.add(this.getCalcTime());
+        ;
     }
 
     public List<Long> getLegTimes() {
         return leg_times;
     }
 
+    public long getTimeToAdd() {
+        return time_to_add;
+    }
+
     public void setTimeToAdd(long time_to_add) {
         this.time_to_add = time_to_add;
     }
 
-    public long getTimeToAdd() {
-        return time_to_add;
-    }
-  
     /**
      * Checks to see if the this boat has collided with the other CollisionObject object passed.
      *
      * @param object The CollisionObject that will be checked to see if it has hit this boat.
      */
     public void checkCollisions(CollisionObject object) {
-        if (object.getBounds().overlaps(getBounds()) && object.isShown()) {
+        if (bounds.isColliding(object.getBounds())) {
             hasCollided();
             object.hasCollided();
         }
