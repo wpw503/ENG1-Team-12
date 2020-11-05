@@ -22,7 +22,7 @@ public class SceneMainGame implements Scene {
     SceneMainGame() {
         player = new PlayerBoat(-15, 0, 30, 100, "boat.png");
         bg = new Texture("temp_background.png");
-        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player, new AIBoat(30, 40, 30, 100, "object_placeholder.png"))));
+        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player, new AIBoat(30, 40, 30, 100, "boat.png"))));
     }
 
     // destructor
