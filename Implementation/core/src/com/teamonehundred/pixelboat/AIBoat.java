@@ -128,12 +128,5 @@ public class AIBoat extends Boat{
         }
         
     }
-    @Override
-    public void checkCollisions(CollisionObject object) {
-        if (object.getBounds().overlaps(getBounds()) && object.isShown()) {
-            hasCollided();
-            object.hasCollided();
-        }
-    }
 
 }

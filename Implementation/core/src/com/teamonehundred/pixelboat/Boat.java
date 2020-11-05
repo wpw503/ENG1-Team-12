@@ -156,6 +156,16 @@ abstract class Boat extends MovableObject implements CollisionObject {
         this.leg_times.add(this.getCalcTime());
     }
 
-    public void checkCollisions(CollisionObject obstacle){ }
+    /**
+     * Checks to see if the this boat has collided with the other CollisionObject object passed.
+     *
+     * @param object The CollisionObject that will be checked to see if it has hit this boat.
+     */
+    public void checkCollisions(CollisionObject object) {
+        if (object.getBounds().overlaps(getBounds()) && object.isShown()) {
+            hasCollided();
+            object.hasCollided();
+        }
+    }
 
 }
