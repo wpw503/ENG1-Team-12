@@ -86,10 +86,19 @@ abstract class Boat extends MovableObject implements CollisionObject {
         stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
     }
 
+    /**
+     * @author Umer Fakher
+     * @param start_time
+     */
     public void setStartTime(long start_time){
         this.start_time = start_time;
     }
 
+    /**
+     * @author Umer Fakher
+     * @param inSeconds
+     * @return
+     */
     public long getStartTime(boolean inSeconds){
         if (inSeconds){
             return this.start_time/1000; // Milliseconds to Seconds conversion 1000:1
@@ -97,10 +106,22 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return this.start_time;
     }
 
+
+    /**
+     * @author Umer Fakher
+     * @param end_time
+     */
     public void setEndTime(long end_time){
         this.start_time = end_time;
     }
 
+    /**
+     * Returns the long value stored in end_time
+     *
+     * @author Umer Fakher
+     * @param inSeconds
+     * @return the end time in seconds or milliseconds
+     */
     public long getEndTime(boolean inSeconds){
         if (inSeconds){
             return this.end_time/1000; // Milliseconds to Seconds conversion 1000:1
@@ -108,10 +129,17 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return this.end_time;
     }
 
+    /**
+     * @author Umer Fakher
+     * @return
+     */
     public long getCalcTime(){
         return this.end_time - this.start_time;
     }
 
+    /**
+     * @author Umer Fakher
+     */
     public void setLegTime(){
         this.leg_times.add(this.getCalcTime());
     }
