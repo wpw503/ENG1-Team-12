@@ -25,17 +25,17 @@ public class BoatRace {
     public void runStep() {
         for (Boat b : boats) {
             // update boat (handles inputs if player, etc)
-            b.updatePosition();
-
-            if (b instanceof PlayerBoat) {
+            if (b instanceof AIBoat) {
+                ((AIBoat) b).updatePosition(obstacles);
+            } else if (b instanceof PlayerBoat) {
+                b.updatePosition();
                 // check for collisions
                 for (CollisionObject obstacle : obstacles)
                     ((PlayerBoat) b).checkCollisions(obstacle);
-            } else if (b instanceof AIBoat) {
-                // todo add ray function
             }
         }
     }
+
 
     public List<Sprite> getSprites() {
         List<Sprite> all_sprites = new ArrayList<>();

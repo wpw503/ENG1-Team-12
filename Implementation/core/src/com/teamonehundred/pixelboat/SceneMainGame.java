@@ -20,7 +20,7 @@ public class SceneMainGame implements Scene {
     SceneMainGame() {
         player = new PlayerBoat(-15, 0, 30, 100, "object_placeholder.png");
         bg = new Texture("temp_background.png");
-        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player)));
+        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player, new AIBoat(30, 40, 30, 100, "object_placeholder.png"))));
     }
 
     // destructor
