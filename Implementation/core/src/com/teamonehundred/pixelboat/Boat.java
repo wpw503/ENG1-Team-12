@@ -91,7 +91,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
      *
      * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
      * @author Umer Fakher
-     * @param start_time
+     * @param start_time long value which is start time of the boat.
      */
     public void setStartTime(long start_time){
         this.start_time = start_time;
@@ -101,8 +101,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * Returns the long value start time of the boat.
      *
      * @author Umer Fakher
-     * @param inSeconds
-     * @return the long value start time in seconds if inSeconds is true. Otherwise in milliseconds.
+     * @param inSeconds boolean to decide if the time should be returned in seconds or in milliseconds.
+     * @return the long value start time
      */
     public long getStartTime(boolean inSeconds){
         if (inSeconds){
@@ -117,7 +117,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
      *
      * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
      * @author Umer Fakher
-     * @param end_time
+     * @param end_time long value which is end time of the boat.
      */
     public void setEndTime(long end_time){
         this.start_time = end_time;
@@ -127,8 +127,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * Returns the long value end time of the boat.
      *
      * @author Umer Fakher
-     * @param inSeconds
-     * @return the long value end time in seconds if inSeconds is true. Otherwise in milliseconds.
+     * @param inSeconds boolean to decide if the time should be returned in seconds or in milliseconds.
+     * @return the long value end time
      */
     public long getEndTime(boolean inSeconds){
         if (inSeconds){
@@ -139,8 +139,9 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     /**
      * Returns the difference between the end time and start time in milliseconds.
+     *
      * @author Umer Fakher
-     * @return long
+     * @return long value time difference
      */
     public long getCalcTime(){
         return this.end_time - this.start_time;
