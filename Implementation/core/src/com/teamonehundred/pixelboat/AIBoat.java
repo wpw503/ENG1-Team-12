@@ -1,5 +1,10 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class AIBoat extends Boat{
     /* ################################### //
                    ATTRIBUTES
@@ -8,6 +13,8 @@ public class AIBoat extends Boat{
     float ray_angle_range;
     float ray_range;
     float ray_step_size;
+    boolean regen;
+
 
     /* ################################### //
               CONSTRUCTORS
@@ -26,14 +33,56 @@ public class AIBoat extends Boat{
     }
 
     public void initialise(){
-        number_of_rays = 10; // how many rays are fired from the boat
-        ray_angle_range = 180; // the range of the angles that the boat will fire rays out at
-        ray_range = 30; // the range of each ray
-        ray_step_size = 1;
+        number_of_rays = 9; // how many rays are fired from the boat
+        ray_angle_range = 145; // the range of the angles that the boat will fire rays out at
+        ray_range = 100; // the range of each ray
+        ray_step_size = (float)10;
+        regen = false;
     }
 
-    public void updatePosition(){
-        /* Fire a number of rays with limited distance out the front of the boat,
+    public void updatePosition(List<CollisionObject> collidables){
+        // TODO: Make this a method, and neaten it up
+        // TODO: Link Acc w/ turning for better AI (that one may take a bit of time tho)
+        // TODO: Visible stamina for AI (maybe as debug option)
+        if (!regen){
+            this.accelerate();
+            if (stamina <= 0.1){
+                regen = true;
+            }
+        }
+        else{
+            if (stamina >= 0.3){
+                regen = false;
+            }
+        }
+        this.check_turn(collidables);
+        super.updatePosition();
+        
+    }
+
+    @Override
+    public boolean isShown() {
+        return super.isShown();
+    }
+
+    private List<Float> get_ray_fire_point(){
+        List<Float> coordinates = new ArrayList<>();
+        float o_x = sprite.getX() + (sprite.getWidth()/2);
+        float o_y = sprite.getY() + (sprite.getHeight());
+        float mod_a = (float) Math.sqrt(Math.pow(sprite.getX() - o_x, 2) + Math.pow(sprite.getY() - o_y, 2));
+        float dx = mod_a * (float) Math.sin(Math.abs(Math.toRadians(sprite.getRotation())));
+        float dy = mod_a * (float) Math.cos(Math.abs(Math.toRadians(sprite.getRotation())));
+        if (sprite.getRotation() > 0){
+            dx = -dx;
+        }
+        coordinates.add(o_x + dx);
+        coordinates.add(o_y);
+        return coordinates;
+    }
+
+
+    public void check_turn(List<CollisionObject> collidables){
+         /* Fire a number of rays with limited distance out the front of the boat,
          select a ray that isn't obstructed by an object,
          preference the middle (maybe put a preference to side as well)
          if every ray is obstructed either (keep turning [left or right] on the spot until one is, or choose the one that is obstructed furthest away
@@ -45,7 +94,6 @@ public class AIBoat extends Boat{
         //select an area of 180 degrees (pi radians)
         boolean cheeky_bit_of_coding = true; // this is a very cheeky way of solving the problem, but has a few benefits
         //TODO: Explain the cheeky_bit_of_coding better
-
         for (int ray = 0; ray <= number_of_rays; ray++){
             if (cheeky_bit_of_coding){
                 ray--;
@@ -59,12 +107,26 @@ public class AIBoat extends Boat{
 
             float ray_angle = ((ray_angle_range/number_of_rays) * ray) + sprite.getRotation();
             for (float dist = 0; dist <= ray_range; dist+= ray_step_size){
-                double tempx = Math.cos(Math.toRadians(ray_angle)) * dist;
-                double tempy = Math.sin(Math.toRadians(ray_angle)) * dist;
+                List<Float> start_point = get_ray_fire_point();
+                double tempx = (Math.cos(Math.toRadians(ray_angle)) * dist) + (start_point.get(0));
+                double tempy = (Math.sin(Math.toRadians(ray_angle)) * dist) + (start_point.get(1));
                 //check if there is a collision hull (other than self) at (tempx, tempy)
+                for (CollisionObject collideable : collidables){
+                    if (collideable.getBounds().contains((float)tempx, (float)tempy)){
+                        if (cheeky_bit_of_coding){
+                            turn(-1);
+                            return;
+                        }
+                        else{
+                            turn(1);
+                            return;
+                        }
+                    }
+
+                }
             }
         }
-
+        
     }
 
 }
