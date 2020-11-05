@@ -89,10 +89,24 @@ abstract class Boat extends MovableObject implements CollisionObject {
         stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
     }
 
+    /**
+     * Sets the start time of a boat in milliseconds.
+     *
+     * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
+     * @author Umer Fakher
+     * @param start_time long value which is start time of the boat.
+     */
     public void setStartTime(long start_time){
         this.start_time = start_time;
     }
 
+    /**
+     * Returns the long value start time of the boat.
+     *
+     * @author Umer Fakher
+     * @param inSeconds boolean to decide if the time should be returned in seconds or in milliseconds.
+     * @return the long value start time
+     */
     public long getStartTime(boolean inSeconds){
         if (inSeconds){
             return this.start_time/1000; // Milliseconds to Seconds conversion 1000:1
@@ -100,10 +114,25 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return this.start_time;
     }
 
+
+    /**
+     * Sets the end time of a boat in milliseconds.
+     *
+     * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
+     * @author Umer Fakher
+     * @param end_time long value which is end time of the boat.
+     */
     public void setEndTime(long end_time){
         this.end_time = end_time;
     }
 
+    /**
+     * Returns the long value end time of the boat.
+     *
+     * @author Umer Fakher
+     * @param inSeconds boolean to decide if the time should be returned in seconds or in milliseconds.
+     * @return the long value end time
+     */
     public long getEndTime(boolean inSeconds){
         if (inSeconds){
             return this.end_time/1000; // Milliseconds to Seconds conversion 1000:1
@@ -111,10 +140,21 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return this.end_time;
     }
 
+    /**
+     * Returns the difference between the end time and start time in milliseconds.
+     *
+     * @author Umer Fakher
+     * @return long value time difference
+     */
     public long getCalcTime(){
         return time_to_add + (this.end_time - this.start_time);
     }
 
+    /**
+     * Adds the difference between end time and start time into the leg times list as a long value.
+     *
+     * @author Umer Fakher
+     */
     public void setLegTime(){
         this.leg_times.add(this.getCalcTime());;
     }
@@ -129,5 +169,17 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     public long getTimeToAdd() {
         return time_to_add;
+    }
+  
+    /**
+     * Checks to see if the this boat has collided with the other CollisionObject object passed.
+     *
+     * @param object The CollisionObject that will be checked to see if it has hit this boat.
+     */
+    public void checkCollisions(CollisionObject object) {
+        if (object.getBounds().overlaps(getBounds()) && object.isShown()) {
+            hasCollided();
+            object.hasCollided();
+        }
     }
 }

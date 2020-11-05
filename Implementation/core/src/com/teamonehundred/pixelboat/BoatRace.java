@@ -70,9 +70,10 @@ public class BoatRace {
                 ((AIBoat) b).updatePosition(obstacles);
             } else if (b instanceof PlayerBoat) {
                 b.updatePosition();
+            }
                 // check for collisions
-                for (CollisionObject obstacle : obstacles)
-                    ((PlayerBoat) b).checkCollisions(obstacle);
+            for (CollisionObject obstacle : obstacles){
+                b.checkCollisions(obstacle);
             }
         }
 

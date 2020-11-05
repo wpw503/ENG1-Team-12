@@ -97,12 +97,6 @@ class PlayerBoat extends Boat {
         camera.translate(dx, dy, 0);
     }
 
-    public void checkCollisions(CollisionObject object) {
-        if (object.getBounds().overlaps(getBounds()) && object.isShown()) {
-            hasCollided();
-            object.hasCollided();
-        }
-    }
 
     public List<Sprite> getUISprites() {
         updateUISprites();  // todo probably move this to only when they change rather than every frame
