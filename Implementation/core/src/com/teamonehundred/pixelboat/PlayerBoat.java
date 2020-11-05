@@ -28,6 +28,12 @@ class PlayerBoat extends Boat {
                   CONSTRUCTORS
     // ################################### */
 
+    PlayerBoat(int x, int y){
+        super(x, y);
+
+        initialise();
+    }
+
     PlayerBoat(int x, int y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path);
 
