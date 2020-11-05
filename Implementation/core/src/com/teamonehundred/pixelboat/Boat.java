@@ -87,6 +87,9 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     /**
+     * Sets the start time of a boat in milliseconds.
+     *
+     * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
      * @author Umer Fakher
      * @param start_time
      */
@@ -95,9 +98,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     /**
+     * Returns the long value start time of the boat.
+     *
      * @author Umer Fakher
      * @param inSeconds
-     * @return
+     * @return the long value start time in seconds if inSeconds is true. Otherwise in milliseconds.
      */
     public long getStartTime(boolean inSeconds){
         if (inSeconds){
@@ -108,6 +113,9 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
 
     /**
+     * Sets the end time of a boat in milliseconds.
+     *
+     * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
      * @author Umer Fakher
      * @param end_time
      */
@@ -116,11 +124,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     /**
-     * Returns the long value stored in end_time
+     * Returns the long value end time of the boat.
      *
      * @author Umer Fakher
      * @param inSeconds
-     * @return the end time in seconds or milliseconds
+     * @return the long value end time in seconds if inSeconds is true. Otherwise in milliseconds.
      */
     public long getEndTime(boolean inSeconds){
         if (inSeconds){
@@ -130,14 +138,17 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     /**
+     * Returns the difference between the end time and start time in milliseconds.
      * @author Umer Fakher
-     * @return
+     * @return long
      */
     public long getCalcTime(){
         return this.end_time - this.start_time;
     }
 
     /**
+     * Adds the difference between end time and start time into the leg times list as a long value.
+     *
      * @author Umer Fakher
      */
     public void setLegTime(){
