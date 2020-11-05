@@ -144,4 +144,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
         this.leg_times.add(this.getCalcTime());
     }
 
+    public void checkCollisions(CollisionObject obstacle){ }
+
 }
