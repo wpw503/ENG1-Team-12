@@ -20,19 +20,23 @@ public class BoatRace {
         boats.addAll(race_boats);
 
         obstacles = new ArrayList<>();
-        
-      // add some random obstacles
+
+        // add some random obstacles
         for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleBranch((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+            obstacles.add(new ObstacleBranch((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
 
         for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleFloatingBranch((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+            obstacles.add(new ObstacleFloatingBranch((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
 
         for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleDuck((int)(-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+            obstacles.add(new ObstacleDuck((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
 
         //Timing Test
-        player.setStartTime(System.currentTimeMillis());
+        for (Boat b : boats) {
+            if (b instanceof PlayerBoat)
+                ((PlayerBoat) b).setStartTime(System.currentTimeMillis());
+        }
+
         font = new BitmapFont();
         font.setColor(Color.RED);
     }
@@ -50,8 +54,6 @@ public class BoatRace {
             }
         }
 
-        
-    
 
     }
 
@@ -61,8 +63,8 @@ public class BoatRace {
 
         for (Boat b : boats) {
             all_sprites.add(b.getSprite());
-            if( b instanceof PlayerBoat)
-                all_sprites.addAll(((PlayerBoat)b).getUISprites());
+            if (b instanceof PlayerBoat)
+                all_sprites.addAll(((PlayerBoat) b).getUISprites());
         }
 
         for (CollisionObject obs : obstacles) {
@@ -74,13 +76,18 @@ public class BoatRace {
         return all_sprites;
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         // Timing Testing
-        long i = (System.currentTimeMillis() - player.getStartTime(false));
+
         for (Sprite sp : getSprites())
             sp.draw(batch);
-        font.draw(batch,  String.format("Time (min:sec) = %02d:%02d", i/60000, i/1000%60),-player.ui_bar_width / 2, -50 + player.getSprite().getY());//TimingTest
 
+        for (Boat b : boats) {
+            if (b instanceof PlayerBoat) {
+                long i = (System.currentTimeMillis() - ((PlayerBoat) b).getStartTime(false));
+                font.draw(batch, String.format("Time (min:sec) = %02d:%02d", i / 60000, i / 1000 % 60), -((PlayerBoat) b).ui_bar_width / 2, -50 + ((PlayerBoat) b).getSprite().getY());//TimingTest
+            }
+        }
     }
 
 
