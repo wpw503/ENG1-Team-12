@@ -1,14 +1,11 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 class SceneMainGame implements Scene {
@@ -16,15 +13,33 @@ class SceneMainGame implements Scene {
     protected int scene_id = 1;
 
     protected PlayerBoat player;
+    protected List<Boat> all_boats;
+
     protected Texture bg;
 
     protected BoatRace race;
 
     SceneMainGame() {
         player = new PlayerBoat(-15, 0);
+        all_boats = new ArrayList<>();
+
+        //all_boats.add(player);
+        for (int i = 0; i < 2; i++) all_boats.add(new AIBoat(50 * i, 40));
+
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player, new AIBoat(30, 40))));
+
+        race = new BoatRace(all_boats);
+        while (!race.isFinished()) race.runBackgroundStep();
+
+        race = new BoatRace(all_boats);
+        while (!race.isFinished()) race.runBackgroundStep();
+
+        race = new BoatRace(all_boats);
+        while (!race.isFinished()) race.runBackgroundStep();
+
+        race = new BoatRace(all_boats);
+        while (!race.isFinished()) race.runBackgroundStep();
     }
 
     // destructor

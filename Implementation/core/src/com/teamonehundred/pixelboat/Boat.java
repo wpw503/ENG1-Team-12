@@ -39,6 +39,9 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected int current_animation_frame = 0;
     protected int frames_elapsed = 0;
 
+    public boolean has_finished_leg = false;
+    public boolean has_started_leg = false;
+
     protected Animation<Texture> rowing_animation;
 
     /* ################################### //
@@ -218,7 +221,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
      */
     public void setLegTime() {
         this.leg_times.add(this.getCalcTime());
-        ;
     }
 
     public List<Long> getLegTimes() {

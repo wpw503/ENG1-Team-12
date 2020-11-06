@@ -22,9 +22,19 @@ class BoatRace {
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
+    protected boolean is_finished = false;
+    protected long frames_elapsed = 0;  // used when working out how long a boat ran in the background would have taken
+
     BoatRace(List<Boat> race_boats) {
         boats = new ArrayList<>();
         boats.addAll(race_boats);
+
+        for (Boat b : boats) {
+            b.has_started_leg = false;
+            b.has_finished_leg = false;
+
+            b.getSprite().setY(40);  // reset boats y so they don't start a race past the finish
+        }
 
         obstacles = new ArrayList<>();
 
@@ -49,22 +59,14 @@ class BoatRace {
         font.setColor(Color.RED);
     }
 
-    public void runStep() {
+    protected void runSimulation() {
+        boolean not_finished = false;
         for (Boat b : boats) {
-            // check if any boats have finished
-            if (b.getEndTime(false) == -1 && b.getSprite().getY() > end_y) {
-                // store the leg time in the object
-                b.setEndTime(System.currentTimeMillis());
-                b.setLegTime();
+            if (!b.has_finished_leg) not_finished = true;
+        }
+        is_finished = !not_finished;
 
-                System.out.print("a boat ended race with time (ms) ");
-                System.out.println(b.getCalcTime());
-            }
-            // check if any boats have started
-            else if (b.getStartTime(false) == -1 && b.getSprite().getY() > start_y) {
-                b.setStartTime(System.currentTimeMillis());
-            }
-
+        for (Boat b : boats) {
             // update boat (handles inputs if player, etc)
             if (b instanceof AIBoat) {
                 ((AIBoat) b).updatePosition(obstacles);
@@ -73,7 +75,12 @@ class BoatRace {
             }
             // check for collisions
             for (CollisionObject obstacle : obstacles) {
+                //long st = System.nanoTime();
                 b.checkCollisions(obstacle);
+                //long et = System.nanoTime();
+                //System.out.print("took ");
+                //System.out.print((et-st)/1000.0);
+                //System.out.println(" ms to run AIBoat.checkCollisions");
             }
         }
 
@@ -81,9 +88,57 @@ class BoatRace {
             if (c instanceof Obstacle)
                 ((Obstacle) c).updatePosition();
         }
-
     }
 
+    public void runBackgroundStep() {
+        for (Boat b : boats) {
+            // check if any boats have finished
+            if (!b.has_finished_leg && b.getSprite().getY() > end_y) {
+                // store the leg time in the object calculated based on a 60fps game
+                b.setEndTime((long)(b.getStartTime(false) + ((1000.0/60.0)*frames_elapsed)));
+                b.setLegTime();
+
+                b.has_finished_leg = true;
+
+                System.out.print("a boat ended race with time (ms) ");
+                System.out.println(b.getCalcTime());
+            }
+            // check if any boats have started
+            else if (!b.has_started_leg && b.getSprite().getY() > start_y) {
+                b.setStartTime(0);
+                b.has_started_leg = true;
+            }
+        }
+
+        runSimulation();
+        frames_elapsed++;
+    }
+
+    public void runStep() {
+        for (Boat b : boats) {
+            // check if any boats have finished
+            if (b.getEndTime(false) == -1 && b.getSprite().getY() > end_y) {
+                // store the leg time in the object
+                b.setEndTime(System.currentTimeMillis());
+                b.setLegTime();
+
+                b.has_finished_leg = true;
+
+                System.out.print("a boat ended race with time (ms) ");
+                System.out.println(b.getCalcTime());
+            }
+            // check if any boats have started
+            else if (b.getStartTime(false) == -1 && b.getSprite().getY() > start_y) {
+                b.setStartTime(System.currentTimeMillis());
+            }
+        }
+
+        runSimulation();
+    }
+
+    public boolean isFinished() {
+        return is_finished;
+    }
 
     public List<Sprite> getSprites() {
         List<Sprite> all_sprites = new ArrayList<>();
