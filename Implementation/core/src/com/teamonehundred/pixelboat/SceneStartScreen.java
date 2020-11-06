@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 class SceneStartScreen implements Scene {
-    int scene_id = 0;
+    protected int scene_id = 0;
 
-    Texture bg;
+    protected Texture bg;
 
     SceneStartScreen() {
         bg = new Texture("start_screen.png");

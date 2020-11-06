@@ -12,44 +12,80 @@ import java.util.Arrays;
 import java.util.List;
 
 // generic boat class, never instantiated
+/**
+ * Base class for all boat types. Contains all functionality for moving, taking damage and collision
+ *
+ * @author William Walton
+ */
 abstract class Boat extends MovableObject implements CollisionObject {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
 
-    String name;
+    protected String name;
 
-    float durability = 1.f;  // from 0 to 1
-    float durability_per_hit = .2f;
-    float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    float stamina_usage = .0f;  //todo change this after testing
-    float stamina_regen = .002f;
+    protected float durability = 1.f;  // from 0 to 1
+    protected float durability_per_hit = .2f;
+    protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
+    protected float stamina_usage = .0f;  //todo change this after testing
+    protected float stamina_regen = .002f;
 
-    List<Long> leg_times = new ArrayList<>();  // times for every previous leg
-    long start_time = -1;
-    long end_time = -1;  // ms since epoch when starting and finishing current leg
-    long time_to_add = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
+    protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
+    protected long start_time = -1;
+    protected long end_time = -1;  // ms since epoch when starting and finishing current leg
+    protected long time_to_add = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
 
-    int frames_to_animate = 0;
-    int current_animation_frame = 0;
-    int frames_elapsed = 0;
+    protected int frames_to_animate = 0;
+    protected int current_animation_frame = 0;
+    protected int frames_elapsed = 0;
 
-    Animation<Texture> rowing_animation;
+    protected Animation<Texture> rowing_animation;
 
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */
 
     //default specs
+    /**
+     * Construct a Boat object with default size, texture and animation at point (x,y)
+     *
+     * @param x x coordinate for the bottom left point of the boat
+     * @param y y coordinate for the bottom left point of the boat
+     * @author William Walton
+     */
     Boat(int x, int y){
         super(x, y, 80, 100, "boat.png", 4);
     }
 
+    /**
+     * Construct a Boat object with default stats (stamina usage, durability, etc)
+     *
+     * @param x x coordinate for the bottom left point of the boat
+     * @param y y coordinate for the bottom left point of the boat
+     * @param w the width of the new boat
+     * @param h the height of the new boat
+     * @param texture_path the relative path from the core/assets folder of the boats texture image
+     * @author William Walton
+     */
     Boat(int x, int y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path, 4);
     }
 
     //specify specs
+    /**
+     * Construct a Boat object with all parameters specified
+     *
+     * @param x x coordinate for the bottom left point of the boat
+     * @param y y coordinate for the bottom left point of the boat
+     * @param w the width of the new boat
+     * @param h the height of the new boat
+     * @param texture_path the relative path from the core/assets folder of the boats texture image
+     * @param durability_per_hit the percentage (0-1) of the max durability taken each hit
+     * @param name the name of the boat seen when the game ends
+     * @param stamina_regen the percentage of stamina regenerated each frame (0-1)
+     * @param stamina_usage the percentage of stamina used each frame when accelerating (0-1)
+     * @author William Walton
+     */
     Boat(int x, int y, int w, int h, String texture_path, String name,
          float durability_per_hit, float stamina_usage, float stamina_regen) {
         super(x, y, w, h, texture_path, 4);
@@ -64,10 +100,20 @@ abstract class Boat extends MovableObject implements CollisionObject {
                     METHODS
     // ################################### */
 
+    /**
+     * Function called when this boat collides with another object
+     *
+     * @author William Walton
+     */
     public void hasCollided() {
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
     }
 
+    /**
+     * Function called when the boat accelerates
+     *
+     * @author William Walton
+     */
     @Override
     public void accelerate() {
         stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
@@ -91,6 +137,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
         }
     }
 
+    /**
+     * Function called every frame when the game updates all objects positions
+     *
+     * @author William Walton
+     */
     @Override
     public void updatePosition() {
         super.updatePosition();
@@ -194,6 +245,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
         }
     }
 
+    /**
+     * Used to return the CollisionBounds object representing this boat. Used for collision detection
+     *
+     * @author William Walton
+     */
     @Override
     public CollisionBounds getBounds() {
         // create a new collision bounds object representing my current position

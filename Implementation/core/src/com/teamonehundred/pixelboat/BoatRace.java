@@ -9,18 +9,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoatRace {
-    List<Boat> boats;
+class BoatRace {
+    protected List<Boat> boats;
 
-    BitmapFont font; //TimingTest
+    protected BitmapFont font; //TimingTest
 
-    List<CollisionObject> obstacles;
+    protected List<CollisionObject> obstacles;
 
-    int start_y = 200;
-    int end_y = 2000;
+    protected int start_y = 200;
+    protected int end_y = 2000;
 
-    int lane_width = 400;
-    int penalty_per_frame = 1; // ms to add per frame when over the lane
+    protected int lane_width = 400;
+    protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     BoatRace(List<Boat> race_boats) {
         boats = new ArrayList<>();

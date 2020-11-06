@@ -5,15 +5,15 @@ import com.badlogic.gdx.math.Shape2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AIBoat extends Boat {
+class AIBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
-    float number_of_rays;
-    float ray_angle_range;
-    float ray_range;
-    float ray_step_size;
-    boolean regen;
+    protected float number_of_rays;
+    protected float ray_angle_range;
+    protected float ray_range;
+    protected float ray_step_size;
+    protected boolean regen;
 
 
     /* ################################### //

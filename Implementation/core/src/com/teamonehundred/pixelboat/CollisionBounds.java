@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CollisionBounds {
-    private List<Shape2D> bounds;  // shapes that represent the area of the object
-    private float rotation; // the rotation of the sprite
-    private Vector2 origin; // the centre coordinate of the sprite
+    protected List<Shape2D> bounds;  // shapes that represent the area of the object
+    protected float rotation; // the rotation of the sprite
+    protected Vector2 origin; // the centre coordinate of the sprite
 
     CollisionBounds() {
         this.bounds = new ArrayList<>();

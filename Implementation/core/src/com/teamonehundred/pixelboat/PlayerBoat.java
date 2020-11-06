@@ -14,15 +14,15 @@ class PlayerBoat extends Boat {
                    ATTRIBUTES
     // ################################### */
 
-    OrthographicCamera camera;
+    protected OrthographicCamera camera;
 
-    Texture stamina_texture;
-    Texture durability_texture;
+    protected Texture stamina_texture;
+    protected Texture durability_texture;
 
-    Sprite stamina_bar;
-    Sprite durability_bar;
+    protected Sprite stamina_bar;
+    protected Sprite durability_bar;
 
-    int ui_bar_width = 500;
+    protected int ui_bar_width = 500;
 
     /* ################################### //
                   CONSTRUCTORS

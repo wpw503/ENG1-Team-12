@@ -8,14 +8,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PixelBoat extends ApplicationAdapter {
-    Scene[] all_scenes;  // stores all game scenes and their data
-    SpriteBatch batch;  // thing that draws the sprites
+    protected Scene[] all_scenes;  // stores all game scenes and their data
+    protected SpriteBatch batch;  // thing that draws the sprites
 
     // id of current game state
     // 0 = start menu
     // 1 = game
     // 2 = ...
-    int scene_id = 0;
+    protected int scene_id = 0;
 
     // ran when the game starts
     @Override

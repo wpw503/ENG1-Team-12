@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SceneMainGame implements Scene {
+class SceneMainGame implements Scene {
 
-    int scene_id = 1;
+    protected int scene_id = 1;
 
-    PlayerBoat player;
-    Texture bg;
+    protected PlayerBoat player;
+    protected Texture bg;
 
-    BoatRace race;
+    protected BoatRace race;
 
     SceneMainGame() {
         player = new PlayerBoat(-15, 0);
