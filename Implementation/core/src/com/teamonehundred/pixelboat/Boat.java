@@ -237,6 +237,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * Checks to see if the this boat has collided with the other CollisionObject object passed.
      *
      * @param object The CollisionObject that will be checked to see if it has hit this boat.
+     * @author Umer Fakher
      */
     public void checkCollisions(CollisionObject object) {
         if (this.getBounds().isColliding(object.getBounds())) {
