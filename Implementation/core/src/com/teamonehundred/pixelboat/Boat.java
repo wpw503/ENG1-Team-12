@@ -231,7 +231,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     /**
-     * Returns the leg time completed by this boat accumulated by crossing the lines.
+     * Returns the time penalties to be added this boat accumulated by crossing the lines.
      *
      * @return Returns a long time in milliseconds.
      */
@@ -240,7 +240,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     /**
-     * Sets the the leg time completed by this boat accumulated by crossing the lines.
+     * Sets the time penalties to be added by this boat accumulated by crossing the lines.
      *
      * @param time_to_add Recorded long time in milliseconds.
      */

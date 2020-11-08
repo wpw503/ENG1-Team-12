@@ -154,7 +154,7 @@ class BoatRace {
 
                 //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
                 font.draw(batch, String.format("Time (min:sec) = %02d:%02d", i / 60000, i / 1000 % 60),
-                        -((PlayerBoat) b).ui_bar_width / 2, -50 + ((PlayerBoat) b).getSprite().getY());//TimingTest
+                        -((PlayerBoat) b).ui_bar_width / 2, -50 + ((PlayerBoat) b).getSprite().getY());
             }
         }
 
