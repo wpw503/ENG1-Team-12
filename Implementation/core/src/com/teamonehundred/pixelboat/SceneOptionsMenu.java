@@ -11,14 +11,19 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class SceneOptionsMenu implements Scene{
+public class SceneOptionsMenu implements Scene {
     protected int scene_id = 2;
+
+    protected boolean is_fullscreen = false;
 
     protected Texture bg;
     protected Sprite bg_sprite;
 
     protected Texture full;
     protected Sprite full_sprite;
+    protected Texture full_check_yes;
+    protected Texture full_check_no;
+    protected Sprite full_check_sprite;
 
     protected Texture accel;
     protected Sprite accel_sprite;
@@ -36,7 +41,7 @@ public class SceneOptionsMenu implements Scene{
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
 
-    public SceneOptionsMenu(){
+    public SceneOptionsMenu() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
         fill_viewport.apply();
@@ -49,9 +54,15 @@ public class SceneOptionsMenu implements Scene{
         bg_sprite.setSize(1280, 720);
 
         full = new Texture("options_menu_fullscreen.png");
+        full_check_yes = new Texture("options_menu_checkbox_yes.png");
+        full_check_no = new Texture("options_menu_checkbox_no.png");
+        full = new Texture("options_menu_fullscreen.png");
         full_sprite = new Sprite(full);
+        full_check_sprite = new Sprite(full_check_no);
         full_sprite.setSize(512 / 2, 128 / 2);
         full_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), (Gdx.graphics.getHeight() / 2) + (full_sprite.getHeight() * 1.5f));
+        full_check_sprite.setSize(128 / 2, 128 / 2);
+        full_check_sprite.setPosition((fill_camera.viewportWidth / 2) + (full_sprite.getWidth() / 2), (Gdx.graphics.getHeight() / 2) + (full_sprite.getHeight() * 1.5f));
 
         accel = new Texture("options_menu_fullscreen.png");
         accel_sprite = new Sprite(accel);
@@ -72,7 +83,7 @@ public class SceneOptionsMenu implements Scene{
         back_hovered = new Texture("options_menu_back_hovered.png");
         back_sprite = new Sprite(back);
         back_sprite.setSize(512 / 2, 128 / 2);
-        back_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()),70);
+        back_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), 70);
     }
 
     public void draw(SpriteBatch batch) {
@@ -87,6 +98,7 @@ public class SceneOptionsMenu implements Scene{
         left_sprite.draw(batch);
         right_sprite.draw(batch);
         back_sprite.draw(batch);
+        full_check_sprite.draw(batch);
         batch.end();
     }
 
@@ -100,6 +112,20 @@ public class SceneOptionsMenu implements Scene{
             }
         } else
             back_sprite.setTexture(back);
+
+        // todo add single click detection to stop this changing every frame
+        if (full_check_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            //full_check_sprite.setTexture(full_check_);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                if (is_fullscreen) {
+                    full_check_sprite.setTexture(full_check_no);
+                    is_fullscreen = !is_fullscreen;
+                } else {
+                    full_check_sprite.setTexture(full_check_yes);
+                    is_fullscreen = !is_fullscreen;
+                }
+            }
+        }
 
         return scene_id;
     }

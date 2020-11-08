@@ -15,15 +15,17 @@ public class PixelBoat extends ApplicationAdapter {
     // 0 = start menu
     // 1 = game
     // 2 = options
+    // 3 = tutorial
     protected int scene_id = 0;
 
     // ran when the game starts
     @Override
     public void create() {
-        all_scenes = new Scene[3];
+        all_scenes = new Scene[4];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame();
         all_scenes[2] = new SceneOptionsMenu();
+        all_scenes[3] = new SceneTutorial();
 
         batch = new SpriteBatch();
     }
