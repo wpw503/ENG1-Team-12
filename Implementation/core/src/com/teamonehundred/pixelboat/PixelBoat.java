@@ -14,15 +14,16 @@ public class PixelBoat extends ApplicationAdapter {
     // id of current game state
     // 0 = start menu
     // 1 = game
-    // 2 = ...
+    // 2 = options
     protected int scene_id = 0;
 
     // ran when the game starts
     @Override
     public void create() {
-        all_scenes = new Scene[2];
+        all_scenes = new Scene[3];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame();
+        all_scenes[2] = new SceneOptionsMenu();
 
         batch = new SpriteBatch();
     }
@@ -31,11 +32,11 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void render() {
         // run the current scene
-        all_scenes[scene_id].update();
+        int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
 
         // check if we need to change scene
-        scene_id = all_scenes[scene_id].getCurrentSceneID();
+        scene_id = new_scene_id;
     }
 
     // ran when the game closes

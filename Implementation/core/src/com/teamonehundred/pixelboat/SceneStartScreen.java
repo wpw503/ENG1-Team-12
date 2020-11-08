@@ -43,13 +43,13 @@ class SceneStartScreen implements Scene {
         play_hovered = new Texture("start_menu_play_hovered.png");
         play_sprite = new Sprite(play);
         play_sprite.setSize(512 / 2, 128 / 2);
-        play_sprite.setPosition((Gdx.graphics.getWidth() / 2) - (play_sprite.getWidth() / 2), (Gdx.graphics.getHeight() / 2) + (play_sprite.getHeight() / 2));
+        play_sprite.setPosition((fill_camera.viewportWidth / 2) - (play_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) + (play_sprite.getHeight() / 2));
 
         options = new Texture("start_menu_options.png");
         options_hovered = new Texture("start_menu_options_hovered.png");
         options_sprite = new Sprite(options);
         options_sprite.setSize(512 / 2, 128 / 2);
-        options_sprite.setPosition((Gdx.graphics.getWidth() / 2) - (options_sprite.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (options_sprite.getHeight() / 2));
+        options_sprite.setPosition((fill_camera.viewportWidth / 2) - (options_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) - (options_sprite.getHeight() / 2));
     }
 
     // destructor
@@ -69,13 +69,13 @@ class SceneStartScreen implements Scene {
         batch.end();
     }
 
-    public void update() {
+    public int update() {
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
         if (play_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             play_sprite.setTexture(play_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                scene_id = 1;
+                return 1;
             }
         } else
             play_sprite.setTexture(play);
@@ -83,13 +83,11 @@ class SceneStartScreen implements Scene {
         if (options_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             options_sprite.setTexture(options_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                //todo options
+                return 2;
             }
         } else
             options_sprite.setTexture(options);
-    }
 
-    public int getCurrentSceneID() {
         return scene_id;
     }
 

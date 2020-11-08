@@ -45,11 +45,8 @@ class SceneMainGame implements Scene {
         batch.end();
     }
 
-    public void update() {
+    public int update() {
         race.runStep();
-    }
-
-    public int getCurrentSceneID() {
         return scene_id;
     }
 
