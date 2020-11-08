@@ -169,8 +169,11 @@ class BoatRace {
                 long i = (System.currentTimeMillis() - ((PlayerBoat) b).getStartTime(false));
 
                 //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
-                font.draw(batch, String.format("Time (min:sec) = %02d:%02d", i / 60000, i / 1000 % 60),
-                        -((PlayerBoat) b).ui_bar_width / 2, -50 + ((PlayerBoat) b).getSprite().getY());
+                drawTimeDisplay(batch, b, "", i, -((PlayerBoat) b).ui_bar_width / 2,
+                        500 + ((PlayerBoat) b).getSprite().getY());
+
+                //Draws a leg time display on the screen when the given boat has completed a leg of the race.
+                drawLegTimeDisplay(batch, b);
             }
         }
 
@@ -182,5 +185,43 @@ class BoatRace {
         temp.dispose();
     }
 
+    /**
+     * Draws the a time display on the screen.
+     *
+     * @param batch SpriteBatch instance
+     * @param b Boat instance
+     * @param label_text label for text. If "" empty string passed in then default time display shown.
+     * @param time time to be shown in milliseconds
+     * @param x horizontal position of display
+     * @param y vertical position of display
+     * @author Umer Fakher
+     */
+    public void drawTimeDisplay(SpriteBatch batch, Boat b, String label_text, long time, float x, float y){
+        if (label_text.equals("")){
+            label_text = "Time (min:sec) = %02d:%02d";
+        }
+        font.draw(batch, String.format(label_text, time / 60000, time / 1000 % 60), x, y);
+    }
+
+    /**
+     *  Draws a leg time display on the screen when the given boat has completed a leg of the race.
+     *
+     *  This function gets the leg times list for the given boat instance, gets the last updated leg time
+     *  and formats a leg time display string which shows which leg was completed and in what time.
+     *  The function then passes on the drawing of this formatted leg time display to drawTimeDisplay.
+     *
+     * @param batch SpriteBatch instance
+     * @param b Boat instance
+     * @author Umer Fakher
+     */
+    public void drawLegTimeDisplay(SpriteBatch batch, Boat b){
+        if(b.getEndTime(false) != -1){
+            List<Long> legtimes = b.getLegTimes();
+            long i = legtimes.get(legtimes.size()-1); // get last in leg times list
+            String label = String.format("Leg Time %d (min:sec) = ", legtimes.size())+"%02d:%02d";
+            drawTimeDisplay(batch, b, label, i, -((PlayerBoat) b).ui_bar_width / 2,
+                    500-(legtimes.size()*20) + ((PlayerBoat) b).getSprite().getY());
+        }
+    }
 
 }
