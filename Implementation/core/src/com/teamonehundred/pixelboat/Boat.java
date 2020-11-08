@@ -16,6 +16,7 @@ import java.util.List;
  * Base class for all boat types. Contains all functionality for moving, taking damage and collision
  *
  * @author William Walton
+ * @author Umer Fakher
  */
 abstract class Boat extends MovableObject implements CollisionObject {
     /* ################################### //
@@ -150,7 +151,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     /**
      * Sets the start time of a boat in milliseconds.
-     * <p>
      * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
      *
      * @param start_time long value which is start time of the boat.
@@ -177,7 +177,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     /**
      * Sets the end time of a boat in milliseconds.
-     * <p>
      * E.g. Pass use System.currentTimeMillis() to get current system time and pass this long into this method.
      *
      * @param end_time long value which is end time of the boat.
@@ -221,14 +220,30 @@ abstract class Boat extends MovableObject implements CollisionObject {
         ;
     }
 
+    /**
+     * Returns recorded leg times of this boat.
+     *
+     * @return List<Long> Returns a list of long types in milliseconds.
+     * @author Umer Fakher
+     */
     public List<Long> getLegTimes() {
         return leg_times;
     }
 
+    /**
+     * Returns the leg time completed by this boat accumulated by crossing the lines.
+     *
+     * @return Returns a long time in milliseconds.
+     */
     public long getTimeToAdd() {
         return time_to_add;
     }
 
+    /**
+     * Sets the the leg time completed by this boat accumulated by crossing the lines.
+     *
+     * @param time_to_add Recorded long time in milliseconds.
+     */
     public void setTimeToAdd(long time_to_add) {
         this.time_to_add = time_to_add;
     }

@@ -14,6 +14,7 @@ import java.util.List;
  *
  * @author William Walton
  * @author Umer Fakher
+ * JavaDoc by Umer Fakher
  */
 class BoatRace {
     protected List<Boat> boats;
@@ -66,7 +67,6 @@ class BoatRace {
      * calls the update methods for the movements for player boat and AI boats obstacles.
      * Also this method checks for collisions.
      *
-     * @author William Walton & Umer Fakher
      * @author William Walton
      * @author Umer Fakher
      */
