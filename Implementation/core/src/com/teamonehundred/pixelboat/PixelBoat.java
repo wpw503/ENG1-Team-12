@@ -46,4 +46,9 @@ public class PixelBoat extends ApplicationAdapter {
         Gdx.app.exit();
         System.exit(0);
     }
+
+    @Override
+    public void resize(int width, int height){
+        all_scenes[scene_id].resize(width, height);
+    }
 }

@@ -1,15 +1,15 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 class SceneMainGame implements Scene {
 
@@ -51,5 +51,10 @@ class SceneMainGame implements Scene {
 
     public int getCurrentSceneID() {
         return scene_id;
+    }
+
+    public void resize(int width, int height) {
+        player.getCamera().viewportHeight = height;
+        player.getCamera().viewportWidth = width;
     }
 }
