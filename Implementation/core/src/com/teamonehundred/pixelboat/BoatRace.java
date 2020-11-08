@@ -17,6 +17,7 @@ import java.util.List;
  */
 class BoatRace {
     protected List<Boat> boats;
+    protected List<lane_wall> lane_objects;
 
     protected BitmapFont font; //TimingTest
 
@@ -26,6 +27,7 @@ class BoatRace {
     protected int end_y = 2000;
 
     protected int lane_width = 400;
+    protected int number_of_competitors = 6;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     /**
@@ -54,10 +56,22 @@ class BoatRace {
         for (int i = 0; i < 5; i++)
             obstacles.add(new ObstacleDuck((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
 
+        createLanes(obstacles);
+
         // Initialise colour of Time Elapsed Overlay
         font = new BitmapFont();
         font.setColor(Color.RED);
     }
+
+    private void createLanes(List<CollisionObject> collidables){
+        for (int lane = 0; lane <= number_of_competitors * lane_width; lane += lane_width){
+            for (int height = 0; height <= end_y; height += lane_wall.texture_height){
+                collidables.add(new lane_wall(lane, height));
+            }
+        }
+
+    }
+
 
     /**
      * Main method called for BoatRace.
@@ -71,6 +85,13 @@ class BoatRace {
      * @author Umer Fakher
      */
     public void runStep() {
+        for (CollisionObject c : obstacles) {
+            if (c instanceof Obstacle)
+                ((Obstacle) c).updatePosition();
+            if (c instanceof lane_wall){
+                ((lane_wall) c).setAnimationFrame(0);
+            }
+        }
         for (Boat b : boats) {
             // check if any boats have finished
             if (b.getEndTime(false) == -1 && b.getSprite().getY() > end_y) {
@@ -96,11 +117,6 @@ class BoatRace {
             for (CollisionObject obstacle : obstacles) {
                 b.checkCollisions(obstacle);
             }
-        }
-
-        for (CollisionObject c : obstacles) {
-            if (c instanceof Obstacle)
-                ((Obstacle) c).updatePosition();
         }
 
     }
