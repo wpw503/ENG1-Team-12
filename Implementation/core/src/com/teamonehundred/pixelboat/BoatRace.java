@@ -14,6 +14,7 @@ import java.util.List;
  *
  * @author William Walton
  * @author Umer Fakher
+ * JavaDoc by Umer Fakher
  */
 class BoatRace {
     protected List<Boat> boats;
@@ -80,7 +81,6 @@ class BoatRace {
      * calls the update methods for the movements for player boat and AI boats obstacles.
      * Also this method checks for collisions.
      *
-     * @author William Walton & Umer Fakher
      * @author William Walton
      * @author Umer Fakher
      */
@@ -170,7 +170,7 @@ class BoatRace {
 
                 //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
                 font.draw(batch, String.format("Time (min:sec) = %02d:%02d", i / 60000, i / 1000 % 60),
-                        -((PlayerBoat) b).ui_bar_width / 2, -50 + ((PlayerBoat) b).getSprite().getY());//TimingTest
+                        -((PlayerBoat) b).ui_bar_width / 2, -50 + ((PlayerBoat) b).getSprite().getY());
             }
         }
 
