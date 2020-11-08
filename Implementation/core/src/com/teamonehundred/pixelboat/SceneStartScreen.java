@@ -37,4 +37,9 @@ class SceneStartScreen implements Scene {
     public int getCurrentSceneID() {
         return scene_id;
     }
+
+    public void resize(int width, int height){
+        //viewport.update(width,height);
+        //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+    }
 }
