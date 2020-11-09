@@ -3,15 +3,13 @@ package com.teamonehundred.pixelboat;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 // generic boat class, never instantiated
+
 /**
  * Base class for all boat types. Contains all functionality for moving, taking damage and collision
  *
@@ -51,6 +49,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     // ################################### */
 
     //default specs
+
     /**
      * Construct a Boat object with default size, texture and animation at point (x,y)
      *
@@ -58,17 +57,17 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * @param y y coordinate for the bottom left point of the boat
      * @author William Walton
      */
-    Boat(int x, int y){
+    Boat(int x, int y) {
         super(x, y, 80, 100, "boat.png", 4);
     }
 
     /**
      * Construct a Boat object with default stats (stamina usage, durability, etc)
      *
-     * @param x x coordinate for the bottom left point of the boat
-     * @param y y coordinate for the bottom left point of the boat
-     * @param w the width of the new boat
-     * @param h the height of the new boat
+     * @param x            x coordinate for the bottom left point of the boat
+     * @param y            y coordinate for the bottom left point of the boat
+     * @param w            the width of the new boat
+     * @param h            the height of the new boat
      * @param texture_path the relative path from the core/assets folder of the boats texture image
      * @author William Walton
      */
@@ -77,18 +76,19 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     //specify specs
+
     /**
      * Construct a Boat object with all parameters specified
      *
-     * @param x x coordinate for the bottom left point of the boat
-     * @param y y coordinate for the bottom left point of the boat
-     * @param w the width of the new boat
-     * @param h the height of the new boat
-     * @param texture_path the relative path from the core/assets folder of the boats texture image
+     * @param x                  x coordinate for the bottom left point of the boat
+     * @param y                  y coordinate for the bottom left point of the boat
+     * @param w                  the width of the new boat
+     * @param h                  the height of the new boat
+     * @param texture_path       the relative path from the core/assets folder of the boats texture image
      * @param durability_per_hit the percentage (0-1) of the max durability taken each hit
-     * @param name the name of the boat seen when the game ends
-     * @param stamina_regen the percentage of stamina regenerated each frame (0-1)
-     * @param stamina_usage the percentage of stamina used each frame when accelerating (0-1)
+     * @param name               the name of the boat seen when the game ends
+     * @param stamina_regen      the percentage of stamina regenerated each frame (0-1)
+     * @param stamina_usage      the percentage of stamina used each frame when accelerating (0-1)
      * @author William Walton
      */
     Boat(int x, int y, int w, int h, String texture_path, String name,
@@ -112,7 +112,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
      */
     public void hasCollided() {
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
-        max_speed -= max_speed - 1 < 5 ? 0 : 1;
+        max_speed -= max_speed - 1 <= 5 ? 0 : 1;
     }
 
     /**
@@ -162,7 +162,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
         this.frames_raced = frames_raced;
     }
 
-    public void addFrameRaced(){
+    public void addFrameRaced() {
         frames_raced++;
     }
 
@@ -280,7 +280,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
      */
     public void checkCollisions(CollisionObject object) {
         if (this.getBounds().isColliding(object.getBounds())) {
-            hasCollided();
+            if (!(object instanceof ObstacleLaneWall))
+                hasCollided();
             object.hasCollided();
         }
     }
@@ -296,15 +297,15 @@ abstract class Boat extends MovableObject implements CollisionObject {
         // see the collision bounds visualisation folder in assets for a visual representation
         CollisionBounds my_bounds = new CollisionBounds();
         Rectangle main_rect = new Rectangle(
-                sprite.getX()+(0.32f*sprite.getWidth()),
-                sprite.getY()+(0.117f*sprite.getHeight()),
-                0.32f*sprite.getWidth(),
-                0.77f* sprite.getHeight());
+                sprite.getX() + (0.32f * sprite.getWidth()),
+                sprite.getY() + (0.117f * sprite.getHeight()),
+                0.32f * sprite.getWidth(),
+                0.77f * sprite.getHeight());
         my_bounds.addBound(main_rect);
 
         my_bounds.setOrigin(new Vector2(
-                sprite.getX()+(sprite.getWidth()/2),
-                sprite.getY()+(sprite.getHeight()/2)));
+                sprite.getX() + (sprite.getWidth() / 2),
+                sprite.getY() + (sprite.getHeight() / 2)));
         my_bounds.setRotation(sprite.getRotation());
 
         return my_bounds;
@@ -326,9 +327,20 @@ abstract class Boat extends MovableObject implements CollisionObject {
         this.has_started_leg = has_started_leg;
     }
 
-    public void reset(){
-        this.max_speed = 10;
+    public void reset() {
+        this.max_speed = 15;
         this.durability = 1;
         this.stamina = 1;
+    }
+
+    public long getBestTime() {
+        long current_best = -1;
+
+        for (long time : leg_times) {
+            if (time > current_best)
+                current_best = time;
+        }
+
+        return current_best;
     }
 }

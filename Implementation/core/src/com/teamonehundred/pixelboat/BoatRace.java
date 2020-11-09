@@ -113,32 +113,24 @@ class BoatRace {
                 ((ObstacleLaneWall) c).setAnimationFrame(0);
             }
         }
-        for (Boat b : boats) {
+        for (int i = 0; i < boats.size(); i++) {
             // check if any boats have finished
-            if (!b.hasFinishedLeg() && b.getSprite().getY() > end_y) {
+            if (!boats.get(i).hasFinishedLeg() && boats.get(i).getSprite().getY() > end_y) {
                 // store the leg time in the object
-                b.setStartTime(0);
-                b.setEndTime((long)(b.getStartTime(false) + ((1000.0/60.0)*b.getFramesRaced())));
-                b.setLegTime();
+                boats.get(i).setStartTime(0);
+                boats.get(i).setEndTime((long)(boats.get(i).getStartTime(false) + ((1000.0/60.0)*boats.get(i).getFramesRaced())));
+                boats.get(i).setLegTime();
 
-                b.setHasFinishedLeg(true);
-
-                System.out.print("a boat (");
-                System.out.print(b.getName());
-                System.out.print(") ended race with time (ms) ");
-                System.out.print(b.getLegTimes().get(b.getLegTimes().size()-1));
-                System.out.print(" (");
-                System.out.print(b.getTimeToAdd());
-                System.out.println(" ms was penalty)");
+                boats.get(i).setHasFinishedLeg(true);
             }
             // check if any boats have started
-            else if (!b.hasStartedLeg() && b.getSprite().getY() > start_y) {
-                b.setStartTime(System.currentTimeMillis());
-                b.setHasStartedLeg(true);
-                b.setFramesRaced(0);
+            else if (!boats.get(i).hasStartedLeg() && boats.get(i).getSprite().getY() > start_y) {
+                boats.get(i).setStartTime(System.currentTimeMillis());
+                boats.get(i).setHasStartedLeg(true);
+                boats.get(i).setFramesRaced(0);
             }else{
                 // if not start or end, must be racing
-                b.addFrameRaced();
+                boats.get(i).addFrameRaced();
             }
         }
 
