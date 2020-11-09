@@ -16,7 +16,7 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class BoatRace {
+class BoatRace extends Thread{
     protected List<Boat> boats;
     protected List<ObstacleLaneWall> lane_objects;
 
@@ -270,5 +270,4 @@ class BoatRace {
                     500-(legtimes.size()*20) + ((PlayerBoat) b).getSprite().getY());
         }
     }
-
 }

@@ -24,7 +24,7 @@ class SceneMainGame implements Scene {
     protected int leg_number = 0;
 
     protected int boats_per_race = 7;
-    protected int groups_per_game = 4;
+    protected int groups_per_game = 3;
 
     protected PlayerBoat player;
     protected List<Boat> all_boats;
@@ -115,15 +115,26 @@ class SceneMainGame implements Scene {
             // only run 3 guaranteed legs
             else if (leg_number < 3) {
                 // run all boats in the background
+                final BoatRace[] races = new BoatRace[groups_per_game-1];
+                RaceThread[] threads = new RaceThread[groups_per_game-1];
                 for(int i = 1; i < groups_per_game; i++){
-                    race = new BoatRace(all_boats.subList(boats_per_race*i, (boats_per_race*(i+1))));
-                    while (!race.isFinished()) race.runStep();
+                    races[i-1] = new BoatRace(all_boats.subList(boats_per_race*i, (boats_per_race*(i+1))));
+                    threads[i-1] = new RaceThread(races[i-1]);
+                    threads[i-1].start();
                 }
 
                 race = new BoatRace(all_boats.subList(0, boats_per_race));
 
                 leg_number++;
                 in_results = true;
+
+                for(int i = 0; i < groups_per_game-1; i++){
+                    try {
+                    threads[i].join();
+                    } catch (InterruptedException e) {
+                        System.out.println("Main thread Interrupted");
+                    }
+                }
             } else {
                 // sort boats based on best time
                 Collections.sort(all_boats, new Comparator<Boat>() {
@@ -150,5 +161,22 @@ class SceneMainGame implements Scene {
     public void resize(int width, int height) {
         player.getCamera().viewportHeight = height;
         player.getCamera().viewportWidth = width;
+    }
+
+    private class RaceThread extends Thread {
+        BoatRace race;
+
+        RaceThread(BoatRace race){this.race = race;}
+
+        public void run(){
+            while(!race.isFinished())race.runStep();
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 }
