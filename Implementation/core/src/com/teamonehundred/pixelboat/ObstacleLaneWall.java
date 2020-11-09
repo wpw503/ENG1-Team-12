@@ -2,10 +2,11 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class lane_wall extends Obstacle {
+class ObstacleLaneWall extends Obstacle {
     public static int texture_height = 64;
-    lane_wall(int x, int y){
-        super(x, y, 32, texture_height, "lane_buoy.png", 2);
+
+    ObstacleLaneWall(int x, int y, Texture t){
+        super(x, y, 32, texture_height, t, 2);
         setAnimationFrame(0);
     }
 

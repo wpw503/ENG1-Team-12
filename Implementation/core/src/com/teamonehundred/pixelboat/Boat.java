@@ -28,7 +28,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected float durability = 1.f;  // from 0 to 1
     protected float durability_per_hit = .2f;
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    protected float stamina_usage = .0f;  //todo change this after testing
+    protected float stamina_usage = .005f;  //todo change this after testing
     protected float stamina_regen = .002f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
@@ -112,6 +112,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
      */
     public void hasCollided() {
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
+        max_speed -= max_speed - 1 < 5 ? 0 : 1;
     }
 
     /**
@@ -323,5 +324,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     public void setHasStartedLeg(boolean has_started_leg) {
         this.has_started_leg = has_started_leg;
+    }
+
+    public void reset(){
+        this.max_speed = 10;
+        this.durability = 1;
+        this.stamina = 1;
     }
 }
