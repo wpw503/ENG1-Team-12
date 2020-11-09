@@ -11,6 +11,9 @@ public class DesktopLauncher {
         config.title = "PixelBoat";
 		config.width = 1280;
 		config.height = 720;
+		config.fullscreen = false;
+		config.resizable = false;
+		//config.foregroundFPS = 30;
 		//config.fullscreen = false;
 		//config.resizable = false;
 		//start the app

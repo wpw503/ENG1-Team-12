@@ -28,7 +28,7 @@ class PlayerBoat extends Boat {
                   CONSTRUCTORS
     // ################################### */
 
-    PlayerBoat(int x, int y){
+    PlayerBoat(int x, int y) {
         super(x, y);
 
         initialise();
@@ -117,9 +117,14 @@ class PlayerBoat extends Boat {
         return camera;
     }
 
+    public void resetCameraPos() {
+        camera.position.set(sprite.getX(), Gdx.graphics.getHeight() / 3, 0);
+        camera.update();
+    }
+
     private void updateUISprites() {
-        stamina_bar.setPosition(-ui_bar_width / 2, -50 + sprite.getY());
-        durability_bar.setPosition(-ui_bar_width / 2, -35 + sprite.getY());
+        stamina_bar.setPosition(-ui_bar_width / 2 + sprite.getX() + sprite.getWidth() / 2, -50 + sprite.getY());
+        durability_bar.setPosition(-ui_bar_width / 2 + sprite.getX() + sprite.getWidth() / 2, -35 + sprite.getY());
 
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);

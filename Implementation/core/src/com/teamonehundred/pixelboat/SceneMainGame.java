@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Arrays;
 
 /**
@@ -22,7 +24,11 @@ class SceneMainGame implements Scene {
 
     protected int scene_id = 1;
 
+    protected int leg_number = 0;
+
     protected PlayerBoat player;
+    protected List<Boat> all_boats;
+
     protected Texture bg;
 
     protected BoatRace race;
@@ -36,9 +42,23 @@ class SceneMainGame implements Scene {
      */
     SceneMainGame() {
         player = new PlayerBoat(-15, 0);
+        player.setName("Player");
+        all_boats = new ArrayList<>();
+
+        all_boats.add(player);
+        for (int i = 0; i < 6; i++) {all_boats.add(new AIBoat(50 * i, 40));all_boats.get(all_boats.size()-1).setName("AI Boat " + Integer.toString(i));}
+        Collections.swap(all_boats, 0, 3); // move player to middle of group
+
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        race = new BoatRace(new ArrayList<Boat>(Arrays.asList(player, new AIBoat(30, 40))));
+
+        race = new BoatRace(all_boats);
+        leg_number++;
+//        while(!race.isFinished())race.runBackgroundStep();
+//        race = new BoatRace(all_boats);
+//        while(!race.isFinished())race.runBackgroundStep();
+//        race = new BoatRace(all_boats);
+//        while(!race.isFinished())race.runBackgroundStep();
     }
 
 
@@ -76,7 +96,18 @@ class SceneMainGame implements Scene {
      * @author William Walton
      */
     public int update() {
-        race.runStep();
+        if (player.hasFinishedLeg()) {
+            while (!race.isFinished()) race.runStep();
+        }
+        if (!race.isFinished()) race.runStep();
+            // only run 3 guaranteed legs
+        else if (leg_number < 3) {
+            race = new BoatRace(all_boats);
+            leg_number++;
+        } else {
+            //todo add final leg checks and running here
+        }
+      
         return scene_id;
     }
 

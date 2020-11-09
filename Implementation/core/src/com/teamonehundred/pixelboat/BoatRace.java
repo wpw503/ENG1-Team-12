@@ -25,11 +25,13 @@ class BoatRace {
     protected List<CollisionObject> obstacles;
 
     protected int start_y = 200;
-    protected int end_y = 2000;
+    protected int end_y = 10000;
 
     protected int lane_width = 400;
     protected int number_of_competitors = 6;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
+
+    protected boolean is_finished = false;
 
     /**
      * Main constructor for a BoatRace.
@@ -45,23 +47,44 @@ class BoatRace {
         boats = new ArrayList<>();
         boats.addAll(race_boats);
 
+        for (int i = 0; i < boats.size(); i++) {
+            boats.get(i).has_started_leg = false;
+            boats.get(i).has_finished_leg = false;
+
+            boats.get(i).reset_motion();
+            boats.get(i).sprite.setPosition(getLaneCentre(i), 40);  // reset boats y and place in lane
+            boats.get(i).setFramesRaced(0);
+
+            if(boats.get(i) instanceof PlayerBoat)
+                ((PlayerBoat)boats.get(i)).resetCameraPos();
+        }
+
         obstacles = new ArrayList<>();
 
         // add some random obstacles
-        for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleBranch((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+        for (int i = 0; i < 100; i++)
+            obstacles.add(new ObstacleBranch(
+                    (int) (-(lane_width*boats.size()/2) + Math.random() * (lane_width*boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y-start_y-50))));
 
-        for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleFloatingBranch((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+        for (int i = 0; i < 100; i++)
+            obstacles.add(new ObstacleFloatingBranch((int) (-(lane_width*boats.size()/2) + Math.random() * (lane_width*boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y-start_y-50))));
 
-        for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleDuck((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+        for (int i = 0; i < 100; i++)
+            obstacles.add(new ObstacleDuck((int) (-(lane_width*boats.size()/2) + Math.random() * (lane_width*boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y-start_y-50))));
 
         createLanes(obstacles);
 
         // Initialise colour of Time Elapsed Overlay
         font = new BitmapFont();
         font.setColor(Color.RED);
+    }
+
+    private int getLaneCentre(int boat_index){
+        int race_width = boats.size() * lane_width;
+        return (-race_width/2)+(lane_width*(boat_index+1))-(lane_width/2);
     }
 
     private void createLanes(List<CollisionObject> collidables){
@@ -94,33 +117,66 @@ class BoatRace {
         }
         for (Boat b : boats) {
             // check if any boats have finished
-            if (b.getEndTime(false) == -1 && b.getSprite().getY() > end_y) {
+            if (!b.hasFinishedLeg() && b.getSprite().getY() > end_y) {
                 // store the leg time in the object
-                b.setEndTime(System.currentTimeMillis());
+                b.setStartTime(0);
+                b.setEndTime((long)(b.getStartTime(false) + ((1000.0/60.0)*b.getFramesRaced())));
                 b.setLegTime();
 
-                System.out.print("a boat ended race with time (ms) ");
-                System.out.println(b.getCalcTime());
+                b.setHasFinishedLeg(true);
+
+                System.out.print("a boat (");
+                System.out.print(b.getName());
+                System.out.print(") ended race with time (ms) ");
+                System.out.print(b.getLegTimes().get(b.getLegTimes().size()-1));
+                System.out.print(" (");
+                System.out.print(b.getTimeToAdd());
+                System.out.println(" ms was penalty)");
             }
             // check if any boats have started
-            else if (b.getStartTime(false) == -1 && b.getSprite().getY() > start_y) {
+            else if (!b.hasStartedLeg() && b.getSprite().getY() > start_y) {
                 b.setStartTime(System.currentTimeMillis());
-            }
-
-            // update boat (handles inputs if player, etc)
-            if (b instanceof AIBoat) {
-                ((AIBoat) b).updatePosition(obstacles);
-            } else if (b instanceof PlayerBoat) {
-                b.updatePosition();
-            }
-            // check for collisions
-            for (CollisionObject obstacle : obstacles) {
-                b.checkCollisions(obstacle);
+                b.setHasStartedLeg(true);
+                b.setFramesRaced(0);
+            }else{
+                // if not start or end, must be racing
+                b.addFrameRaced();
             }
         }
 
+        boolean not_finished = false;
+
+        for (int i = 0; i < boats.size(); i++) {
+            // all boats
+            if (!boats.get(i).hasFinishedLeg()) not_finished = true;
+
+            // update boat (handles inputs if player, etc)
+            if (boats.get(i) instanceof AIBoat) {
+                ((AIBoat) boats.get(i)).updatePosition(obstacles);
+            } else if (boats.get(i) instanceof PlayerBoat) {
+                boats.get(i).updatePosition();
+            }
+            // check for collisions
+            for (CollisionObject obstacle : obstacles) {
+                boats.get(i).checkCollisions(obstacle);
+            }
+
+            // check if out of lane
+            if(boats.get(i).getSprite().getX() > getLaneCentre(i) + lane_width/2 ||
+                    boats.get(i).getSprite().getX() < getLaneCentre(i) - lane_width/2)
+                boats.get(i).setTimeToAdd(boats.get(i).getTimeToAdd() + penalty_per_frame);
+        }
+        is_finished = !not_finished;
+
+        for (CollisionObject c : obstacles) {
+            if (c instanceof Obstacle)
+                ((Obstacle) c).updatePosition();
+        }
     }
 
+    public boolean isFinished() {
+        return is_finished;
+    }
 
     /**
      * Returns a list of all sprites in the PixelBoat game including boats and obstacles.
