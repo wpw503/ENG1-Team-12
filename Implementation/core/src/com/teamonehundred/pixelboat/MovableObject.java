@@ -1,5 +1,7 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.graphics.Texture;
+
 abstract class MovableObject extends GameObject {
     /* ################################### //
                    ATTRIBUTES
@@ -21,6 +23,10 @@ abstract class MovableObject extends GameObject {
 
     MovableObject(int x, int y, int w, int h, String texture_path, int frame_count) {
         super(x, y, w, h, texture_path, frame_count);
+    }
+
+    MovableObject(int x, int y, int w, int h, Texture t, int frame_count) {
+        super(x, y, w, h, t, frame_count);
     }
 
     /* ################################### //

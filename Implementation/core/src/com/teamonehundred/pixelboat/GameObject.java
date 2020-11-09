@@ -65,6 +65,22 @@ abstract class GameObject {
         sprite.setOriginCenter();
     }
 
+    GameObject(int x, int y, int w, int h, Texture texture, int frame_count){
+        this.texture = texture;
+        is_shown = true;
+
+        animation_regions = new TextureRegion[frame_count];
+        float texture_width = 1f/(frame_count);
+        for(int i = 0; i < frame_count; i++){
+            animation_regions[i] = new TextureRegion(texture, i*texture_width, 0f, (i+1)*texture_width, 1f);
+        }
+
+        sprite = new Sprite(animation_regions[0]);
+        sprite.setPosition(x, y);
+        sprite.setSize(w, h);
+        sprite.setOriginCenter();
+    }
+
     void initialise(int x, int y, int w, int h, final String texture_path) {
         texture = new Texture(texture_path);
         is_shown = true;

@@ -1,5 +1,6 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.teamonehundred.pixelboat.CollisionObject;
 import com.teamonehundred.pixelboat.MovableObject;
 
@@ -15,6 +16,10 @@ abstract class Obstacle extends MovableObject implements CollisionObject {
 
     Obstacle(int x, int y, int w, int h, String texture_path, int frame_count){
         super(x, y, w, h, texture_path,frame_count);
+    }
+
+    Obstacle(int x, int y, int w, int h, Texture t, int frame_count){
+        super(x, y, w, h, t ,frame_count);
     }
 
     /* ################################### //

@@ -18,9 +18,10 @@ import java.util.List;
  */
 class BoatRace {
     protected List<Boat> boats;
-    protected List<lane_wall> lane_objects;
+    protected List<ObstacleLaneWall> lane_objects;
 
     protected BitmapFont font; //TimingTest
+    protected Texture lane_sep;
 
     protected List<CollisionObject> obstacles;
 
@@ -28,7 +29,6 @@ class BoatRace {
     protected int end_y = 10000;
 
     protected int lane_width = 400;
-    protected int number_of_competitors = 6;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     protected boolean is_finished = false;
@@ -44,6 +44,8 @@ class BoatRace {
      * JavaDoc by Umer Fakher
      */
     BoatRace(List<Boat> race_boats) {
+        lane_sep = new Texture("lane_buoy.png");
+
         boats = new ArrayList<>();
         boats.addAll(race_boats);
 
@@ -75,7 +77,12 @@ class BoatRace {
             obstacles.add(new ObstacleDuck((int) (-(lane_width*boats.size()/2) + Math.random() * (lane_width*boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y-start_y-50))));
 
-        createLanes(obstacles);
+        // add the lane separators
+        for (int lane = 0; lane <= boats.size(); lane ++){
+            for (int height = 0; height <= end_y; height += ObstacleLaneWall.texture_height){
+                obstacles.add(new ObstacleLaneWall(getLaneCentre(lane) - lane_width/2, height, lane_sep));
+            }
+        }
 
         // Initialise colour of Time Elapsed Overlay
         font = new BitmapFont();
@@ -86,16 +93,6 @@ class BoatRace {
         int race_width = boats.size() * lane_width;
         return (-race_width/2)+(lane_width*(boat_index+1))-(lane_width/2);
     }
-
-    private void createLanes(List<CollisionObject> collidables){
-        for (int lane = 0; lane <= number_of_competitors * lane_width; lane += lane_width){
-            for (int height = 0; height <= end_y; height += lane_wall.texture_height){
-                collidables.add(new lane_wall(lane, height));
-            }
-        }
-
-    }
-
 
     /**
      * Main method called for BoatRace.
@@ -111,8 +108,8 @@ class BoatRace {
         for (CollisionObject c : obstacles) {
             if (c instanceof Obstacle)
                 ((Obstacle) c).updatePosition();
-            if (c instanceof lane_wall){
-                ((lane_wall) c).setAnimationFrame(0);
+            if (c instanceof ObstacleLaneWall){
+                ((ObstacleLaneWall) c).setAnimationFrame(0);
             }
         }
         for (Boat b : boats) {
