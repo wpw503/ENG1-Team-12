@@ -49,4 +49,9 @@ abstract class MovableObject extends GameObject {
     public void accelerate() {
         speed += speed >= max_speed ? 0 : acceleration;
     }
+
+    public void reset_motion() {
+        speed = 0;
+        sprite.setRotation(0);
+    }
 }

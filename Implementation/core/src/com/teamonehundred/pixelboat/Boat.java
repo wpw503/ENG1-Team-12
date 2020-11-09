@@ -39,8 +39,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected int current_animation_frame = 0;
     protected int frames_elapsed = 0;
 
-    public boolean has_finished_leg = false;
-    public boolean has_started_leg = false;
+    protected boolean has_finished_leg = false;
+    protected boolean has_started_leg = false;
 
     protected Animation<Texture> rowing_animation;
 
@@ -270,5 +270,21 @@ abstract class Boat extends MovableObject implements CollisionObject {
         my_bounds.setRotation(sprite.getRotation());
 
         return my_bounds;
+    }
+
+    public boolean hasFinishedLeg() {
+        return has_finished_leg;
+    }
+
+    public void setHasFinishedLeg(boolean has_finished_leg) {
+        this.has_finished_leg = has_finished_leg;
+    }
+
+    public boolean hasStartedLeg() {
+        return has_started_leg;
+    }
+
+    public void setHasStartedLeg(boolean has_started_leg) {
+        this.has_started_leg = has_started_leg;
     }
 }

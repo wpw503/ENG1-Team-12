@@ -23,23 +23,18 @@ class SceneMainGame implements Scene {
         player = new PlayerBoat(-15, 0);
         all_boats = new ArrayList<>();
 
-        //all_boats.add(player);
-        for (int i = 0; i < 2; i++) all_boats.add(new AIBoat(50 * i, 40));
+        all_boats.add(player);
+        for (int i = 0; i < 6; i++) all_boats.add(new AIBoat(50 * i, 40));
 
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         race = new BoatRace(all_boats);
-        while (!race.isFinished()) race.runBackgroundStep();
-
-        race = new BoatRace(all_boats);
-        while (!race.isFinished()) race.runBackgroundStep();
-
-        race = new BoatRace(all_boats);
-        while (!race.isFinished()) race.runBackgroundStep();
-
-        race = new BoatRace(all_boats);
-        while (!race.isFinished()) race.runBackgroundStep();
+//        while(!race.isFinished())race.runBackgroundStep();
+//        race = new BoatRace(all_boats);
+//        while(!race.isFinished())race.runBackgroundStep();
+//        race = new BoatRace(all_boats);
+//        while(!race.isFinished())race.runBackgroundStep();
     }
 
     // destructor
@@ -61,7 +56,13 @@ class SceneMainGame implements Scene {
     }
 
     public void update() {
-        race.runStep();
+        if (player.hasFinishedLeg()) {
+            while(!race.isFinished()) race.runBackgroundStep();
+        }
+        if (!race.isFinished()) race.runStep();
+        else {
+            race = new BoatRace(all_boats);
+        }
     }
 
     public int getCurrentSceneID() {

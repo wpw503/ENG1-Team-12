@@ -17,7 +17,7 @@ class BoatRace {
     protected List<CollisionObject> obstacles;
 
     protected int start_y = 200;
-    protected int end_y = 2000;
+    protected int end_y = 10000;
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
@@ -29,24 +29,34 @@ class BoatRace {
         boats = new ArrayList<>();
         boats.addAll(race_boats);
 
-        for (Boat b : boats) {
-            b.has_started_leg = false;
-            b.has_finished_leg = false;
+        int race_width = boats.size() * lane_width;
 
-            b.getSprite().setY(40);  // reset boats y so they don't start a race past the finish
+        for (int i = 0; i < boats.size(); i++) {
+            boats.get(i).has_started_leg = false;
+            boats.get(i).has_finished_leg = false;
+
+            boats.get(i).reset_motion();
+            boats.get(i).sprite.setPosition((-race_width/2)+(lane_width*i)-(lane_width/2), 40);  // reset boats y and place in lane
+
+            if(boats.get(i) instanceof PlayerBoat)
+                ((PlayerBoat)boats.get(i)).resetCameraPos();
         }
 
         obstacles = new ArrayList<>();
 
         // add some random obstacles
-        for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleBranch((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+        for (int i = 0; i < 100; i++)
+            obstacles.add(new ObstacleBranch(
+                    (int) (-(lane_width*boats.size()/2) + Math.random() * (lane_width*boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y-start_y-50))));
 
-        for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleFloatingBranch((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+        for (int i = 0; i < 100; i++)
+            obstacles.add(new ObstacleFloatingBranch((int) (-(lane_width*boats.size()/2) + Math.random() * (lane_width*boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y-start_y-50))));
 
-        for (int i = 0; i < 5; i++)
-            obstacles.add(new ObstacleDuck((int) (-600 + Math.random() * 1200), (int) (60 + Math.random() * 400)));
+        for (int i = 0; i < 100; i++)
+            obstacles.add(new ObstacleDuck((int) (-(lane_width*boats.size()/2) + Math.random() * (lane_width*boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y-start_y-50))));
 
         //Timing Test
 //        for (Boat b : boats) {
@@ -62,14 +72,14 @@ class BoatRace {
     protected void runSimulation() {
         boolean not_finished = false;
         for (Boat b : boats) {
-            if (!b.has_finished_leg) not_finished = true;
+            if (!b.hasFinishedLeg()) not_finished = true;
         }
         is_finished = !not_finished;
 
         for (Boat b : boats) {
             // update boat (handles inputs if player, etc)
             if (b instanceof AIBoat) {
-                ((AIBoat) b).updatePosition(obstacles);
+                //((AIBoat) b).updatePosition(obstacles);
             } else if (b instanceof PlayerBoat) {
                 b.updatePosition();
             }
@@ -93,20 +103,20 @@ class BoatRace {
     public void runBackgroundStep() {
         for (Boat b : boats) {
             // check if any boats have finished
-            if (!b.has_finished_leg && b.getSprite().getY() > end_y) {
+            if (!b.hasFinishedLeg() && b.getSprite().getY() > end_y) {
                 // store the leg time in the object calculated based on a 60fps game
                 b.setEndTime((long)(b.getStartTime(false) + ((1000.0/60.0)*frames_elapsed)));
                 b.setLegTime();
 
-                b.has_finished_leg = true;
+                b.setHasFinishedLeg(true);
 
                 System.out.print("a boat ended race with time (ms) ");
                 System.out.println(b.getCalcTime());
             }
             // check if any boats have started
-            else if (!b.has_started_leg && b.getSprite().getY() > start_y) {
+            else if (!b.hasStartedLeg() && b.getSprite().getY() > start_y) {
                 b.setStartTime(0);
-                b.has_started_leg = true;
+                b.setHasStartedLeg(true);
             }
         }
 
@@ -117,19 +127,20 @@ class BoatRace {
     public void runStep() {
         for (Boat b : boats) {
             // check if any boats have finished
-            if (b.getEndTime(false) == -1 && b.getSprite().getY() > end_y) {
+            if (!b.hasFinishedLeg() && b.getSprite().getY() > end_y) {
                 // store the leg time in the object
                 b.setEndTime(System.currentTimeMillis());
                 b.setLegTime();
 
-                b.has_finished_leg = true;
+                b.setHasFinishedLeg(true);
 
                 System.out.print("a boat ended race with time (ms) ");
                 System.out.println(b.getCalcTime());
             }
             // check if any boats have started
-            else if (b.getStartTime(false) == -1 && b.getSprite().getY() > start_y) {
+            else if (!b.hasStartedLeg() && b.getSprite().getY() > start_y) {
                 b.setStartTime(System.currentTimeMillis());
+                b.setHasStartedLeg(true);
             }
         }
 
