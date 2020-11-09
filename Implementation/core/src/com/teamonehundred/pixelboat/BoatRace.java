@@ -56,6 +56,7 @@ class BoatRace {
             boats.get(i).reset_motion();
             boats.get(i).sprite.setPosition(getLaneCentre(i), 40);  // reset boats y and place in lane
             boats.get(i).setFramesRaced(0);
+            boats.get(i).reset();
 
             if(boats.get(i) instanceof PlayerBoat)
                 ((PlayerBoat)boats.get(i)).resetCameraPos();
@@ -155,7 +156,8 @@ class BoatRace {
             }
             // check for collisions
             for (CollisionObject obstacle : obstacles) {
-                boats.get(i).checkCollisions(obstacle);
+                if(obstacle.isShown())
+                    boats.get(i).checkCollisions(obstacle);
             }
 
             // check if out of lane
