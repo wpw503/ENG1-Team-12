@@ -22,7 +22,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
                    ATTRIBUTES
     // ################################### */
 
-    protected String name;
+    protected String name = "default boat name";
 
     protected float durability = 1.f;  // from 0 to 1
     protected float durability_per_hit = .2f;
@@ -33,6 +33,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
     protected long start_time = -1;
     protected long end_time = -1;  // ms since epoch when starting and finishing current leg
+    protected long frames_raced = 0;  // number of frames taken to do current leg
     protected long time_to_add = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
 
     protected int frames_to_animate = 0;
@@ -149,6 +150,26 @@ abstract class Boat extends MovableObject implements CollisionObject {
     public void updatePosition() {
         super.updatePosition();
         stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
+    }
+
+    public long getFramesRaced() {
+        return frames_raced;
+    }
+
+    public void setFramesRaced(long frames_raced) {
+        this.frames_raced = frames_raced;
+    }
+
+    public void addFrameRaced(){
+        frames_raced++;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**

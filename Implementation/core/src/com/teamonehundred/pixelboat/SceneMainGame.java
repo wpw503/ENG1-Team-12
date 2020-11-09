@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class SceneMainGame implements Scene {
@@ -23,10 +24,12 @@ class SceneMainGame implements Scene {
 
     SceneMainGame() {
         player = new PlayerBoat(-15, 0);
+        player.setName("Player");
         all_boats = new ArrayList<>();
 
         all_boats.add(player);
-        for (int i = 0; i < 6; i++) all_boats.add(new AIBoat(50 * i, 40));
+        for (int i = 0; i < 6; i++) {all_boats.add(new AIBoat(50 * i, 40));all_boats.get(all_boats.size()-1).setName("AI Boat " + Integer.toString(i));}
+        Collections.swap(all_boats, 0, 3); // move player to middle of group
 
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
@@ -60,7 +63,7 @@ class SceneMainGame implements Scene {
 
     public void update() {
         if (player.hasFinishedLeg()) {
-            while (!race.isFinished()) race.runBackgroundStep();
+            while (!race.isFinished()) race.runStep();
         }
         if (!race.isFinished()) race.runStep();
             // only run 3 guaranteed legs

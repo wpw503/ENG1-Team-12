@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.height = 720;
 		config.fullscreen = false;
 		config.resizable = false;
+		//config.foregroundFPS = 30;
 		//start the app
         new LwjglApplication(new PixelBoat(), config);
     }

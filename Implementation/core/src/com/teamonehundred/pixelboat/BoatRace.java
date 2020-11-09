@@ -23,7 +23,6 @@ class BoatRace {
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     protected boolean is_finished = false;
-    protected long frames_elapsed = 0;  // used when working out how long a boat ran in the background would have taken
 
     BoatRace(List<Boat> race_boats) {
         boats = new ArrayList<>();
@@ -35,6 +34,7 @@ class BoatRace {
 
             boats.get(i).reset_motion();
             boats.get(i).sprite.setPosition(getLaneCentre(i), 40);  // reset boats y and place in lane
+            boats.get(i).setFramesRaced(0);
 
             if(boats.get(i) instanceof PlayerBoat)
                 ((PlayerBoat)boats.get(i)).resetCameraPos();
@@ -72,7 +72,36 @@ class BoatRace {
         return (-race_width/2)+(lane_width*(boat_index+1))-(lane_width/2);
     }
 
-    protected void runSimulation() {
+    public void runStep() {
+        for (Boat b : boats) {
+            // check if any boats have finished
+            if (!b.hasFinishedLeg() && b.getSprite().getY() > end_y) {
+                // store the leg time in the object
+                b.setStartTime(0);
+                b.setEndTime((long)(b.getStartTime(false) + ((1000.0/60.0)*b.getFramesRaced())));
+                b.setLegTime();
+
+                b.setHasFinishedLeg(true);
+
+                System.out.print("a boat (");
+                System.out.print(b.getName());
+                System.out.print(") ended race with time (ms) ");
+                System.out.print(b.getLegTimes().get(b.getLegTimes().size()-1));
+                System.out.print(" (");
+                System.out.print(b.getTimeToAdd());
+                System.out.println(" ms was penalty)");
+            }
+            // check if any boats have started
+            else if (!b.hasStartedLeg() && b.getSprite().getY() > start_y) {
+                b.setStartTime(System.currentTimeMillis());
+                b.setHasStartedLeg(true);
+                b.setFramesRaced(0);
+            }else{
+                // if not start or end, must be racing
+                b.addFrameRaced();
+            }
+        }
+
         boolean not_finished = false;
 
         for (int i = 0; i < boats.size(); i++) {
@@ -101,53 +130,6 @@ class BoatRace {
             if (c instanceof Obstacle)
                 ((Obstacle) c).updatePosition();
         }
-    }
-
-    public void runBackgroundStep() {
-        for (Boat b : boats) {
-            // check if any boats have finished
-            if (!b.hasFinishedLeg() && b.getSprite().getY() > end_y) {
-                // store the leg time in the object calculated based on a 60fps game
-                b.setEndTime((long)(b.getStartTime(false) + ((1000.0/60.0)*frames_elapsed)));
-                b.setLegTime();
-
-                b.setHasFinishedLeg(true);
-
-                System.out.print("a boat ended race with time (ms) ");
-                System.out.println(b.getCalcTime());
-            }
-            // check if any boats have started
-            else if (!b.hasStartedLeg() && b.getSprite().getY() > start_y) {
-                b.setStartTime(0);
-                b.setHasStartedLeg(true);
-            }
-        }
-
-        runSimulation();
-        frames_elapsed++;
-    }
-
-    public void runStep() {
-        for (Boat b : boats) {
-            // check if any boats have finished
-            if (!b.hasFinishedLeg() && b.getSprite().getY() > end_y) {
-                // store the leg time in the object
-                b.setEndTime(System.currentTimeMillis());
-                b.setLegTime();
-
-                b.setHasFinishedLeg(true);
-
-                System.out.print("a boat ended race with time (ms) ");
-                System.out.println(b.getCalcTime());
-            }
-            // check if any boats have started
-            else if (!b.hasStartedLeg() && b.getSprite().getY() > start_y) {
-                b.setStartTime(System.currentTimeMillis());
-                b.setHasStartedLeg(true);
-            }
-        }
-
-        runSimulation();
     }
 
     public boolean isFinished() {
