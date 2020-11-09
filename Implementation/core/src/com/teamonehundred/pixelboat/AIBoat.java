@@ -86,7 +86,7 @@ class AIBoat extends Boat {
         return coordinates;
     }
 
-
+// Boat rumba (Bumba)
     public void check_turn(List<CollisionObject> collidables) {
          /* Fire a number of rays with limited distance out the front of the boat,
          select a ray that isn't obstructed by an object,
