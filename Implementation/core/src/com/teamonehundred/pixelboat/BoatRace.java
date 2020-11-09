@@ -29,14 +29,12 @@ class BoatRace {
         boats = new ArrayList<>();
         boats.addAll(race_boats);
 
-        int race_width = boats.size() * lane_width;
-
         for (int i = 0; i < boats.size(); i++) {
             boats.get(i).has_started_leg = false;
             boats.get(i).has_finished_leg = false;
 
             boats.get(i).reset_motion();
-            boats.get(i).sprite.setPosition((-race_width/2)+(lane_width*i)-(lane_width/2), 40);  // reset boats y and place in lane
+            boats.get(i).sprite.setPosition(getLaneCentre(i), 40);  // reset boats y and place in lane
 
             if(boats.get(i) instanceof PlayerBoat)
                 ((PlayerBoat)boats.get(i)).resetCameraPos();
@@ -69,30 +67,35 @@ class BoatRace {
         font.setColor(Color.RED);
     }
 
+    private int getLaneCentre(int boat_index){
+        int race_width = boats.size() * lane_width;
+        return (-race_width/2)+(lane_width*(boat_index+1))-(lane_width/2);
+    }
+
     protected void runSimulation() {
         boolean not_finished = false;
-        for (Boat b : boats) {
-            if (!b.hasFinishedLeg()) not_finished = true;
-        }
-        is_finished = !not_finished;
 
-        for (Boat b : boats) {
+        for (int i = 0; i < boats.size(); i++) {
+            // all boats
+            if (!boats.get(i).hasFinishedLeg()) not_finished = true;
+
             // update boat (handles inputs if player, etc)
-            if (b instanceof AIBoat) {
-                //((AIBoat) b).updatePosition(obstacles);
-            } else if (b instanceof PlayerBoat) {
-                b.updatePosition();
+            if (boats.get(i) instanceof AIBoat) {
+                ((AIBoat) boats.get(i)).updatePosition(obstacles);
+            } else if (boats.get(i) instanceof PlayerBoat) {
+                boats.get(i).updatePosition();
             }
             // check for collisions
             for (CollisionObject obstacle : obstacles) {
-                //long st = System.nanoTime();
-                b.checkCollisions(obstacle);
-                //long et = System.nanoTime();
-                //System.out.print("took ");
-                //System.out.print((et-st)/1000.0);
-                //System.out.println(" ms to run AIBoat.checkCollisions");
+                boats.get(i).checkCollisions(obstacle);
             }
+
+            // check if out of lane
+            if(boats.get(i).getSprite().getX() > getLaneCentre(i) + lane_width/2 ||
+                    boats.get(i).getSprite().getX() < getLaneCentre(i) - lane_width/2)
+                boats.get(i).setTimeToAdd(boats.get(i).getTimeToAdd() + penalty_per_frame);
         }
+        is_finished = !not_finished;
 
         for (CollisionObject c : obstacles) {
             if (c instanceof Obstacle)

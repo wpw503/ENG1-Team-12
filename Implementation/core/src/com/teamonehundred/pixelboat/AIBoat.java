@@ -60,7 +60,8 @@ class AIBoat extends Boat {
                 regen = false;
             }
         }
-        this.check_turn(collidables);
+        // todo fix this, it takes too long
+        //this.check_turn(collidables);
         super.updatePosition();
 
     }

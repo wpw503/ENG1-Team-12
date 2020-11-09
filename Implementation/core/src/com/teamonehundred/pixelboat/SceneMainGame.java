@@ -12,6 +12,8 @@ class SceneMainGame implements Scene {
 
     protected int scene_id = 1;
 
+    protected int leg_number = 0;
+
     protected PlayerBoat player;
     protected List<Boat> all_boats;
 
@@ -30,6 +32,7 @@ class SceneMainGame implements Scene {
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         race = new BoatRace(all_boats);
+        leg_number++;
 //        while(!race.isFinished())race.runBackgroundStep();
 //        race = new BoatRace(all_boats);
 //        while(!race.isFinished())race.runBackgroundStep();
@@ -57,11 +60,15 @@ class SceneMainGame implements Scene {
 
     public void update() {
         if (player.hasFinishedLeg()) {
-            while(!race.isFinished()) race.runBackgroundStep();
+            while (!race.isFinished()) race.runBackgroundStep();
         }
         if (!race.isFinished()) race.runStep();
-        else {
+            // only run 3 guaranteed legs
+        else if (leg_number < 3) {
             race = new BoatRace(all_boats);
+            leg_number++;
+        } else {
+            //todo add final leg checks and running here
         }
     }
 
