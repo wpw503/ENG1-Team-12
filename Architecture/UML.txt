@@ -1,37 +1,20 @@
 @startuml
 
-GameObject <|-- Boat
-Boat <|-- PlayerBoat
-Boat <|-- AIBoat
-GameObject <|-- Obstacle
-Obstacle <|-- ObstacleDuck 
-Obstacle <|-- ObstacleWood
+GameObject <|- MoveableObject
 
-GameObject : x
-GameObject : y
-GameObject : terminal_speed
-GameObject : speed
-GameObject : rotation
+MoveableObject <|- Obstacle
+Obstacle <|- ObstacleBranch
+Obstacle <|- ObstacleDuck
+ObstacleBranch <|- ObstacleFLoatingBranch
+Obstacle <|- ObstacleLaneWall
 
-Boat : name
-Boat : health
-Boat : durability
-Boat : leg_times[]
-Boat : stamina_max
-Boat : stamina
-Boat : start_time
-Boat : end_time
+MoveableObject <|- Boat
+Boat <|- PlayerBoat
+Boat <|- AIBoat
 
-Boat : move()
-Boat : turn_left()
-Boat : turn_right()
-Boat : start_race()
-Boat : end_race()
-Boat : start_timer()
-Boat : stop_timer()
-Boat : query_timer()
+Scene <|- SceneMainGame
+Scene <|- SceneOptionsMenu
+Scene <|- SceneStartScreen
+Scene <|- SceneTutorial
 
-AIBoat : ray_stuff_or_smth_idk_im_dumb()
-
-PlayerBoat : read_input()
 @enduml
