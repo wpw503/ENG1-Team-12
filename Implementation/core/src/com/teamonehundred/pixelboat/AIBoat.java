@@ -41,7 +41,7 @@ class AIBoat extends Boat {
     public void initialise() {
         number_of_rays = 4; // how many rays are fired from the boat
         ray_angle_range = 145; // the range of the angles that the boat will fire rays out at
-        ray_range = 100; // the range of each ray
+        ray_range = 30; // the range of each ray
         ray_step_size = (float) 10;
         regen = false;
     }
@@ -89,8 +89,8 @@ class AIBoat extends Boat {
                 sprite.getY() + (sprite.getHeight()));
 
         Vector2 p1 = p.rotateAround(new Vector2(
-                sprite.getX() + (sprite.getWidth() / 2),
-                sprite.getY() + (sprite.getHeight() / 2)),
+                        sprite.getX() + (sprite.getWidth() / 2),
+                        sprite.getY() + (sprite.getHeight() / 2)),
                 sprite.getRotation());
 
         return p1;
@@ -129,6 +129,7 @@ class AIBoat extends Boat {
                 double tempy = (Math.sin(Math.toRadians(ray_angle)) * dist) + (start_point.y);
                 //check if there is a collision hull (other than self) at (tempx, tempy)
                 for (CollisionObject collideable : collidables) {
+                    if(collideable.isShown())
                     for (Shape2D bound : collideable.getBounds().getShapes()) {
                         if (bound.contains((float) tempx, (float) tempy)) {
                             if (cheeky_bit_of_coding) {
@@ -138,6 +139,7 @@ class AIBoat extends Boat {
                                 turn(1);
                                 return;
                             }
+
                         }
                     }
 

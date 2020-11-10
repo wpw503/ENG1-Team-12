@@ -16,7 +16,7 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class BoatRace extends Thread {
+class BoatRace{
     protected List<Boat> boats;
     protected List<ObstacleLaneWall> lane_objects;
 
