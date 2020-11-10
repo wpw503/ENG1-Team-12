@@ -35,6 +35,7 @@ class BoatRace extends Thread {
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     protected boolean is_finished = false;
+    protected long total_frames = 0;
 
     /**
      * Main constructor for a BoatRace.
@@ -112,6 +113,18 @@ class BoatRace extends Thread {
      * @author Umer Fakher
      */
     public void runStep() {
+        // dnf after 5 mins
+        if (total_frames++ > 60 * 60 * 5) {
+            is_finished = true;
+            for (Boat b : boats) {
+                if (!b.hasFinishedLeg()) {
+                    b.setStartTime(0);
+                    b.setEndTime((long) (b.getStartTime(false) + ((1000.0 / 60.0) * b.getFramesRaced())));
+                    b.setLegTime();
+                }
+            }
+        }
+
         for (CollisionObject c : obstacles) {
             if (c instanceof Obstacle)
                 ((Obstacle) c).updatePosition();
@@ -236,9 +249,9 @@ class BoatRace extends Thread {
         Texture temp = new Texture("object_placeholder.png");
 
         for (int i = -1000; i < end_y + 1000; i += 800)
-            batch.draw(bleachers_r, race_width/2 + 400, i, 400, 800);
+            batch.draw(bleachers_r, race_width / 2 + 400, i, 400, 800);
         for (int i = -1000; i < end_y + 1000; i += 800)
-            batch.draw(bleachers_l, -race_width/2 - 800, i, 400, 800);
+            batch.draw(bleachers_l, -race_width / 2 - 800, i, 400, 800);
         for (int i = 0; i < boats.size(); i++)
             batch.draw(start_banner, (getLaneCentre(i)) - (lane_width / 2), start_y, lane_width, lane_width / 2);
         batch.draw(temp, -race_width / 2, end_y, race_width, 5);

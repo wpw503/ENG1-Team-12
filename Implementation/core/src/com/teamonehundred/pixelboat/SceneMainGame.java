@@ -29,7 +29,7 @@ class SceneMainGame implements Scene {
     protected PlayerBoat player;
     protected List<Boat> all_boats;
 
-    RaceThread[] threads;
+    //RaceThread[] threads;
 
     protected Texture bg;
 
@@ -66,7 +66,7 @@ class SceneMainGame implements Scene {
         race = new BoatRace(all_boats.subList(0, boats_per_race));
         leg_number++;
 
-        startBackgroundRaces();
+        //startBackgroundRaces();
     }
 
 
@@ -112,7 +112,7 @@ class SceneMainGame implements Scene {
     public int update() {
         if (in_results || last_run) {
             in_results = results.update();
-            if(!in_results) startBackgroundRaces();
+            //if(!in_results) startBackgroundRaces();
         } else {
             if (player.hasFinishedLeg()) {
                 while (!race.isFinished()) race.runStep();
@@ -125,13 +125,20 @@ class SceneMainGame implements Scene {
                 leg_number++;
                 in_results = true;
 
-                for (int i = 0; i < groups_per_game - 1; i++) {
-                    try {
-                        threads[i].join();
-                    } catch (InterruptedException e) {
-                        System.out.println("Main thread Interrupted");
-                    }
+                // generate some "realistic" times for all boats not shown
+                for (int i = boats_per_race; i < all_boats.size(); i++){
+                    all_boats.get(i).setStartTime(0);
+                    all_boats.get(i).setEndTime((long)(13000 + 7000*Math.random()));
+                    all_boats.get(i).setLegTime();
                 }
+
+//                for (int i = 0; i < groups_per_game - 1; i++) {
+//                    try {
+//                        threads[i].join();
+//                    } catch (InterruptedException e) {
+//                        System.out.println("Main thread Interrupted");
+//                    }
+//                }
             } else {
                 // sort boats based on best time
                 Collections.sort(all_boats, new Comparator<Boat>() {
@@ -150,14 +157,14 @@ class SceneMainGame implements Scene {
         return scene_id;
     }
 
-    private void startBackgroundRaces(){
-        // run all boats in the background
-        threads = new RaceThread[groups_per_game - 1];
-        for (int i = 1; i < groups_per_game; i++) {
-            threads[i - 1] = new RaceThread(all_boats.subList(boats_per_race * i, (boats_per_race * (i + 1))));
-            threads[i - 1].start();
-        }
-    }
+//    private void startBackgroundRaces(){
+//        // run all boats in the background
+//        threads = new RaceThread[groups_per_game - 1];
+//        for (int i = 1; i < groups_per_game; i++) {
+//            threads[i - 1] = new RaceThread(all_boats.subList(boats_per_race * i, (boats_per_race * (i + 1))));
+//            threads[i - 1].start();
+//        }
+//    }
 
     /**
      * TODO Finish DocString if needed
