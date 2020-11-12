@@ -18,7 +18,6 @@ import java.util.List;
  */
 class BoatRace{
     protected List<Boat> boats;
-    protected List<ObstacleLaneWall> lane_objects;
 
     protected BitmapFont font; //TimingTest
     protected Texture lane_sep;
