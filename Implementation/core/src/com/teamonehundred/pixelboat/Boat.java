@@ -42,8 +42,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected boolean has_finished_leg = false;
     protected boolean has_started_leg = false;
 
-    protected Animation<Texture> rowing_animation;
-
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */

@@ -71,7 +71,7 @@ class AIBoat extends Boat {
         return super.isShown();
     }
 
-    private Vector2 get_ray_fire_point() {
+    protected Vector2 get_ray_fire_point() {
 //        List<Float> coordinates = new ArrayList<>();
 //        float o_x = sprite.getX() + (sprite.getWidth() / 2);
 //        float o_y = sprite.getY() + (sprite.getHeight());
@@ -97,7 +97,7 @@ class AIBoat extends Boat {
     }
 
     // Boat rumba (Bumba)
-    public void check_turn(List<CollisionObject> collidables) {
+    protected void check_turn(List<CollisionObject> collidables) {
          /* Fire a number of rays with limited distance out the front of the boat,
          select a ray that isn't obstructed by an object,
          preference the middle (maybe put a preference to side as well)

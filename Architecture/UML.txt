@@ -55,6 +55,33 @@ SceneMainGame "1" *-- "1" BoatRace
 SceneMainGame "1" *-- "1" ResultsScreen
 SceneMainGame "1" *-- "0..*" Boat
 
-CollisionObject *-- CollisionBounds
+CollisionObject "1" *-- "1" CollisionBounds
+
+class AIBoat{
+  #numberOfRays:Float
+  #rangeAngleRange:Float
+  #rayAngle:Foat
+  #rayStepSize:Float
+  #regen:Boolean
+  
+  updatePosition(obstacles:CollisionObject[0..*]):Void
+  isShown():Boolean
+  #getRayFirePoint():Vector2
+  #checkTurn(obstacles:CollisionObject[0..*]):Void
+}
+
+abstract class Boat{
+  #name:String
+  #durability:Float
+  #durabilityPerHit:Float
+  #stamina:Float
+  #staminaUsage:Float
+  #staminaRegen:Float
+  #legTimes:Integer[0..4]
+  #startTime:Integer
+  #endTime:Integer
+  #hasFinishedLeg:Boolean
+  #hasStartedLeg:Boolean
+}
 
 @enduml
