@@ -35,7 +35,9 @@ class SceneMainGame implements Scene {
 
     protected BoatRace race;
     protected ResultsScreen results;
+    protected BoatSelection boat_selection;
 
+    protected boolean in_boat_selection = true;
     protected boolean in_results = false;
     protected boolean last_run = false;
 
@@ -62,6 +64,9 @@ class SceneMainGame implements Scene {
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         results = new ResultsScreen(all_boats);
+
+        //todo check if this syncs with list
+        boat_selection = new BoatSelection(player);
 
         race = new BoatRace(all_boats.subList(0, boats_per_race));
         leg_number++;
@@ -92,7 +97,9 @@ class SceneMainGame implements Scene {
         batch.setProjectionMatrix(player.getCamera().combined);
 
         batch.begin();
-        if (in_results) {
+        if (in_boat_selection) {
+            boat_selection.draw(batch);
+        } else if (in_results) {
             results.draw(batch);
         } else {
             batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
@@ -110,7 +117,9 @@ class SceneMainGame implements Scene {
      * @author William Walton
      */
     public int update() {
-        if (in_results || last_run) {
+        if (in_boat_selection) {
+            in_boat_selection = boat_selection.update();
+        } else if (in_results || last_run) {
             in_results = results.update();
             //if(!in_results) startBackgroundRaces();
         } else {
@@ -126,9 +135,9 @@ class SceneMainGame implements Scene {
                 in_results = true;
 
                 // generate some "realistic" times for all boats not shown
-                for (int i = boats_per_race; i < all_boats.size(); i++){
+                for (int i = boats_per_race; i < all_boats.size(); i++) {
                     all_boats.get(i).setStartTime(0);
-                    all_boats.get(i).setEndTime((long)(15000 + 10000*Math.random()));
+                    all_boats.get(i).setEndTime((long) (50000 + 10000 * Math.random()));
                     all_boats.get(i).setLegTime();
                 }
 
