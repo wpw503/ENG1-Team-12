@@ -1,7 +1,10 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 
 import java.util.List;
 
@@ -129,7 +132,12 @@ class AIBoat extends Boat {
                 double tempy = (Math.sin(Math.toRadians(ray_angle)) * dist) + (start_point.y);
                 //check if there is a collision hull (other than self) at (tempx, tempy)
                 for (CollisionObject collideable : collidables) {
-                    if(collideable.isShown())
+                    // very lazy way of optimising this code. will break if the collidable isn't an obstacle
+                    if(collideable.isShown() &&
+                            ((Obstacle)collideable).getSprite().getY()>sprite.getY()-200 &&
+                            ((Obstacle)collideable).getSprite().getY()<sprite.getY()+200 &&
+                            ((Obstacle)collideable).getSprite().getX()>sprite.getX()-200 &&
+                            ((Obstacle)collideable).getSprite().getX()<sprite.getX()+200)
                     for (Shape2D bound : collideable.getBounds().getShapes()) {
                         if (bound.contains((float) tempx, (float) tempy)) {
                             if (cheeky_bit_of_coding) {
@@ -146,6 +154,40 @@ class AIBoat extends Boat {
                 }
             }
         }
+
+//        Vector3 ray_origin = new Vector3(get_ray_fire_point(), 0);
+//        for (float dist = 0; dist <= ray_range; dist += ray_step_size)
+//            for (int i = 0; i < number_of_rays; i++) {
+//                float ray_angle = sprite.getRotation() + (ray_angle_range / number_of_rays) * (i - number_of_rays / 2);
+//                Vector3 ray_dir = new Vector3((float) Math.cos(Math.toRadians(ray_angle)) * dist, (float) Math.sin(Math.toRadians(ray_angle)) * dist, 0);
+//                Ray r = new Ray(ray_origin, ray_dir);
+//                for (CollisionObject collideable : collidables) {
+//                    if (collideable.isShown())
+//                        if (collideable instanceof ObstacleLaneWall) {
+//                            for (Shape2D bound : collideable.getBounds().getShapes()) {
+//                                if (bound.contains((float) Math.cos(Math.toRadians(ray_angle)) * dist + ray_origin.x, (float) Math.sin(Math.toRadians(ray_angle)) * dist+ ray_origin.y)) {
+//                                    if (i < number_of_rays / 2)
+//                                        turn(1);
+//                                    else
+//                                        turn(-1);
+//
+//                                    return;
+//
+//                                }
+//                            }
+//                        } else {
+//                            if (Intersector.intersectRaySphere(r, new Vector3(collideable.getBounds().origin, 0), 40, null)) {
+//                                if (i < number_of_rays / 2)
+//                                    turn(1);
+//                                else
+//                                    turn(-1);
+//
+//                                return;
+//                            }
+//                        }
+//
+//                }
+//            }
 
     }
 
