@@ -131,6 +131,7 @@ class BoatRace{
                 ((ObstacleLaneWall) c).setAnimationFrame(0);
             }
         }
+
         for (int i = 0; i < boats.size(); i++) {
             // check if any boats have finished
             if (!boats.get(i).hasFinishedLeg() && boats.get(i).getSprite().getY() > end_y) {
@@ -164,6 +165,7 @@ class BoatRace{
             } else if (boats.get(i) instanceof PlayerBoat) {
                 boats.get(i).updatePosition();
             }
+
             // check for collisions
             for (CollisionObject obstacle : obstacles) {
                 if (obstacle.isShown())
@@ -176,11 +178,6 @@ class BoatRace{
                 boats.get(i).setTimeToAdd(boats.get(i).getTimeToAdd() + penalty_per_frame);
         }
         is_finished = !not_finished;
-
-        for (CollisionObject c : obstacles) {
-            if (c instanceof Obstacle)
-                ((Obstacle) c).updatePosition();
-        }
     }
 
     public boolean isFinished() {

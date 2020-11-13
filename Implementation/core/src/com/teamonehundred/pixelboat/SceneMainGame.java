@@ -128,7 +128,7 @@ class SceneMainGame implements Scene {
                 // generate some "realistic" times for all boats not shown
                 for (int i = boats_per_race; i < all_boats.size(); i++){
                     all_boats.get(i).setStartTime(0);
-                    all_boats.get(i).setEndTime((long)(13000 + 7000*Math.random()));
+                    all_boats.get(i).setEndTime((long)(15000 + 10000*Math.random()));
                     all_boats.get(i).setLegTime();
                 }
 
