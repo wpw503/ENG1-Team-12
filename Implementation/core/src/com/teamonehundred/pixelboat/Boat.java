@@ -277,6 +277,12 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * @author Umer Fakher
      */
     public void checkCollisions(CollisionObject object) {
+        if(object instanceof Obstacle && !(
+                ((Obstacle)object).getSprite().getY()>sprite.getY()-200 &&
+                ((Obstacle)object).getSprite().getY()<sprite.getY()+200 &&
+                ((Obstacle)object).getSprite().getX()>sprite.getX()-200 &&
+                ((Obstacle)object).getSprite().getX()<sprite.getX()+200))
+            return;
         if (this.getBounds().isColliding(object.getBounds())) {
             if (!(object instanceof ObstacleLaneWall))
                 hasCollided();
