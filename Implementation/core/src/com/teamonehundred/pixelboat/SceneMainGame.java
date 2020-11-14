@@ -61,11 +61,6 @@ class SceneMainGame implements Scene {
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        results = new SceneResultsScreen(all_boats);
-
-        //todo check if this syncs with list
-        boat_selection = new SceneBoatSelection(player);
-
         race = new BoatRace(all_boats.subList(0, boats_per_race));
         leg_number++;
 
@@ -131,13 +126,6 @@ class SceneMainGame implements Scene {
 
             return 4;
 
-//                for (int i = 0; i < groups_per_game - 1; i++) {
-//                    try {
-//                        threads[i].join();
-//                    } catch (InterruptedException e) {
-//                        System.out.println("Main thread Interrupted");
-//                    }
-//                }
         } else {
             // sort boats based on best time
             Collections.sort(all_boats, new Comparator<Boat>() {
@@ -155,15 +143,6 @@ class SceneMainGame implements Scene {
         return scene_id;
     }
 
-//    private void startBackgroundRaces(){
-//        // run all boats in the background
-//        threads = new RaceThread[groups_per_game - 1];
-//        for (int i = 1; i < groups_per_game; i++) {
-//            threads[i - 1] = new RaceThread(all_boats.subList(boats_per_race * i, (boats_per_race * (i + 1))));
-//            threads[i - 1].start();
-//        }
-//    }
-
     /**
      * TODO Finish DocString if needed
      *
@@ -179,12 +158,8 @@ class SceneMainGame implements Scene {
         return all_boats;
     }
 
-    public PlayerBoat getPlayer() {
-        for (Boat b : all_boats)
-            if (b instanceof PlayerBoat)
-                return (PlayerBoat) b;
-
-        return null;
+    public void setPlayerSpec(int spec) {
+        player.setSpec(spec);
     }
 
     private class RaceThread extends Thread {

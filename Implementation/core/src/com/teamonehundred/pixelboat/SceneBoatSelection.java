@@ -5,15 +5,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 class SceneBoatSelection implements Scene {
     protected int scene_id = 5;
 
-    PlayerBoat boat;
+    protected int spec_id = 0;
 
-    public SceneBoatSelection(PlayerBoat boat) {
-        this.boat = boat;
+
+    public SceneBoatSelection() {
     }
 
     // return false to exit
     public int update() {
-        return 1;
+
+        return 3;
     }
 
     public void draw(SpriteBatch batch) {
@@ -21,5 +22,9 @@ class SceneBoatSelection implements Scene {
     }
 
     public void resize(int width, int height) {
+    }
+
+    public int getSpecID() {
+        return spec_id;
     }
 }

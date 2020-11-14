@@ -76,6 +76,17 @@ class PlayerBoat extends Boat {
         camera.update();
     }
 
+    // set the type of boat
+    public void setSpec(int spec_id) {
+        switch (spec_id) {
+            case 0:
+                stamina_usage = 0f;
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     public void updatePosition() {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {

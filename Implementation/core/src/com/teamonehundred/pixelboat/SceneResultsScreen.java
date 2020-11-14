@@ -2,17 +2,15 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
 import java.util.List;
 
-class SceneResultsScreen implements Scene{
+class SceneResultsScreen implements Scene {
     protected int scene_id = 4;
 
     protected List<Boat> boats;
 
-    SceneResultsScreen(List<Boat> race_boats) {
-        boats = new ArrayList<>();
-        boats.addAll(race_boats);
+    SceneResultsScreen() {
+        boats = null;
     }
 
     // return 1 when you want to exit the results screen
@@ -40,5 +38,10 @@ class SceneResultsScreen implements Scene{
     public void draw(SpriteBatch batch) {
     }
 
-    public void resize(int width, int height){}
+    public void resize(int width, int height) {
+    }
+
+    public void setBoats(List<Boat> boats) {
+        this.boats = boats;
+    }
 }

@@ -2,9 +2,6 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PixelBoat extends ApplicationAdapter {
@@ -28,8 +25,8 @@ public class PixelBoat extends ApplicationAdapter {
         all_scenes[1] = new SceneMainGame();
         all_scenes[2] = new SceneOptionsMenu();
         all_scenes[3] = new SceneTutorial();
-        all_scenes[4] = new SceneResultsScreen(((SceneMainGame)all_scenes[1]).getAllBoats());
-        all_scenes[5] = new SceneBoatSelection(((SceneMainGame)all_scenes[1]).getPlayer());
+        all_scenes[4] = new SceneResultsScreen();
+        all_scenes[5] = new SceneBoatSelection();
 
         batch = new SpriteBatch();
     }
@@ -40,6 +37,12 @@ public class PixelBoat extends ApplicationAdapter {
         // run the current scene
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
+
+        // special case updates
+        if (new_scene_id == 4)
+            ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+        else if (new_scene_id == 5)
+            ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
 
         // check if we need to change scene
         scene_id = new_scene_id;
@@ -55,7 +58,7 @@ public class PixelBoat extends ApplicationAdapter {
     }
 
     @Override
-    public void resize(int width, int height){
+    public void resize(int width, int height) {
         all_scenes[scene_id].resize(width, height);
     }
 }

@@ -75,7 +75,7 @@ class SceneStartScreen implements Scene {
         if (play_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             play_sprite.setTexture(play_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                return 3;
+                return 5;
             }
         } else
             play_sprite.setTexture(play);
