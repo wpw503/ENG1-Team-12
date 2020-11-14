@@ -132,24 +132,24 @@ class BoatRace{
             }
         }
 
-        for (int i = 0; i < boats.size(); i++) {
+        for (Boat boat : boats) {
             // check if any boats have finished
-            if (!boats.get(i).hasFinishedLeg() && boats.get(i).getSprite().getY() > end_y) {
+            if (!boat.hasFinishedLeg() && boat.getSprite().getY() > end_y) {
                 // store the leg time in the object
-                boats.get(i).setStartTime(0);
-                boats.get(i).setEndTime((long) (boats.get(i).getStartTime(false) + ((1000.0 / 60.0) * boats.get(i).getFramesRaced())));
-                boats.get(i).setLegTime();
+                boat.setStartTime(0);
+                boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced())));
+                boat.setLegTime();
 
-                boats.get(i).setHasFinishedLeg(true);
+                boat.setHasFinishedLeg(true);
             }
             // check if any boats have started
-            else if (!boats.get(i).hasStartedLeg() && boats.get(i).getSprite().getY() > start_y) {
-                boats.get(i).setStartTime(System.currentTimeMillis());
-                boats.get(i).setHasStartedLeg(true);
-                boats.get(i).setFramesRaced(0);
+            else if (!boat.hasStartedLeg() && boat.getSprite().getY() > start_y) {
+                boat.setStartTime(System.currentTimeMillis());
+                boat.setHasStartedLeg(true);
+                boat.setFramesRaced(0);
             } else {
                 // if not start or end, must be racing
-                boats.get(i).addFrameRaced();
+                boat.addFrameRaced();
             }
         }
 

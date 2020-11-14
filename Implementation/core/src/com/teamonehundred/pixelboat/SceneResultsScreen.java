@@ -5,16 +5,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
-class ResultsScreen {
+class SceneResultsScreen implements Scene{
+    protected int scene_id = 4;
+
     protected List<Boat> boats;
 
-    ResultsScreen(List<Boat> race_boats) {
+    SceneResultsScreen(List<Boat> race_boats) {
         boats = new ArrayList<>();
         boats.addAll(race_boats);
     }
 
-    // return false when you want to exit the results screen
-    public boolean update() {
+    // return 1 when you want to exit the results screen
+    // else return scene_id if you want to stay
+    public int update() {
         // placeholder text output
         for (Boat b : boats) {
             System.out.print("a boat (");
@@ -30,9 +33,12 @@ class ResultsScreen {
         System.out.println();
         System.out.println();
 
-        return false;
+        //return scene_id;
+        return 1;
     }
 
     public void draw(SpriteBatch batch) {
     }
+
+    public void resize(int width, int height){}
 }

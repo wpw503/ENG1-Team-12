@@ -34,11 +34,9 @@ class SceneMainGame implements Scene {
     protected Texture bg;
 
     protected BoatRace race;
-    protected ResultsScreen results;
-    protected BoatSelection boat_selection;
+    protected SceneResultsScreen results;
+    protected SceneBoatSelection boat_selection;
 
-    protected boolean in_boat_selection = true;
-    protected boolean in_results = false;
     protected boolean last_run = false;
 
     /**
@@ -63,10 +61,10 @@ class SceneMainGame implements Scene {
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        results = new ResultsScreen(all_boats);
+        results = new SceneResultsScreen(all_boats);
 
         //todo check if this syncs with list
-        boat_selection = new BoatSelection(player);
+        boat_selection = new SceneBoatSelection(player);
 
         race = new BoatRace(all_boats.subList(0, boats_per_race));
         leg_number++;
@@ -97,14 +95,10 @@ class SceneMainGame implements Scene {
         batch.setProjectionMatrix(player.getCamera().combined);
 
         batch.begin();
-        if (in_boat_selection) {
-            boat_selection.draw(batch);
-        } else if (in_results) {
-            results.draw(batch);
-        } else {
-            batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
-            race.draw(batch);
-        }
+
+        batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
+        race.draw(batch);
+
         batch.end();
     }
 
@@ -117,29 +111,25 @@ class SceneMainGame implements Scene {
      * @author William Walton
      */
     public int update() {
-        if (in_boat_selection) {
-            in_boat_selection = boat_selection.update();
-        } else if (in_results || last_run) {
-            in_results = results.update();
-            //if(!in_results) startBackgroundRaces();
-        } else {
-            if (player.hasFinishedLeg()) {
-                while (!race.isFinished()) race.runStep();
+        if (player.hasFinishedLeg()) {
+            while (!race.isFinished()) race.runStep();
+        }
+        if (!race.isFinished()) race.runStep();
+            // only run 3 guaranteed legs
+        else if (leg_number < 3) {
+            race = new BoatRace(all_boats.subList(0, boats_per_race));
+
+            leg_number++;
+
+
+            // generate some "realistic" times for all boats not shown
+            for (int i = boats_per_race; i < all_boats.size(); i++) {
+                all_boats.get(i).setStartTime(0);
+                all_boats.get(i).setEndTime((long) (50000 + 10000 * Math.random()));
+                all_boats.get(i).setLegTime();
             }
-            if (!race.isFinished()) race.runStep();
-                // only run 3 guaranteed legs
-            else if (leg_number < 3) {
-                race = new BoatRace(all_boats.subList(0, boats_per_race));
 
-                leg_number++;
-                in_results = true;
-
-                // generate some "realistic" times for all boats not shown
-                for (int i = boats_per_race; i < all_boats.size(); i++) {
-                    all_boats.get(i).setStartTime(0);
-                    all_boats.get(i).setEndTime((long) (50000 + 10000 * Math.random()));
-                    all_boats.get(i).setLegTime();
-                }
+            return 4;
 
 //                for (int i = 0; i < groups_per_game - 1; i++) {
 //                    try {
@@ -148,20 +138,19 @@ class SceneMainGame implements Scene {
 //                        System.out.println("Main thread Interrupted");
 //                    }
 //                }
-            } else {
-                // sort boats based on best time
-                Collections.sort(all_boats, new Comparator<Boat>() {
-                    @Override
-                    public int compare(Boat b1, Boat b2) {
-                        return (int) (b1.getBestTime() - b2.getBestTime());
-                    }
-                });
+        } else {
+            // sort boats based on best time
+            Collections.sort(all_boats, new Comparator<Boat>() {
+                @Override
+                public int compare(Boat b1, Boat b2) {
+                    return (int) (b1.getBestTime() - b2.getBestTime());
+                }
+            });
 
-                race = new BoatRace(all_boats.subList(0, boats_per_race));
-                in_results = true;
-                last_run = true;
-            }
+            race = new BoatRace(all_boats.subList(0, boats_per_race));
+            last_run = true;
         }
+
 
         return scene_id;
     }
@@ -184,6 +173,18 @@ class SceneMainGame implements Scene {
     public void resize(int width, int height) {
         player.getCamera().viewportHeight = height;
         player.getCamera().viewportWidth = width;
+    }
+
+    public List<Boat> getAllBoats() {
+        return all_boats;
+    }
+
+    public PlayerBoat getPlayer() {
+        for (Boat b : all_boats)
+            if (b instanceof PlayerBoat)
+                return (PlayerBoat) b;
+
+        return null;
     }
 
     private class RaceThread extends Thread {
