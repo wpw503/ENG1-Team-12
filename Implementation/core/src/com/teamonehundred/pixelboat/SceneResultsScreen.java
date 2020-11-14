@@ -22,7 +22,7 @@ class SceneResultsScreen implements Scene {
 
         // Initialise colour of Text Display Overlay - UF
         font = new BitmapFont();
-        font.setColor(Color.BLUE);
+        font.setColor(Color.WHITE);
     }
 
     // return 1 when you want to exit the results screen
@@ -55,7 +55,7 @@ class SceneResultsScreen implements Scene {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //
 //        batch.setProjectionMatrix(fill_camera.combined);
-        batch.begin();
+
 //
         PlayerBoat thePlayerBoat = null;
         //         your draw code
@@ -65,29 +65,42 @@ class SceneResultsScreen implements Scene {
 
             }
         }
-//
-//        String label_text = thePlayerBoat.getName();
-        String label_text = String.format("A boat (%s) ended race with time (ms) %d (%d ms was penalty)",
-                thePlayerBoat.getName(), thePlayerBoat.getLegTimes().get(thePlayerBoat.getLegTimes().size() - 1), thePlayerBoat.getTimeToAdd());
 
-        font.draw(batch, label_text, -thePlayerBoat.ui_bar_width / 2, 470 + thePlayerBoat.getSprite().getY());
+        batch.begin();
+
+        font.setColor(Color.ORANGE);
+        font.draw(batch, "Results Screen! Click on the screen to skip and start the next leg!",
+                -thePlayerBoat.ui_bar_width / 2, 540 + thePlayerBoat.getSprite().getY());
+
+        font.setColor(Color.YELLOW);
+        font.draw(batch, "BoatName | Race Time in ms | Race penalty in ms",
+                -thePlayerBoat.ui_bar_width / 2, 520 + thePlayerBoat.getSprite().getY());
+
+        String label_template = "%s | %d ms | %d ms";//"A boat (%s) ended race with time (ms) %d (%d ms was penalty)";
+        int column_num = -1;
+        int column_idx = -1;
+        for (Boat b : boats) {
+            if (b instanceof PlayerBoat){
+                font.setColor(Color.RED);
+            }
+            else{
+                font.setColor(Color.WHITE);
+            }
+
+            if (boats.indexOf(b) % 20 == 0) {
+                column_num++;
+                column_idx = 0;
+            }
+            column_idx++;
+
+            String label_text = String.format(label_template, b.getName(),
+                    b.getLegTimes().get(b.getLegTimes().size() - 1), b.getTimeToAdd());
+            font.draw(batch, label_text, -thePlayerBoat.ui_bar_width / 2 + column_num * 210,
+                    500 - (column_idx * 20) + thePlayerBoat.getSprite().getY());
+        }
+
         batch.end();
 
-//        for (Boat b : boats) {
-//            if (b instanceof  PlayerBoat) {
-//                List<Long> legTimes = b.getLegTimes();
-//                float boatTime = legTimes.get(legTimes.size() - 1);
-//
-//                String label_text = String.format("A boat (%s) ended race with time (ms) %d (%d ms was penalty)", b.getName(), boatTime, b.getTimeToAdd());
-////                String.format(label_text, boatTime / 60000, boatTime / 1000 % 60)
-//                font.draw(batch, label_text,-thePlayerBoat.ui_bar_width /2,500 - (10) + thePlayerBoat.getSprite().getY());
-////            drawTimeDisplay(batch, b, label, i, -((PlayerBoat) b).ui_bar_width / 2,
-////                    500 - (legtimes.size() * 20) + ((PlayerBoat) b).getSprite().getY());
-////                font.draw(batch, label_text, -thePlayerBoat.ui_bar_width / 2, 470 + thePlayerBoat.getSprite().getY());
-//            }
-//        }
-
-//        batch.end();
     }
 
     public void resize(int width, int height) {
