@@ -28,7 +28,7 @@ class BoatRace{
     protected List<CollisionObject> obstacles;
 
     protected int start_y = 200;
-    protected int end_y = 40000;
+    protected int end_y = 4000; //40000; made shorter for testing
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
@@ -286,11 +286,12 @@ class BoatRace{
      */
     public void drawLegTimeDisplay(SpriteBatch batch, Boat b) {
         if (b.getEndTime(false) != -1) {
-            List<Long> legtimes = b.getLegTimes();
-            long i = legtimes.get(legtimes.size() - 1); // get last in leg times list
-            String label = String.format("Leg Time %d (min:sec) = ", legtimes.size()) + "%02d:%02d";
-            drawTimeDisplay(batch, b, label, i, -((PlayerBoat) b).ui_bar_width / 2,
-                    500 - (legtimes.size() * 20) + ((PlayerBoat) b).getSprite().getY());
+            for (long l : b.getLegTimes()){
+                String label = String.format("Leg Time %d (min:sec) = ", b.getLegTimes().indexOf(l)+1) + "%02d:%02d";
+                drawTimeDisplay(batch, b, label, l, -((PlayerBoat) b).ui_bar_width / 2,
+                        500 - ( (b.getLegTimes().indexOf(l)+1) * 20) + ((PlayerBoat) b).getSprite().getY());
+            }
+
         }
     }
 }
