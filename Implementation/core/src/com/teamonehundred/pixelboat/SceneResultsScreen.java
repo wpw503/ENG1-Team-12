@@ -1,6 +1,7 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Color;
@@ -42,8 +43,11 @@ class SceneResultsScreen implements Scene {
         System.out.println();
         System.out.println();
 
-        //return scene_id;
-        return 1;
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            return 1;
+        }
+        return scene_id;
+//        return 1;
     }
 
     public void draw(SpriteBatch batch) {
@@ -62,7 +66,10 @@ class SceneResultsScreen implements Scene {
             }
         }
 //
-        String label_text = thePlayerBoat.getName();
+//        String label_text = thePlayerBoat.getName();
+        String label_text = String.format("A boat (%s) ended race with time (ms) %d (%d ms was penalty)",
+                thePlayerBoat.getName(), thePlayerBoat.getLegTimes().get(thePlayerBoat.getLegTimes().size() - 1), thePlayerBoat.getTimeToAdd());
+
         font.draw(batch, label_text, -thePlayerBoat.ui_bar_width / 2, 470 + thePlayerBoat.getSprite().getY());
         batch.end();
 
@@ -70,15 +77,17 @@ class SceneResultsScreen implements Scene {
 //            if (b instanceof  PlayerBoat) {
 //                List<Long> legTimes = b.getLegTimes();
 //                float boatTime = legTimes.get(legTimes.size() - 1);
-//                String label_text = b.getName();//String.format("A boat (%s) ended race with time (ms) %d (%d ms was penalty)", b.getName(), boatTime, b.getTimeToAdd());
-//                //String.format(label_text, boatTime / 60000, boatTime / 1000 % 60)
 //
-//                // font.draw(batch, label_text,-thePlayerBoat.ui_bar_width /2,500 - (boats.indexOf(b)*10) + thePlayerBoat.getSprite().getY());
+//                String label_text = String.format("A boat (%s) ended race with time (ms) %d (%d ms was penalty)", b.getName(), boatTime, b.getTimeToAdd());
+////                String.format(label_text, boatTime / 60000, boatTime / 1000 % 60)
+//                font.draw(batch, label_text,-thePlayerBoat.ui_bar_width /2,500 - (10) + thePlayerBoat.getSprite().getY());
 ////            drawTimeDisplay(batch, b, label, i, -((PlayerBoat) b).ui_bar_width / 2,
 ////                    500 - (legtimes.size() * 20) + ((PlayerBoat) b).getSprite().getY());
-//                font.draw(batch, label_text, -thePlayerBoat.ui_bar_width / 2, 470 + thePlayerBoat.getSprite().getY());
+////                font.draw(batch, label_text, -thePlayerBoat.ui_bar_width / 2, 470 + thePlayerBoat.getSprite().getY());
 //            }
 //        }
+
+//        batch.end();
     }
 
     public void resize(int width, int height) {
