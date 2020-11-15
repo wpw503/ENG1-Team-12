@@ -4,6 +4,16 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Main class for the PixelBoat game.
+ *
+ * Extends Libgdx ApplicationAdapter.
+ *
+ * @author William Walton
+ * @author James Frost
+ * @author Umer Fakher
+ * JavaDoc by Umer Fakher
+ */
 public class PixelBoat extends ApplicationAdapter {
     protected Scene[] all_scenes;  // stores all game scenes and their data
     protected SpriteBatch batch;  // thing that draws the sprites
@@ -17,7 +27,11 @@ public class PixelBoat extends ApplicationAdapter {
     // 5 =boat selection
     protected int scene_id = 0;
 
-    // ran when the game starts
+    /**
+     * Create method runs when the game starts.
+     *
+     * Runs every scene in Game.
+     */
     @Override
     public void create() {
         all_scenes = new Scene[6];
@@ -31,7 +45,11 @@ public class PixelBoat extends ApplicationAdapter {
         batch = new SpriteBatch();
     }
 
-    // ran every frame
+    /**
+     * Render function runs every frame.
+     *
+     * Controls functionality of frame switching.
+     */
     @Override
     public void render() {
         // run the current scene
@@ -51,7 +69,11 @@ public class PixelBoat extends ApplicationAdapter {
         }
     }
 
-    // ran when the game closes
+    /**
+     * Disposes unneeded SpriteBatch and exits application.
+     *
+     * Runs when the game needs to close.
+     */
     @Override
     public void dispose() {
         batch.dispose();
@@ -60,6 +82,12 @@ public class PixelBoat extends ApplicationAdapter {
         System.exit(0);
     }
 
+    /**
+     * Resize used and passed to resize method of each scene based on width and height attributes.
+     *
+     * @param width int for scene
+     * @param height int for scene
+     */
     @Override
     public void resize(int width, int height) {
         all_scenes[scene_id].resize(width, height);

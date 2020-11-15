@@ -318,6 +318,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return my_bounds;
     }
 
+    // Getters and Setters for has_started_leg and has_finished_leg
+
     public boolean hasFinishedLeg() {
         return has_finished_leg;
     }
@@ -334,12 +336,18 @@ abstract class Boat extends MovableObject implements CollisionObject {
         this.has_started_leg = has_started_leg;
     }
 
+    /** Reset max_speed, durability and stamina to defaults */
     public void reset() {
         this.max_speed = 15;
         this.durability = 1;
         this.stamina = 1;
     }
 
+    /**
+     * Gets current best time for boat from its list of leg_times.
+     *
+     * @return long time in milliseconds.
+     */
     public long getBestTime() {
         long current_best = -1;
 

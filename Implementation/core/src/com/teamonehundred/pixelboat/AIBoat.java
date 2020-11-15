@@ -33,7 +33,7 @@ class AIBoat extends Boat {
      *
      * @param x int coordinate for the bottom left point of the boat
      * @param y int coordinate for the bottom left point of the boat
-     * @author William Walton
+     * @author James Frost
      */
     AIBoat(int x, int y) {
         super(x, y);
@@ -50,7 +50,7 @@ class AIBoat extends Boat {
      * @param w int width of the new boat
      * @param h int height of the new boat
      * @param texture_path String relative path from the core/assets folder of the boats texture image
-     * @author William Walton
+     * @author James Frost
      */
     AIBoat(int x, int y, int w, int h, String texture_path) { // So this section will just initialise the AI boat, it doesn't need the intialise method of playerboat due to the fact it doesn't have any textures for durability / stamina
         super(x, y, w, h, texture_path);
@@ -70,7 +70,7 @@ class AIBoat extends Boat {
      * @param name String of the boat seen when the game ends
      * @param stamina_regen float percentage of stamina regenerated each frame (0-1)
      * @param stamina_usage float percentage of stamina used each frame when accelerating (0-1)
-     * @author William Walton
+     * @author James Frost
      */
     AIBoat(int x, int y, int w, int h, String texture_path, String name, float durability_per_hit, float stamina_usage, float stamina_regen) {
         super(x, y, w, h, texture_path, name, durability_per_hit, stamina_usage, stamina_regen); // This should be the init that is used mostly (but the other one is needed incase someone messes up)
@@ -84,7 +84,7 @@ class AIBoat extends Boat {
      *
      * Initialises the ray properties. Rays are used to help the AI control the boat based on visual feedback
      * of its environment i.e. obstacles such as movable obstacles and static lane wall obstacles.
-     *
+     * @author James Frost
      */
     public void initialise() {
         number_of_rays = 4; // how many rays are fired from the boat
@@ -94,9 +94,17 @@ class AIBoat extends Boat {
         regen = false;
     }
 
+    /**
+     * Updates position of objects AIBoat based on acceleration and stamina.
+     *
+     * Checks if AIBoat can turn and updates position accordingly based on any collision objects that may overlap.
+     *
+     * @param collidables List of Collision Objects
+     * @author James Frost
+     */
     public void updatePosition(List<CollisionObject> collidables) {
         // TODO: Make this a method, and neaten it up
-        // TODO: Link Acc w/ turning for better AI (that one may take a bit of time tho)
+        // TODO: Link Acc w/ turning for better AI (that one may take a bit of time though)
         // TODO: Visible stamina for AI (maybe as debug option)
         if (!regen) {
             this.accelerate();
@@ -114,11 +122,23 @@ class AIBoat extends Boat {
 
     }
 
+    /**
+     * Returns true if AIBoat should exist on the screen.
+     *
+     * @return boolean parent isShown
+     * @author James Frost
+     */
     @Override
     public boolean isShown() {
         return super.isShown();
     }
 
+    /**
+     * Return centre coordinates of point where ray is fired.
+     *
+     * @return Vector2 of coordinates
+     * @author James Frost
+     */
     protected Vector2 get_ray_fire_point() {
 //        List<Float> coordinates = new ArrayList<>();
 //        float o_x = sprite.getX() + (sprite.getWidth() / 2);
@@ -144,15 +164,17 @@ class AIBoat extends Boat {
         return p1;
     }
 
-    // Boat rumba (Bumba)
+    /**
+     * Fire a number of rays with limited distance out the front of the boat, select a ray that
+     * isn't obstructed by an object, preference the middle (maybe put a preference to side as well)
+     * if every ray is obstructed either (keep turning [left or right] on the spot until one is,
+     * or choose the one that is obstructed furthest away the second option
+     * (choose the one that is obstructed furthest away) is better
+     *
+     * @param collidables List of Collision Objects
+     * @author James Frost
+     */
     protected void check_turn(List<CollisionObject> collidables) {
-         /* Fire a number of rays with limited distance out the front of the boat,
-         select a ray that isn't obstructed by an object,
-         preference the middle (maybe put a preference to side as well)
-         if every ray is obstructed either (keep turning [left or right] on the spot until one is, or choose the one that is obstructed furthest away
-         I am pretty sure the second option (choose the one that is obstructed furthest away) is better
-         */
-
         //Firing rays
 
         //select an area of 180 degrees (pi radians)
@@ -200,6 +222,7 @@ class AIBoat extends Boat {
             }
         }
 
+// Code before refactor:
 //        Vector3 ray_origin = new Vector3(get_ray_fire_point(), 0);
 //        for (float dist = 0; dist <= ray_range; dist += ray_step_size)
 //            for (int i = 0; i < number_of_rays; i++) {
