@@ -24,7 +24,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected String name = "default boat name";
 
     protected float durability = 1.f;  // from 0 to 1
-    protected float durability_per_hit = .2f;
+    protected float durability_per_hit = .1f;
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;

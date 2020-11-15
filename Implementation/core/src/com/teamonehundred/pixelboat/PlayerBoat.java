@@ -80,8 +80,17 @@ class PlayerBoat extends Boat {
     public void setSpec(int spec_id) {
         switch (spec_id) {
             case 0:
+                // debug
                 stamina_usage = 0f;
+                durability_per_hit = 0f;
                 break;
+            case 1:
+                // default
+                break;
+            case 2:
+                // fast low durability
+                max_speed = 20;
+                durability_per_hit = .2f;
             default:
                 break;
         }

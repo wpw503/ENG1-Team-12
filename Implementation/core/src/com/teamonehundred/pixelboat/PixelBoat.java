@@ -38,14 +38,18 @@ public class PixelBoat extends ApplicationAdapter {
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
 
-        // special case updates
-        if (new_scene_id == 4)
-            ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
-        else if (new_scene_id == 5)
-            ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+        if (scene_id != new_scene_id) {
+            // special case updates
+            if (new_scene_id == 4)
+                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+            else if (new_scene_id == 3 && scene_id == 5) {
+                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+                System.out.println(((SceneBoatSelection) all_scenes[5]).getSpecID());
+            }
 
-        // check if we need to change scene
-        scene_id = new_scene_id;
+            // check if we need to change scene
+            scene_id = new_scene_id;
+        }
     }
 
     // ran when the game closes
