@@ -126,7 +126,7 @@ class SceneMainGame implements Scene {
 
             return 4;
 
-        } else {
+        } else if (leg_number == 3){
             // sort boats based on best time
             Collections.sort(all_boats, new Comparator<Boat>() {
                 @Override
@@ -137,7 +137,13 @@ class SceneMainGame implements Scene {
 
             race = new BoatRace(all_boats.subList(0, boats_per_race));
             last_run = true;
+            leg_number++;
+
+            return 4;
         }
+
+        // stay in results after all legs done
+        if (race.isFinished() && leg_number > 3) return 4;
 
 
         return scene_id;
