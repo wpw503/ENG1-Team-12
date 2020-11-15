@@ -8,6 +8,12 @@ import com.badlogic.gdx.math.collision.Ray;
 
 import java.util.List;
 
+/**
+ * Represents the AI's boat.
+ *
+ * @author James Frost
+ * JavaDoc by Umer Fakher
+ */
 class AIBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
@@ -22,18 +28,50 @@ class AIBoat extends Boat {
     /* ################################### //
               CONSTRUCTORS
     // ################################### */
+    /**
+     * Construct a AIBoat object at point (x,y) with default size, texture and animation.
+     *
+     * @param x int coordinate for the bottom left point of the boat
+     * @param y int coordinate for the bottom left point of the boat
+     * @author William Walton
+     */
     AIBoat(int x, int y) {
         super(x, y);
 
         initialise();
     }
 
+    /**
+     * Construct a AIBoat object with at point (x,y) with width and height and texture path
+     * with default stats (stamina usage, durability, etc).
+     *
+     * @param x int coordinate for the bottom left point of the boat
+     * @param y int coordinate for the bottom left point of the boat
+     * @param w int width of the new boat
+     * @param h int height of the new boat
+     * @param texture_path String relative path from the core/assets folder of the boats texture image
+     * @author William Walton
+     */
     AIBoat(int x, int y, int w, int h, String texture_path) { // So this section will just initialise the AI boat, it doesn't need the intialise method of playerboat due to the fact it doesn't have any textures for durability / stamina
         super(x, y, w, h, texture_path);
 
         initialise();
     }
 
+    /**
+     * Construct a AIBoat object with all parameters specified.
+     *
+     * @param x int coordinate for the bottom left point of the boat
+     * @param y int coordinate for the bottom left point of the boat
+     * @param w int width of the new boat
+     * @param h int height of the new boat
+     * @param texture_path String relative path from the core/assets folder of the boats texture image
+     * @param durability_per_hit float percentage (0-1) of the max durability taken each hit
+     * @param name String of the boat seen when the game ends
+     * @param stamina_regen float percentage of stamina regenerated each frame (0-1)
+     * @param stamina_usage float percentage of stamina used each frame when accelerating (0-1)
+     * @author William Walton
+     */
     AIBoat(int x, int y, int w, int h, String texture_path, String name, float durability_per_hit, float stamina_usage, float stamina_regen) {
         super(x, y, w, h, texture_path, name, durability_per_hit, stamina_usage, stamina_regen); // This should be the init that is used mostly (but the other one is needed incase someone messes up)
 
@@ -41,6 +79,13 @@ class AIBoat extends Boat {
 
     }
 
+    /**
+     * Shared initialisation functionality among all constructors.
+     *
+     * Initialises the ray properties. Rays are used to help the AI control the boat based on visual feedback
+     * of its environment i.e. obstacles such as movable obstacles and static lane wall obstacles.
+     *
+     */
     public void initialise() {
         number_of_rays = 4; // how many rays are fired from the boat
         ray_angle_range = 145; // the range of the angles that the boat will fire rays out at
