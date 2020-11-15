@@ -150,24 +150,43 @@ class SceneMainGame implements Scene {
     }
 
     /**
-     * TODO Finish DocString if needed
+     * Resize method if for camera extension.
      *
-     * @param width
-     * @param height
+     * @param width Integer width to be resized to
+     * @param height Integer height to be resized to
+     * @author Umer Fakher
      */
     public void resize(int width, int height) {
         player.getCamera().viewportHeight = height;
         player.getCamera().viewportWidth = width;
     }
 
+    /**
+     * Getter method for returning list of boats which contain all boats in scene.
+     *
+     * @return list of boats
+     * @author Umer Fakher
+     */
     public List<Boat> getAllBoats() {
         return all_boats;
     }
 
+    /**
+     *  Setter method for player boat spec in the scene.
+     *
+     * @param spec Integer for player spec.
+     * @author Umer Fakher
+     */
     public void setPlayerSpec(int spec) {
         player.setSpec(spec);
     }
 
+    /**
+     * RaceThread class for Multi-threading.
+     *
+     * @author William Walton
+     * JavaDoc by Umer Fakher
+     */
     private class RaceThread extends Thread {
         List<Boat> boats;
         BoatRace race;
@@ -178,6 +197,12 @@ class SceneMainGame implements Scene {
             race = new BoatRace(this.boats);
         }
 
+        /**
+         * Main run method for RaceThread class.
+         *
+         * Runs race until it has finished.
+         * @author William Walton
+         */
         public void run() {
             while (!race.isFinished()) race.runStep();
 

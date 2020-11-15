@@ -13,6 +13,7 @@ import java.util.List;
  * Scene Class for Results Screen. Contains all functionality for Displaying results screen after each leg.
  *
  * @author Umer Fakher
+ * JavaDoc by Umer Fakher
  */
 class SceneResultsScreen implements Scene {
     protected int scene_id = 4;
@@ -66,7 +67,7 @@ class SceneResultsScreen implements Scene {
      * leg. This table will wrap according to how many boat times need to be displayed. Using label template format it
      * draws the name of boat, time of just completed leg, race penalty added for each boat that finished the leg.
      *
-     * @param batch SpriteBatch used for drawing
+     * @param batch SpriteBatch used for drawing to screen.
      * @author Umer Fakher
      */
     public void draw(SpriteBatch batch) {
@@ -142,7 +143,7 @@ class SceneResultsScreen implements Scene {
     }
 
     /**
-     * Setter method for list of boats.
+     * Setter method for list of boats for all boats in scene.
      *
      * @param boats List of boats to be set to current instance.
      * @author Umer Fakher

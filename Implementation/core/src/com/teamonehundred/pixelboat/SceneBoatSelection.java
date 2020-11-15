@@ -10,7 +10,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
+/**
+ * Represents the Boat Selection Scene for when the player wants to select which boat to play with before the race
+ * starts.
+ *
+ * @author William Walton
+ * JavaDoc by Umer Fakher
+ */
 class SceneBoatSelection implements Scene {
     protected int scene_id = 5;
 
@@ -28,6 +34,13 @@ class SceneBoatSelection implements Scene {
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
 
+    /**
+     * Main constructor for a SceneBoatSelection.
+     * <p>
+     * Initialises a Scene textures for Boat Selection and camera.
+     *
+     * @author William Walton
+     */
     public SceneBoatSelection() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
@@ -56,7 +69,14 @@ class SceneBoatSelection implements Scene {
         }
     }
 
-    // return 3 to exit
+    /**
+     * Update function for SceneBoatSelection. Ends SceneBoatSelection based on user input otherwise stays in scene.
+     *
+     * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
+     *
+     * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
+     * @author William Walton
+     */
     public int update() {
         if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT))
             is_new_click = true;
@@ -67,13 +87,21 @@ class SceneBoatSelection implements Scene {
         if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
                 spec_id = i;
-                return 3;
+                return 3;  // return 3 to exit
             }
         }
 
         return scene_id;
     }
 
+    /**
+     * Draw function for SceneBoatSelection.
+     *
+     * Draws BoatSelection for the PixelBoat game.
+     *
+     * @param batch SpriteBatch used for drawing to screen.
+     * @author William Walton
+     */
     public void draw(SpriteBatch batch) {
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -87,9 +115,22 @@ class SceneBoatSelection implements Scene {
         batch.end();
     }
 
+    /**
+     * Temp resize method if needed for camera extension.
+     *
+     * @param width Integer width to be resized to
+     * @param height Integer height to be resized to
+     * @author Umer Fakher
+     */
     public void resize(int width, int height) {
     }
 
+    /**
+     * Getter method for the specified boat's spec_id.
+     *
+     * @return boat's spec id
+     * @author William Walton
+     */
     public int getSpecID() {
         return spec_id;
     }
