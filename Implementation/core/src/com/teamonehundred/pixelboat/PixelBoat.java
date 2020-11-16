@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Main class for the PixelBoat game.
- *
+ * <p>
  * Extends Libgdx ApplicationAdapter.
  *
  * @author William Walton
@@ -29,7 +29,7 @@ public class PixelBoat extends ApplicationAdapter {
 
     /**
      * Create method runs when the game starts.
-     *
+     * <p>
      * Runs every scene in Game.
      */
     @Override
@@ -47,7 +47,7 @@ public class PixelBoat extends ApplicationAdapter {
 
     /**
      * Render function runs every frame.
-     *
+     * <p>
      * Controls functionality of frame switching.
      */
     @Override
@@ -71,7 +71,7 @@ public class PixelBoat extends ApplicationAdapter {
 
     /**
      * Disposes unneeded SpriteBatch and exits application.
-     *
+     * <p>
      * Runs when the game needs to close.
      */
     @Override
@@ -85,7 +85,7 @@ public class PixelBoat extends ApplicationAdapter {
     /**
      * Resize used and passed to resize method of each scene based on width and height attributes.
      *
-     * @param width int for scene
+     * @param width  int for scene
      * @param height int for scene
      */
     @Override

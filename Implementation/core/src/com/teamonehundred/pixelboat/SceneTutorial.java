@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -18,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-public class SceneTutorial implements Scene{
+public class SceneTutorial implements Scene {
     protected int scene_id = 3;
 
     protected Texture bg;
@@ -56,7 +55,7 @@ public class SceneTutorial implements Scene{
 
     /**
      * Draw function for SceneTutorial.
-     *
+     * <p>
      * Draws SceneTutorial for the PixelBoat game.
      *
      * @param batch SpriteBatch used for drawing to screen.
@@ -72,10 +71,9 @@ public class SceneTutorial implements Scene{
         batch.end();
     }
 
-
     /**
      * Update function for SceneTutorial. Ends SceneTutorial based on user input otherwise stays in scene.
-     *
+     * <p>
      * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
      * In this case any key pressed on the keyboard will stop the Tutorial Scene and continue with the main game.
      *
@@ -83,7 +81,7 @@ public class SceneTutorial implements Scene{
      * @author William Walton
      */
     public int update() {
-        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY))
+        if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY))
             return 1; // Move onto next Scene (Back to main game)
 
         return scene_id; // Stay on current Tutorial Scene.
@@ -92,7 +90,7 @@ public class SceneTutorial implements Scene{
     /**
      * Temp resize method if needed for camera extension.
      *
-     * @param width Integer width to be resized to
+     * @param width  Integer width to be resized to
      * @param height Integer height to be resized to
      * @author Umer Fakher
      */

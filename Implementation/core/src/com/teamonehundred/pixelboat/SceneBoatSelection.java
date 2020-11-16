@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 /**
  * Represents the Boat Selection Scene for when the player wants to select which boat to play with before the race
  * starts.
@@ -71,32 +72,32 @@ class SceneBoatSelection implements Scene {
 
     /**
      * Update function for SceneBoatSelection. Ends SceneBoatSelection based on user input otherwise stays in scene.
-     *
+     * <p>
      * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
      *
      * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
      * @author William Walton
      */
     public int update() {
-        if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+        if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT))
             is_new_click = true;
 
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-        for(int i = 0; i < num_specs; i++)
-        if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
-                spec_id = i;
-                return 3;  // return 3 to exit
+        for (int i = 0; i < num_specs; i++)
+            if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
+                    spec_id = i;
+                    return 3;  // return 3 to exit
+                }
             }
-        }
 
         return scene_id;
     }
 
     /**
      * Draw function for SceneBoatSelection.
-     *
+     * <p>
      * Draws BoatSelection for the PixelBoat game.
      *
      * @param batch SpriteBatch used for drawing to screen.
@@ -118,7 +119,7 @@ class SceneBoatSelection implements Scene {
     /**
      * Temp resize method if needed for camera extension.
      *
-     * @param width Integer width to be resized to
+     * @param width  Integer width to be resized to
      * @param height Integer height to be resized to
      * @author Umer Fakher
      */

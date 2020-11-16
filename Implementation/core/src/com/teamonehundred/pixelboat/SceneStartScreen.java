@@ -75,7 +75,7 @@ class SceneStartScreen implements Scene {
 
     /**
      * Draw function for SceneStartScreen.
-     *
+     * <p>
      * Draws StartScreen for the PixelBoat game.
      *
      * @param batch SpriteBatch used for drawing to screen.
@@ -95,7 +95,7 @@ class SceneStartScreen implements Scene {
 
     /**
      * Update function for SceneStartScreen. Ends SceneStartScreen based on user input otherwise stays in scene.
-     *
+     * <p>
      * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
      *
      * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
@@ -128,7 +128,7 @@ class SceneStartScreen implements Scene {
     /**
      * Resize method if for camera extension.
      *
-     * @param width Integer width to be resized to
+     * @param width  Integer width to be resized to
      * @param height Integer height to be resized to
      * @author William Walton
      */

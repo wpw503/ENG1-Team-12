@@ -102,7 +102,7 @@ public class SceneOptionsMenu implements Scene {
 
     /**
      * Draw function for SceneOptionsMenu.
-     *
+     * <p>
      * Draws Options Menu for the PixelBoat game.
      *
      * @param batch SpriteBatch used for drawing to screen.
@@ -126,7 +126,7 @@ public class SceneOptionsMenu implements Scene {
 
     /**
      * Update function for SceneOptionsMenu. Ends SceneOptionsMenu based on user input otherwise stays in scene.
-     *
+     * <p>
      * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
      * In this case left clicking with the mouse on  the back button will stop the Options Menu Scene
      * and continue with the Main Menu Scene.
@@ -165,7 +165,7 @@ public class SceneOptionsMenu implements Scene {
     /**
      * Temp resize method if needed for camera extension.
      *
-     * @param width Integer width to be resized to
+     * @param width  Integer width to be resized to
      * @param height Integer height to be resized to
      * @author William Walton
      */

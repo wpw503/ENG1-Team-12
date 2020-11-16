@@ -16,7 +16,7 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class BoatRace{
+class BoatRace {
     protected List<Boat> boats;
 
     protected BitmapFont font; //TimingTest
@@ -286,10 +286,10 @@ class BoatRace{
      */
     public void drawLegTimeDisplay(SpriteBatch batch, Boat b) {
         if (b.getEndTime(false) != -1) {
-            for (long l : b.getLegTimes()){
-                String label = String.format("Leg Time %d (min:sec) = ", b.getLegTimes().indexOf(l)+1) + "%02d:%02d";
+            for (long l : b.getLegTimes()) {
+                String label = String.format("Leg Time %d (min:sec) = ", b.getLegTimes().indexOf(l) + 1) + "%02d:%02d";
                 drawTimeDisplay(batch, b, label, l, -((PlayerBoat) b).ui_bar_width / 2,
-                        500 - ( (b.getLegTimes().indexOf(l)+1) * 20) + ((PlayerBoat) b).getSprite().getY());
+                        500 - ((b.getLegTimes().indexOf(l) + 1) * 20) + ((PlayerBoat) b).getSprite().getY());
             }
 
         }

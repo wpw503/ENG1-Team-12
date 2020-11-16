@@ -29,8 +29,6 @@ class SceneMainGame implements Scene {
     protected PlayerBoat player;
     protected List<Boat> all_boats;
 
-    //RaceThread[] threads;
-
     protected Texture bg;
 
     protected BoatRace race;
@@ -63,8 +61,6 @@ class SceneMainGame implements Scene {
 
         race = new BoatRace(all_boats.subList(0, boats_per_race));
         leg_number++;
-
-        //startBackgroundRaces();
     }
 
 
@@ -126,7 +122,7 @@ class SceneMainGame implements Scene {
 
             return 4;
 
-        } else if (leg_number == 3){
+        } else if (leg_number == 3) {
             // sort boats based on best time
             Collections.sort(all_boats, new Comparator<Boat>() {
                 @Override
@@ -152,7 +148,7 @@ class SceneMainGame implements Scene {
     /**
      * Resize method if for camera extension.
      *
-     * @param width Integer width to be resized to
+     * @param width  Integer width to be resized to
      * @param height Integer height to be resized to
      * @author Umer Fakher
      */
@@ -172,7 +168,7 @@ class SceneMainGame implements Scene {
     }
 
     /**
-     *  Setter method for player boat spec in the scene.
+     * Setter method for player boat spec in the scene.
      *
      * @param spec Integer for player spec.
      * @author Umer Fakher
@@ -199,8 +195,9 @@ class SceneMainGame implements Scene {
 
         /**
          * Main run method for RaceThread class.
-         *
+         * <p>
          * Runs race until it has finished.
+         *
          * @author William Walton
          */
         public void run() {

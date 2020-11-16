@@ -1,7 +1,5 @@
 package com.teamonehundred.pixelboat;
 
-import com.badlogic.gdx.math.Rectangle;
-
 /**
  * Represents the CollisionObject as an interface.
  *
@@ -10,12 +8,18 @@ import com.badlogic.gdx.math.Rectangle;
  * @author Umer Fakher
  */
 interface CollisionObject {
-    /** Called when this object collides with something */
+    /**
+     * Called when this object collides with something
+     */
     void hasCollided();
 
-    /** Returns a collision bounds object for intersection checking */
+    /**
+     * Returns a collision bounds object for intersection checking
+     */
     CollisionBounds getBounds();
 
-    /** Returns true if the object should be considered for collision checking */
+    /**
+     * Returns true if the object should be considered for collision checking
+     */
     boolean isShown();
 }

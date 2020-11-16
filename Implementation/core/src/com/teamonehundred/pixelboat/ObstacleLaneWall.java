@@ -16,23 +16,23 @@ class ObstacleLaneWall extends Obstacle {
     /**
      * A constructor for an lane wall obstacle taking its position (x and y).
      * <p>
-     *
+     * <p>
      * Image is taken by default from C:\...\ENG1-Team-12\Implementation\core\assets.
      *
      * @author James Frost
      * @author William Walton
      */
-    ObstacleLaneWall(int x, int y, Texture t){
+    ObstacleLaneWall(int x, int y, Texture t) {
         super(x, y, 32, texture_height, t, 2);
         setAnimationFrame(0);
     }
 
-    public void setAnimationFrame(int i){
+    public void setAnimationFrame(int i) {
         super.setAnimationFrame(i);
     }
 
     @Override
-    public void hasCollided(){
+    public void hasCollided() {
         setAnimationFrame(1);
     }
 }

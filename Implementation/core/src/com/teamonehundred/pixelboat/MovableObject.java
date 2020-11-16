@@ -27,10 +27,10 @@ abstract class MovableObject extends GameObject {
     /**
      * A constructor for MovableObject.
      *
-     * @param x int for horizontal position of object
-     * @param y int for vertical position of object
-     * @param w int for width of object
-     * @param h int for height of object
+     * @param x            int for horizontal position of object
+     * @param y            int for vertical position of object
+     * @param w            int for width of object
+     * @param h            int for height of object
      * @param texture_path String of object's file path
      */
     MovableObject(int x, int y, int w, int h, String texture_path) {
@@ -41,26 +41,25 @@ abstract class MovableObject extends GameObject {
     /**
      * A constructor for MovableObject.
      *
-     * @param x int for horizontal position of object
-     * @param y int for vertical position of object
-     * @param w int for width of object
-     * @param h int for height of object
+     * @param x            int for horizontal position of object
+     * @param y            int for vertical position of object
+     * @param w            int for width of object
+     * @param h            int for height of object
      * @param texture_path String of object's file path
-     * @param frame_count int frame count
+     * @param frame_count  int frame count
      */
     MovableObject(int x, int y, int w, int h, String texture_path, int frame_count) {
         super(x, y, w, h, texture_path, frame_count);
     }
 
     /**
-     *
      * A constructor for MovableObject.
      *
-     * @param x int for horizontal position of object
-     * @param y int for vertical position of object
-     * @param w int for width of object
-     * @param h int for height of object
-     * @param t Direct Texture
+     * @param x           int for horizontal position of object
+     * @param y           int for vertical position of object
+     * @param w           int for width of object
+     * @param h           int for height of object
+     * @param t           Direct Texture
      * @param frame_count int frame count
      */
     MovableObject(int x, int y, int w, int h, Texture t, int frame_count) {
@@ -73,8 +72,9 @@ abstract class MovableObject extends GameObject {
 
     /**
      * Rotates the Movable object by some given value.
-     *
+     * <p>
      * Note: turn left (1) or right (-1)
+     *
      * @param amount Integer value that dictates how much the movable object will be rotated
      * @author James Frost
      * @author William Walton
@@ -111,7 +111,7 @@ abstract class MovableObject extends GameObject {
 
     /**
      * Increase speed based on current acceleration attribute.
-     *
+     * <p>
      * If max_speed (terminal velocity) is reached for the movable object then don't increase speed.
      *
      * @author James Frost
@@ -121,7 +121,9 @@ abstract class MovableObject extends GameObject {
         speed += speed >= max_speed ? 0 : acceleration;
     }
 
-    /** Resets speed to 0 and rotation to 0. */
+    /**
+     * Resets speed to 0 and rotation to 0.
+     */
     public void reset_motion() {
         speed = 0;
         sprite.setRotation(0);

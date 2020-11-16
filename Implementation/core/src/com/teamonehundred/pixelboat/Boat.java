@@ -1,7 +1,5 @@
 package com.teamonehundred.pixelboat;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -63,10 +61,10 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * Construct a Boat object with at point (x,y) with width and height and texture path
      * with default stats (stamina usage, durability, etc).
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
-     * @param w int width of the new boat
-     * @param h int height of the new boat
+     * @param x            int coordinate for the bottom left point of the boat
+     * @param y            int coordinate for the bottom left point of the boat
+     * @param w            int width of the new boat
+     * @param h            int height of the new boat
      * @param texture_path String relative path from the core/assets folder of the boats texture image
      * @author William Walton
      */
@@ -79,15 +77,15 @@ abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Construct a Boat object with all parameters specified.
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
-     * @param w int width of the new boat
-     * @param h int height of the new boat
-     * @param texture_path String relative path from the core/assets folder of the boats texture image
+     * @param x                  int coordinate for the bottom left point of the boat
+     * @param y                  int coordinate for the bottom left point of the boat
+     * @param w                  int width of the new boat
+     * @param h                  int height of the new boat
+     * @param texture_path       String relative path from the core/assets folder of the boats texture image
      * @param durability_per_hit float percentage (0-1) of the max durability taken each hit
-     * @param name String of the boat seen when the game ends
-     * @param stamina_regen float percentage of stamina regenerated each frame (0-1)
-     * @param stamina_usage float percentage of stamina used each frame when accelerating (0-1)
+     * @param name               String of the boat seen when the game ends
+     * @param stamina_regen      float percentage of stamina regenerated each frame (0-1)
+     * @param stamina_usage      float percentage of stamina used each frame when accelerating (0-1)
      * @author William Walton
      */
     Boat(int x, int y, int w, int h, String texture_path, String name,
@@ -280,11 +278,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * @author Umer Fakher
      */
     public void checkCollisions(CollisionObject object) {
-        if(object instanceof Obstacle && !(
-                ((Obstacle)object).getSprite().getY()>sprite.getY()-200 &&
-                ((Obstacle)object).getSprite().getY()<sprite.getY()+200 &&
-                ((Obstacle)object).getSprite().getX()>sprite.getX()-200 &&
-                ((Obstacle)object).getSprite().getX()<sprite.getX()+200))
+        if (object instanceof Obstacle && !(
+                ((Obstacle) object).getSprite().getY() > sprite.getY() - 200 &&
+                        ((Obstacle) object).getSprite().getY() < sprite.getY() + 200 &&
+                        ((Obstacle) object).getSprite().getX() > sprite.getX() - 200 &&
+                        ((Obstacle) object).getSprite().getX() < sprite.getX() + 200))
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
             if (!(object instanceof ObstacleLaneWall))
@@ -336,7 +334,9 @@ abstract class Boat extends MovableObject implements CollisionObject {
         this.has_started_leg = has_started_leg;
     }
 
-    /** Reset max_speed, durability and stamina to defaults */
+    /**
+     * Reset max_speed, durability and stamina to defaults
+     */
     public void reset() {
         this.max_speed = 15;
         this.durability = 1;

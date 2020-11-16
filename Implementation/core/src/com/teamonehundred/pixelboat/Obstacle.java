@@ -1,8 +1,6 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.teamonehundred.pixelboat.CollisionObject;
-import com.teamonehundred.pixelboat.MovableObject;
 
 /**
  * Represents the obstacle as an abstract class that extends from movable object
@@ -20,8 +18,9 @@ abstract class Obstacle extends MovableObject implements CollisionObject {
     /**
      * A constructor for an Obstacle taking its position (x and y) and width and height.
      * <p>
-     *
+     * <p>
      * Accepts Texture indirectly through file path. Integer for frame count not needed.
+     *
      * @author James Frost
      * @author William Walton
      */
@@ -33,25 +32,27 @@ abstract class Obstacle extends MovableObject implements CollisionObject {
     /**
      * A constructor for an Obstacle taking its position (x and y) and width and height.
      * <p>
-     *
+     * <p>
      * Accepts Texture indirectly through file path. Integer for frame count needed.
+     *
      * @author James Frost
      * @author William Walton
      */
-    Obstacle(int x, int y, int w, int h, String texture_path, int frame_count){
-        super(x, y, w, h, texture_path,frame_count);
+    Obstacle(int x, int y, int w, int h, String texture_path, int frame_count) {
+        super(x, y, w, h, texture_path, frame_count);
     }
 
     /**
-     *  A constructor for an Obstacle taking its position (x and y) and width and height.
+     * A constructor for an Obstacle taking its position (x and y) and width and height.
      * <p>
-     *
+     * <p>
      * Accepts Texture directly. Integer for frame count needed.
+     *
      * @author James Frost
      * @author William Walton
      */
-    Obstacle(int x, int y, int w, int h, Texture t, int frame_count){
-        super(x, y, w, h, t ,frame_count);
+    Obstacle(int x, int y, int w, int h, Texture t, int frame_count) {
+        super(x, y, w, h, t, frame_count);
     }
 
     /* ################################### //

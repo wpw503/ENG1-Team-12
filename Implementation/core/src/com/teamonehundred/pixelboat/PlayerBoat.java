@@ -52,10 +52,10 @@ class PlayerBoat extends Boat {
      * Construct a PlayerBoat object with at point (x,y) with width and height and texture path
      * with default stats (stamina usage, durability, etc).
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
-     * @param w int width of the new boat
-     * @param h int height of the new boat
+     * @param x            int coordinate for the bottom left point of the boat
+     * @param y            int coordinate for the bottom left point of the boat
+     * @param w            int width of the new boat
+     * @param h            int height of the new boat
      * @param texture_path String relative path from the core/assets folder of the boats texture image
      * @author William Walton
      */
@@ -68,15 +68,15 @@ class PlayerBoat extends Boat {
     /**
      * Construct a PlayerBoat object with all parameters specified.
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
-     * @param w int width of the new boat
-     * @param h int height of the new boat
-     * @param texture_path String relative path from the core/assets folder of the boats texture image
+     * @param x                  int coordinate for the bottom left point of the boat
+     * @param y                  int coordinate for the bottom left point of the boat
+     * @param w                  int width of the new boat
+     * @param h                  int height of the new boat
+     * @param texture_path       String relative path from the core/assets folder of the boats texture image
      * @param durability_per_hit float percentage (0-1) of the max durability taken each hit
-     * @param name String of the boat seen when the game ends
-     * @param stamina_regen float percentage of stamina regenerated each frame (0-1)
-     * @param stamina_usage float percentage of stamina used each frame when accelerating (0-1)
+     * @param name               String of the boat seen when the game ends
+     * @param stamina_regen      float percentage of stamina regenerated each frame (0-1)
+     * @param stamina_usage      float percentage of stamina used each frame when accelerating (0-1)
      * @author William Walton
      */
     PlayerBoat(int x, int y, int w, int h, String texture_path, String name, float durability_per_hit, float stamina_usage, float stamina_regen) {
@@ -99,7 +99,7 @@ class PlayerBoat extends Boat {
 
     /**
      * Shared initialisation functionality among all constructors.
-     *
+     * <p>
      * Sets stamina bar and durability bar textures and sprites.
      * Initialises the bars' size and position.
      * Initialises camera position.
@@ -125,11 +125,11 @@ class PlayerBoat extends Boat {
 
     /**
      * Sets the spec type of boat.
-     *
-     *  Can be in these states:
-     *   - debug
-     *   - default
-     *   - fast low durability
+     * <p>
+     * Can be in these states:
+     * - debug
+     * - default
+     * - fast low durability
      *
      * @param spec_id int for boat spec
      */
@@ -154,13 +154,14 @@ class PlayerBoat extends Boat {
 
     /**
      * Updates the position based on the user's input.
-     *
+     * <p>
      * 'W' key accelerates the boat.
      * 'A' Turns the boat to the left
      * 'D' Turns the boat to the right
-     *
+     * <p>
      * Updates the x and y position of the sprite with new x and y according to which input has been requested.
      * The camera will follow the player's boat
+     *
      * @author William Walton
      */
     @Override
@@ -192,7 +193,7 @@ class PlayerBoat extends Boat {
 
     /**
      * Returns the all sprites for PlayerBoat UI.
-     *
+     * <p>
      * This includes the stamina bar and durability bar.
      *
      * @return List of Sprites
@@ -215,7 +216,9 @@ class PlayerBoat extends Boat {
         return camera;
     }
 
-    /** Resets PlayerBoat Camera position */
+    /**
+     * Resets PlayerBoat Camera position
+     */
     public void resetCameraPos() {
         camera.position.set(sprite.getX(), Gdx.graphics.getHeight() / 3, 0);
         camera.update();
@@ -223,13 +226,12 @@ class PlayerBoat extends Boat {
 
     /**
      * Update the position and size of the UI elements (e.g. stamina bar and durability bar) according to their values.
-     *
-     *
+     * <p>
+     * <p>
      * The stamina decreases as player requests the boat to row and move. It increases when this is not the case.
      * Durability decreases according to the collisions with other obstacles.
      * Dynamically updates the size of the stamina bar and durability bar
      * based on the PlayerBoat attributes as they change.
-     *
      */
     private void updateUISprites() {
         stamina_bar.setPosition(-ui_bar_width / 2 + sprite.getX() + sprite.getWidth() / 2, -50 + sprite.getY());

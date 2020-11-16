@@ -26,7 +26,7 @@ interface Scene {
     /**
      * Resize method if needed for camera extension.
      *
-     * @param width Integer width to be resized to
+     * @param width  Integer width to be resized to
      * @param height Integer height to be resized to
      */
     void resize(int width, int height);

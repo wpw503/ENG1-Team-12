@@ -1,10 +1,7 @@
 package com.teamonehundred.pixelboat;
 
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
 
 import java.util.List;
 
@@ -28,6 +25,7 @@ class AIBoat extends Boat {
     /* ################################### //
               CONSTRUCTORS
     // ################################### */
+
     /**
      * Construct a AIBoat object at point (x,y) with default size, texture and animation.
      *
@@ -45,10 +43,10 @@ class AIBoat extends Boat {
      * Construct a AIBoat object with at point (x,y) with width and height and texture path
      * with default stats (stamina usage, durability, etc).
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
-     * @param w int width of the new boat
-     * @param h int height of the new boat
+     * @param x            int coordinate for the bottom left point of the boat
+     * @param y            int coordinate for the bottom left point of the boat
+     * @param w            int width of the new boat
+     * @param h            int height of the new boat
      * @param texture_path String relative path from the core/assets folder of the boats texture image
      * @author James Frost
      */
@@ -61,15 +59,15 @@ class AIBoat extends Boat {
     /**
      * Construct a AIBoat object with all parameters specified.
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
-     * @param w int width of the new boat
-     * @param h int height of the new boat
-     * @param texture_path String relative path from the core/assets folder of the boats texture image
+     * @param x                  int coordinate for the bottom left point of the boat
+     * @param y                  int coordinate for the bottom left point of the boat
+     * @param w                  int width of the new boat
+     * @param h                  int height of the new boat
+     * @param texture_path       String relative path from the core/assets folder of the boats texture image
      * @param durability_per_hit float percentage (0-1) of the max durability taken each hit
-     * @param name String of the boat seen when the game ends
-     * @param stamina_regen float percentage of stamina regenerated each frame (0-1)
-     * @param stamina_usage float percentage of stamina used each frame when accelerating (0-1)
+     * @param name               String of the boat seen when the game ends
+     * @param stamina_regen      float percentage of stamina regenerated each frame (0-1)
+     * @param stamina_usage      float percentage of stamina used each frame when accelerating (0-1)
      * @author James Frost
      */
     AIBoat(int x, int y, int w, int h, String texture_path, String name, float durability_per_hit, float stamina_usage, float stamina_regen) {
@@ -81,9 +79,10 @@ class AIBoat extends Boat {
 
     /**
      * Shared initialisation functionality among all constructors.
-     *
+     * <p>
      * Initialises the ray properties. Rays are used to help the AI control the boat based on visual feedback
      * of its environment i.e. obstacles such as movable obstacles and static lane wall obstacles.
+     *
      * @author James Frost
      */
     public void initialise() {
@@ -96,7 +95,7 @@ class AIBoat extends Boat {
 
     /**
      * Updates position of objects AIBoat based on acceleration and stamina.
-     *
+     * <p>
      * Checks if AIBoat can turn and updates position accordingly based on any collision objects that may overlap.
      *
      * @param collidables List of Collision Objects
@@ -140,18 +139,6 @@ class AIBoat extends Boat {
      * @author James Frost
      */
     protected Vector2 get_ray_fire_point() {
-//        List<Float> coordinates = new ArrayList<>();
-//        float o_x = sprite.getX() + (sprite.getWidth() / 2);
-//        float o_y = sprite.getY() + (sprite.getHeight());
-//        float mod_a = (float) Math.sqrt(Math.pow(sprite.getX() - o_x, 2) + Math.pow(sprite.getY() - o_y, 2));
-//        float dx = mod_a * (float) Math.sin(Math.abs(Math.toRadians(sprite.getRotation())));
-//        float dy = mod_a * (float) Math.cos(Math.abs(Math.toRadians(sprite.getRotation())));
-//        if (sprite.getRotation() > 0) {
-//            dx = -dx;
-//        }
-//        coordinates.add(o_x + dx);
-//        coordinates.add(o_y);
-//        return coordinates;
         Vector2 p = new Vector2(
                 sprite.getX() + (sprite.getWidth() / 2),
                 sprite.getY() + (sprite.getHeight()));
@@ -200,63 +187,26 @@ class AIBoat extends Boat {
                 //check if there is a collision hull (other than self) at (tempx, tempy)
                 for (CollisionObject collideable : collidables) {
                     // very lazy way of optimising this code. will break if the collidable isn't an obstacle
-                    if(collideable.isShown() &&
-                            ((Obstacle)collideable).getSprite().getY()>sprite.getY()-200 &&
-                            ((Obstacle)collideable).getSprite().getY()<sprite.getY()+200 &&
-                            ((Obstacle)collideable).getSprite().getX()>sprite.getX()-200 &&
-                            ((Obstacle)collideable).getSprite().getX()<sprite.getX()+200)
-                    for (Shape2D bound : collideable.getBounds().getShapes()) {
-                        if (bound.contains((float) tempx, (float) tempy)) {
-                            if (cheeky_bit_of_coding) {
-                                turn(-1);
-                                return;
-                            } else {
-                                turn(1);
-                                return;
-                            }
+                    if (collideable.isShown() &&
+                            ((Obstacle) collideable).getSprite().getY() > sprite.getY() - 200 &&
+                            ((Obstacle) collideable).getSprite().getY() < sprite.getY() + 200 &&
+                            ((Obstacle) collideable).getSprite().getX() > sprite.getX() - 200 &&
+                            ((Obstacle) collideable).getSprite().getX() < sprite.getX() + 200)
+                        for (Shape2D bound : collideable.getBounds().getShapes()) {
+                            if (bound.contains((float) tempx, (float) tempy)) {
+                                if (cheeky_bit_of_coding) {
+                                    turn(-1);
+                                    return;
+                                } else {
+                                    turn(1);
+                                    return;
+                                }
 
+                            }
                         }
-                    }
 
                 }
             }
         }
-
-// Code before refactor:
-//        Vector3 ray_origin = new Vector3(get_ray_fire_point(), 0);
-//        for (float dist = 0; dist <= ray_range; dist += ray_step_size)
-//            for (int i = 0; i < number_of_rays; i++) {
-//                float ray_angle = sprite.getRotation() + (ray_angle_range / number_of_rays) * (i - number_of_rays / 2);
-//                Vector3 ray_dir = new Vector3((float) Math.cos(Math.toRadians(ray_angle)) * dist, (float) Math.sin(Math.toRadians(ray_angle)) * dist, 0);
-//                Ray r = new Ray(ray_origin, ray_dir);
-//                for (CollisionObject collideable : collidables) {
-//                    if (collideable.isShown())
-//                        if (collideable instanceof ObstacleLaneWall) {
-//                            for (Shape2D bound : collideable.getBounds().getShapes()) {
-//                                if (bound.contains((float) Math.cos(Math.toRadians(ray_angle)) * dist + ray_origin.x, (float) Math.sin(Math.toRadians(ray_angle)) * dist+ ray_origin.y)) {
-//                                    if (i < number_of_rays / 2)
-//                                        turn(1);
-//                                    else
-//                                        turn(-1);
-//
-//                                    return;
-//
-//                                }
-//                            }
-//                        } else {
-//                            if (Intersector.intersectRaySphere(r, new Vector3(collideable.getBounds().origin, 0), 40, null)) {
-//                                if (i < number_of_rays / 2)
-//                                    turn(1);
-//                                else
-//                                    turn(-1);
-//
-//                                return;
-//                            }
-//                        }
-//
-//                }
-//            }
-
     }
-
 }

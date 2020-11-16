@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Represents a CollisionBounds object.
- *
+ * <p>
  * Helps to control functionality for objects colliding by defining bounds that are used for identifying collisions.
  *
  * @author James Frost
@@ -23,7 +23,7 @@ class CollisionBounds {
 
     /**
      * Main constructor for CollisionBounds.
-     *
+     * <p>
      * Initialises bounds list, rotation and coordinates.
      */
     CollisionBounds() {
@@ -45,9 +45,9 @@ class CollisionBounds {
     /**
      * Returns polygon for CollisionBounds.
      *
-     * @param r1 Rectangle representing shape of object
+     * @param r1   Rectangle representing shape of object
      * @param rot1 float for rotation of object
-     * @param o1 Vector2 position vector
+     * @param o1   Vector2 position vector
      * @return polygon for CollisionBounds of object.
      */
     private Polygon getPolygon(Rectangle r1, float rot1, Vector2 o1) {
@@ -71,8 +71,10 @@ class CollisionBounds {
         return pr1;
     }
 
-    /** Returns the list of polygons */
-    public List<Polygon> getPolygons(){
+    /**
+     * Returns the list of polygons
+     */
+    public List<Polygon> getPolygons() {
         List<Polygon> ret = new ArrayList<>();
 
         for (Shape2D my_bound : bounds)
@@ -102,6 +104,7 @@ class CollisionBounds {
 
     /**
      * Gets the centre coordinate of the sprite
+     *
      * @return Vector2
      */
     public Vector2 getOrigin() {
@@ -128,7 +131,7 @@ class CollisionBounds {
 
     /**
      * Returns true if objects have collided according to their collision boundaries.
-     *
+     * <p>
      * Note: only works for rectangles, but could be expanded to check for other shape types
      *
      * @param collider CollisionBounds to be checked to see if there is a collision.
@@ -152,12 +155,12 @@ class CollisionBounds {
      * Returns true if objects have collided according to their
      * collision boundaries overlapping rectangle upon rectangle.
      *
-     * @param r1 Rectangle area of the sprite
+     * @param r1   Rectangle area of the sprite
      * @param rot1 float rotation of the sprite
-     * @param o1 Vector2 centre coordinate of the sprite
-     * @param r2 Rectangle area of the second sprite
+     * @param o1   Vector2 centre coordinate of the sprite
+     * @param r2   Rectangle area of the second sprite
      * @param rot2 float rotation of the second sprite
-     * @param o2 Vector2 centre coordinate of the second sprite
+     * @param o2   Vector2 centre coordinate of the second sprite
      * @return boolean
      */
     public boolean rectOnRectCollides(Rectangle r1, float rot1, Vector2 o1, Rectangle r2, float rot2, Vector2 o2) {
