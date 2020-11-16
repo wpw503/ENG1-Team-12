@@ -113,6 +113,13 @@ body {
     font-size: 14px;
 }
 
+#gantt {
+    width: 48%;
+    height: auto;
+    display: block;
+    position: relative;
+}
+
 @-webkit-keyframes tabFade {
     from {opacity: 0;}
     to {opacity: 1;}
