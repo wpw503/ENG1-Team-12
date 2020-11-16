@@ -34,9 +34,9 @@ class SceneMainGame implements Scene {
     protected Texture bg;
 
     protected BoatRace race;
-    protected ResultsScreen results;
+    protected SceneResultsScreen results;
+    protected SceneBoatSelection boat_selection;
 
-    protected boolean in_results = false;
     protected boolean last_run = false;
 
     /**
@@ -60,8 +60,6 @@ class SceneMainGame implements Scene {
 
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-
-        results = new ResultsScreen(all_boats);
 
         race = new BoatRace(all_boats.subList(0, boats_per_race));
         leg_number++;
@@ -92,12 +90,10 @@ class SceneMainGame implements Scene {
         batch.setProjectionMatrix(player.getCamera().combined);
 
         batch.begin();
-        if (in_results) {
-            results.draw(batch);
-        } else {
-            batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
-            race.draw(batch);
-        }
+
+        batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
+        race.draw(batch);
+
         batch.end();
     }
 
@@ -110,73 +106,87 @@ class SceneMainGame implements Scene {
      * @author William Walton
      */
     public int update() {
-        if (in_results || last_run) {
-            in_results = results.update();
-            //if(!in_results) startBackgroundRaces();
-        } else {
-            if (player.hasFinishedLeg()) {
-                while (!race.isFinished()) race.runStep();
-            }
-            if (!race.isFinished()) race.runStep();
-                // only run 3 guaranteed legs
-            else if (leg_number < 3) {
-                race = new BoatRace(all_boats.subList(0, boats_per_race));
-
-                leg_number++;
-                in_results = true;
-
-                // generate some "realistic" times for all boats not shown
-                for (int i = boats_per_race; i < all_boats.size(); i++){
-                    all_boats.get(i).setStartTime(0);
-                    all_boats.get(i).setEndTime((long)(13000 + 7000*Math.random()));
-                    all_boats.get(i).setLegTime();
-                }
-
-//                for (int i = 0; i < groups_per_game - 1; i++) {
-//                    try {
-//                        threads[i].join();
-//                    } catch (InterruptedException e) {
-//                        System.out.println("Main thread Interrupted");
-//                    }
-//                }
-            } else {
-                // sort boats based on best time
-                Collections.sort(all_boats, new Comparator<Boat>() {
-                    @Override
-                    public int compare(Boat b1, Boat b2) {
-                        return (int) (b1.getBestTime() - b2.getBestTime());
-                    }
-                });
-
-                race = new BoatRace(all_boats.subList(0, boats_per_race));
-                in_results = true;
-                last_run = true;
-            }
+        if (player.hasFinishedLeg()) {
+            while (!race.isFinished()) race.runStep();
         }
+        if (!race.isFinished()) race.runStep();
+            // only run 3 guaranteed legs
+        else if (leg_number < 3) {
+            race = new BoatRace(all_boats.subList(0, boats_per_race));
+
+            leg_number++;
+
+
+            // generate some "realistic" times for all boats not shown
+            for (int i = boats_per_race; i < all_boats.size(); i++) {
+                all_boats.get(i).setStartTime(0);
+                all_boats.get(i).setEndTime((long) (50000 + 10000 * Math.random()));
+                all_boats.get(i).setLegTime();
+            }
+
+            return 4;
+
+        } else if (leg_number == 3){
+            // sort boats based on best time
+            Collections.sort(all_boats, new Comparator<Boat>() {
+                @Override
+                public int compare(Boat b1, Boat b2) {
+                    return (int) (b1.getBestTime() - b2.getBestTime());
+                }
+            });
+
+            race = new BoatRace(all_boats.subList(0, boats_per_race));
+            last_run = true;
+            leg_number++;
+
+            return 4;
+        }
+
+        // stay in results after all legs done
+        if (race.isFinished() && leg_number > 3) return 4;
+
 
         return scene_id;
     }
 
-//    private void startBackgroundRaces(){
-//        // run all boats in the background
-//        threads = new RaceThread[groups_per_game - 1];
-//        for (int i = 1; i < groups_per_game; i++) {
-//            threads[i - 1] = new RaceThread(all_boats.subList(boats_per_race * i, (boats_per_race * (i + 1))));
-//            threads[i - 1].start();
-//        }
-//    }
-
     /**
-     * TODO Finish DocString if needed
+     * Resize method if for camera extension.
      *
-     * @param width
-     * @param height
+     * @param width Integer width to be resized to
+     * @param height Integer height to be resized to
+     * @author Umer Fakher
      */
     public void resize(int width, int height) {
         player.getCamera().viewportHeight = height;
         player.getCamera().viewportWidth = width;
     }
 
+    /**
+     * Getter method for returning list of boats which contain all boats in scene.
+     *
+     * @return list of boats
+     * @author Umer Fakher
+     */
+    public List<Boat> getAllBoats() {
+        return all_boats;
+    }
+
+    /**
+     *  Setter method for player boat spec in the scene.
+     *
+     * @param spec Integer for player spec.
+     * @author Umer Fakher
+     */
+    public void setPlayerSpec(int spec) {
+        player.setSpec(spec);
+    }
+
+    /**
+     * RaceThread class for Multi-threading.
+     *
+     * @author William Walton
+     * JavaDoc by Umer Fakher
+     */
     private class RaceThread extends Thread {
         List<Boat> boats;
         BoatRace race;
@@ -187,6 +197,12 @@ class SceneMainGame implements Scene {
             race = new BoatRace(this.boats);
         }
 
+        /**
+         * Main run method for RaceThread class.
+         *
+         * Runs race until it has finished.
+         * @author William Walton
+         */
         public void run() {
             while (!race.isFinished()) race.runStep();
 

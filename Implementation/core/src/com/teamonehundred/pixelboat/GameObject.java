@@ -10,8 +10,14 @@ import com.badlogic.gdx.math.Shape2D;
 import java.util.ArrayList;
 
 /**
- * The class that everything visible in the game is derived from.
+ * Represents a game object.
+ *
+ * The GameObject class that everything visible in the game is derived from.
  * Contains texture and positional information.
+ *
+ * @author James Frost
+ * @author William Walton
+ * JavaDoc by Umer Fakher
  */
 abstract class GameObject {
     /* ################################### //
@@ -37,7 +43,15 @@ abstract class GameObject {
                   CONSTRUCTORS
     // ################################### */
 
-    // static texture
+    /**
+     * A constructor for GameObject for static textures.
+     *
+     * @param x int for horizontal position of object
+     * @param y int for vertical position of object
+     * @param w int for width of object
+     * @param h int for height of object
+     * @param texture_path String of object's file path
+     */
     GameObject(int x, int y, int w, int h, final String texture_path) {
         initialise(x, y, w, h, texture_path);
 
@@ -50,6 +64,17 @@ abstract class GameObject {
     }
 
     // animation
+
+    /**
+     * A constructor for GameObject for animation textures.
+     *
+     * @param x int for horizontal position of object
+     * @param y int for vertical position of object
+     * @param w int for width of object
+     * @param h int for height of object
+     * @param texture_path String of object's file path
+     * @param frame_count int frame count
+     */
     GameObject(int x, int y, int w, int h, final String texture_path, int frame_count) {
         initialise(x, y, w, h, texture_path);
 
@@ -65,6 +90,16 @@ abstract class GameObject {
         sprite.setOriginCenter();
     }
 
+    /**
+     * A constructor for GameObject.
+     *
+     * @param x int for horizontal position of object
+     * @param y int for vertical position of object
+     * @param w int for width of object
+     * @param h int for height of object
+     * @param texture Direct Texture
+     * @param frame_count int frame count
+     */
     GameObject(int x, int y, int w, int h, Texture texture, int frame_count){
         this.texture = texture;
         is_shown = true;
@@ -81,12 +116,21 @@ abstract class GameObject {
         sprite.setOriginCenter();
     }
 
+    /**
+     * A constructor for GameObject.
+     *
+     * @param x int for horizontal position of object
+     * @param y int for vertical position of object
+     * @param w int for width of object
+     * @param h int for height of object
+     * @param texture_path String of object's file path
+     */
     void initialise(int x, int y, int w, int h, final String texture_path) {
         texture = new Texture(texture_path);
         is_shown = true;
     }
 
-    // destructor
+    /** Destructor disposes of this texture once it is no longer referenced. */
     protected void finalize() {
         texture.dispose();
     }
@@ -95,23 +139,49 @@ abstract class GameObject {
                     METHODS
     // ################################### */
 
+    /**
+     * Returns true if GameObject should be shown otherwise false.
+     *
+     * @return is_shown boolean
+     */
     public boolean isShown() {
         return is_shown;
     }
 
+    /**
+     * Getter for GameObject sprite.
+     *
+     * @return Sprite
+     */
     public Sprite getSprite() {
         return sprite;
     }
 
+    /**
+     * Returns a new collision bounds object for the GameObject.
+     * <p>
+     *
+     * Creates a new collision bounds object representing the current position of this GameObject.
+     * See the collision bounds visualisation folder in assets for a visual representation.
+     *
+     * @return CollisionBounds object of GameObject
+     *
+     * @author James Frost
+     * @author William Walton
+     */
     public CollisionBounds getBounds() {
-        // create a new collision bounds object representing my current position
-        // see the collision bounds visualisation folder in assets for a visual representation
         CollisionBounds my_bounds = new CollisionBounds();
         Rectangle main_rect = sprite.getBoundingRectangle();  // default is to use whole sprite
         my_bounds.addBound(main_rect);
         return my_bounds;
     }
 
+    /**
+     * Sets GameObject sprite's animation region according to integer passed in as long as the animation
+     * regions is not null.
+     *
+     * @param i int
+     */
     public void setAnimationFrame(int i){
         if(animation_regions != null)
             sprite.setRegion(animation_regions[i%animation_regions.length]);

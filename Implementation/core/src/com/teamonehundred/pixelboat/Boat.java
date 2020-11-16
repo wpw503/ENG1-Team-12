@@ -24,9 +24,9 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected String name = "default boat name";
 
     protected float durability = 1.f;  // from 0 to 1
-    protected float durability_per_hit = .2f;
+    protected float durability_per_hit = .1f;
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    protected float stamina_usage = .005f;  //todo change this after testing
+    protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
@@ -49,10 +49,10 @@ abstract class Boat extends MovableObject implements CollisionObject {
     //default specs
 
     /**
-     * Construct a Boat object with default size, texture and animation at point (x,y)
+     * Construct a Boat object at point (x,y) with default size, texture and animation.
      *
-     * @param x x coordinate for the bottom left point of the boat
-     * @param y y coordinate for the bottom left point of the boat
+     * @param x int coordinate for the bottom left point of the boat
+     * @param y int coordinate for the bottom left point of the boat
      * @author William Walton
      */
     Boat(int x, int y) {
@@ -60,13 +60,14 @@ abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     /**
-     * Construct a Boat object with default stats (stamina usage, durability, etc)
+     * Construct a Boat object with at point (x,y) with width and height and texture path
+     * with default stats (stamina usage, durability, etc).
      *
-     * @param x            x coordinate for the bottom left point of the boat
-     * @param y            y coordinate for the bottom left point of the boat
-     * @param w            the width of the new boat
-     * @param h            the height of the new boat
-     * @param texture_path the relative path from the core/assets folder of the boats texture image
+     * @param x int coordinate for the bottom left point of the boat
+     * @param y int coordinate for the bottom left point of the boat
+     * @param w int width of the new boat
+     * @param h int height of the new boat
+     * @param texture_path String relative path from the core/assets folder of the boats texture image
      * @author William Walton
      */
     Boat(int x, int y, int w, int h, String texture_path) {
@@ -76,17 +77,17 @@ abstract class Boat extends MovableObject implements CollisionObject {
     //specify specs
 
     /**
-     * Construct a Boat object with all parameters specified
+     * Construct a Boat object with all parameters specified.
      *
-     * @param x                  x coordinate for the bottom left point of the boat
-     * @param y                  y coordinate for the bottom left point of the boat
-     * @param w                  the width of the new boat
-     * @param h                  the height of the new boat
-     * @param texture_path       the relative path from the core/assets folder of the boats texture image
-     * @param durability_per_hit the percentage (0-1) of the max durability taken each hit
-     * @param name               the name of the boat seen when the game ends
-     * @param stamina_regen      the percentage of stamina regenerated each frame (0-1)
-     * @param stamina_usage      the percentage of stamina used each frame when accelerating (0-1)
+     * @param x int coordinate for the bottom left point of the boat
+     * @param y int coordinate for the bottom left point of the boat
+     * @param w int width of the new boat
+     * @param h int height of the new boat
+     * @param texture_path String relative path from the core/assets folder of the boats texture image
+     * @param durability_per_hit float percentage (0-1) of the max durability taken each hit
+     * @param name String of the boat seen when the game ends
+     * @param stamina_regen float percentage of stamina regenerated each frame (0-1)
+     * @param stamina_usage float percentage of stamina used each frame when accelerating (0-1)
      * @author William Walton
      */
     Boat(int x, int y, int w, int h, String texture_path, String name,
@@ -151,6 +152,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
         super.updatePosition();
         stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
     }
+
+    // Getter and Setter methods for attributes
 
     public long getFramesRaced() {
         return frames_raced;
@@ -277,6 +280,12 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * @author Umer Fakher
      */
     public void checkCollisions(CollisionObject object) {
+        if(object instanceof Obstacle && !(
+                ((Obstacle)object).getSprite().getY()>sprite.getY()-200 &&
+                ((Obstacle)object).getSprite().getY()<sprite.getY()+200 &&
+                ((Obstacle)object).getSprite().getX()>sprite.getX()-200 &&
+                ((Obstacle)object).getSprite().getX()<sprite.getX()+200))
+            return;
         if (this.getBounds().isColliding(object.getBounds())) {
             if (!(object instanceof ObstacleLaneWall))
                 hasCollided();
@@ -309,6 +318,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return my_bounds;
     }
 
+    // Getters and Setters for has_started_leg and has_finished_leg
+
     public boolean hasFinishedLeg() {
         return has_finished_leg;
     }
@@ -325,12 +336,18 @@ abstract class Boat extends MovableObject implements CollisionObject {
         this.has_started_leg = has_started_leg;
     }
 
+    /** Reset max_speed, durability and stamina to defaults */
     public void reset() {
         this.max_speed = 15;
         this.durability = 1;
         this.stamina = 1;
     }
 
+    /**
+     * Gets current best time for boat from its list of leg_times.
+     *
+     * @return long time in milliseconds.
+     */
     public long getBestTime() {
         long current_best = -1;
 

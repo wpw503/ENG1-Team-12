@@ -28,7 +28,7 @@ class BoatRace{
     protected List<CollisionObject> obstacles;
 
     protected int start_y = 200;
-    protected int end_y = 10000;
+    protected int end_y = 4000; //40000; made shorter for testing
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
@@ -131,24 +131,25 @@ class BoatRace{
                 ((ObstacleLaneWall) c).setAnimationFrame(0);
             }
         }
-        for (int i = 0; i < boats.size(); i++) {
-            // check if any boats have finished
-            if (!boats.get(i).hasFinishedLeg() && boats.get(i).getSprite().getY() > end_y) {
-                // store the leg time in the object
-                boats.get(i).setStartTime(0);
-                boats.get(i).setEndTime((long) (boats.get(i).getStartTime(false) + ((1000.0 / 60.0) * boats.get(i).getFramesRaced())));
-                boats.get(i).setLegTime();
 
-                boats.get(i).setHasFinishedLeg(true);
+        for (Boat boat : boats) {
+            // check if any boats have finished
+            if (!boat.hasFinishedLeg() && boat.getSprite().getY() > end_y) {
+                // store the leg time in the object
+                boat.setStartTime(0);
+                boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced())));
+                boat.setLegTime();
+
+                boat.setHasFinishedLeg(true);
             }
             // check if any boats have started
-            else if (!boats.get(i).hasStartedLeg() && boats.get(i).getSprite().getY() > start_y) {
-                boats.get(i).setStartTime(System.currentTimeMillis());
-                boats.get(i).setHasStartedLeg(true);
-                boats.get(i).setFramesRaced(0);
+            else if (!boat.hasStartedLeg() && boat.getSprite().getY() > start_y) {
+                boat.setStartTime(System.currentTimeMillis());
+                boat.setHasStartedLeg(true);
+                boat.setFramesRaced(0);
             } else {
                 // if not start or end, must be racing
-                boats.get(i).addFrameRaced();
+                boat.addFrameRaced();
             }
         }
 
@@ -164,6 +165,7 @@ class BoatRace{
             } else if (boats.get(i) instanceof PlayerBoat) {
                 boats.get(i).updatePosition();
             }
+
             // check for collisions
             for (CollisionObject obstacle : obstacles) {
                 if (obstacle.isShown())
@@ -176,11 +178,6 @@ class BoatRace{
                 boats.get(i).setTimeToAdd(boats.get(i).getTimeToAdd() + penalty_per_frame);
         }
         is_finished = !not_finished;
-
-        for (CollisionObject c : obstacles) {
-            if (c instanceof Obstacle)
-                ((Obstacle) c).updatePosition();
-        }
     }
 
     public boolean isFinished() {
@@ -289,11 +286,12 @@ class BoatRace{
      */
     public void drawLegTimeDisplay(SpriteBatch batch, Boat b) {
         if (b.getEndTime(false) != -1) {
-            List<Long> legtimes = b.getLegTimes();
-            long i = legtimes.get(legtimes.size() - 1); // get last in leg times list
-            String label = String.format("Leg Time %d (min:sec) = ", legtimes.size()) + "%02d:%02d";
-            drawTimeDisplay(batch, b, label, i, -((PlayerBoat) b).ui_bar_width / 2,
-                    500 - (legtimes.size() * 20) + ((PlayerBoat) b).getSprite().getY());
+            for (long l : b.getLegTimes()){
+                String label = String.format("Leg Time %d (min:sec) = ", b.getLegTimes().indexOf(l)+1) + "%02d:%02d";
+                drawTimeDisplay(batch, b, label, l, -((PlayerBoat) b).ui_bar_width / 2,
+                        500 - ( (b.getLegTimes().indexOf(l)+1) * 20) + ((PlayerBoat) b).getSprite().getY());
+            }
+
         }
     }
 }

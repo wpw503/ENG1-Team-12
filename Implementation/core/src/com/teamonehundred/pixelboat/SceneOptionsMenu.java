@@ -11,6 +11,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * Represents the Options Menu Scene for when the player wants to select/edit the options before the race starts.
+ *
+ * @author William Walton
+ * JavaDoc by Umer Fakher
+ */
 public class SceneOptionsMenu implements Scene {
     protected int scene_id = 2;
 
@@ -41,6 +47,14 @@ public class SceneOptionsMenu implements Scene {
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
 
+    /**
+     * Main constructor for a SceneOptionsMenu.
+     * <p>
+     * Initialises a Scene textures for Options Menu and camera.
+     * When options are hovered over they will change texture indicating what the user is about to select.
+     *
+     * @author William Walton
+     */
     public SceneOptionsMenu() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
@@ -86,6 +100,14 @@ public class SceneOptionsMenu implements Scene {
         back_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), 70);
     }
 
+    /**
+     * Draw function for SceneOptionsMenu.
+     *
+     * Draws Options Menu for the PixelBoat game.
+     *
+     * @param batch SpriteBatch used for drawing to screen.
+     * @author William Walton
+     */
     public void draw(SpriteBatch batch) {
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -102,6 +124,16 @@ public class SceneOptionsMenu implements Scene {
         batch.end();
     }
 
+    /**
+     * Update function for SceneOptionsMenu. Ends SceneOptionsMenu based on user input otherwise stays in scene.
+     *
+     * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
+     * In this case left clicking with the mouse on  the back button will stop the Options Menu Scene
+     * and continue with the Main Menu Scene.
+     *
+     * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
+     * @author William Walton
+     */
     public int update() {
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
@@ -130,6 +162,13 @@ public class SceneOptionsMenu implements Scene {
         return scene_id;
     }
 
+    /**
+     * Temp resize method if needed for camera extension.
+     *
+     * @param width Integer width to be resized to
+     * @param height Integer height to be resized to
+     * @author William Walton
+     */
     public void resize(int width, int height) {
         fill_viewport.update(width, height);
         fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);

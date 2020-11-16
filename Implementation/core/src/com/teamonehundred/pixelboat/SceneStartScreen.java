@@ -11,6 +11,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * Represents the Main Game Scene for when the boat race starts.
+ *
+ * @author William Walton
+ * JavaDoc by Umer Fakher
+ */
 class SceneStartScreen implements Scene {
     protected int scene_id = 0;
 
@@ -28,6 +34,14 @@ class SceneStartScreen implements Scene {
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
 
+    /**
+     * Main constructor for a SceneStartGame.
+     * <p>
+     * Initialises a Scene textures for StartScreen. Including start menu for playing the game and options.
+     * When options are hovered over they will change texture indicating what the user is about to select.
+     *
+     * @author William Walton
+     */
     SceneStartScreen() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
@@ -52,11 +66,21 @@ class SceneStartScreen implements Scene {
         options_sprite.setPosition((fill_camera.viewportWidth / 2) - (options_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) - (options_sprite.getHeight() / 2));
     }
 
-    // destructor
+    /**
+     * Destructor disposes of this texture once it is no longer referenced.
+     */
     protected void finalize() {
         bg.dispose();
     }
 
+    /**
+     * Draw function for SceneStartScreen.
+     *
+     * Draws StartScreen for the PixelBoat game.
+     *
+     * @param batch SpriteBatch used for drawing to screen.
+     * @author William Walton
+     */
     public void draw(SpriteBatch batch) {
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -69,13 +93,21 @@ class SceneStartScreen implements Scene {
         batch.end();
     }
 
+    /**
+     * Update function for SceneStartScreen. Ends SceneStartScreen based on user input otherwise stays in scene.
+     *
+     * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
+     *
+     * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
+     * @author William Walton
+     */
     public int update() {
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
         if (play_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             play_sprite.setTexture(play_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                return 3;
+                return 5;
             }
         } else
             play_sprite.setTexture(play);
@@ -88,9 +120,18 @@ class SceneStartScreen implements Scene {
         } else
             options_sprite.setTexture(options);
 
+        // Stay in SceneStartScreen
         return scene_id;
     }
 
+
+    /**
+     * Resize method if for camera extension.
+     *
+     * @param width Integer width to be resized to
+     * @param height Integer height to be resized to
+     * @author William Walton
+     */
     public void resize(int width, int height) {
         fill_viewport.update(width, height);
         fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
