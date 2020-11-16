@@ -24,7 +24,7 @@ class SceneMainGame implements Scene {
     protected int leg_number = 0;
 
     protected int boats_per_race = 7;
-    protected int groups_per_game = 9;
+    protected int groups_per_game = 3;
 
     protected PlayerBoat player;
     protected List<Boat> all_boats;

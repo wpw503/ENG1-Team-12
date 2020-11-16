@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.List;
 
@@ -21,7 +24,16 @@ class SceneResultsScreen implements Scene {
     protected List<Boat> boats;
     protected BitmapFont font; // For Text Display
 
+    protected Viewport fill_viewport;
+    protected OrthographicCamera fill_camera;
+
     SceneResultsScreen() {
+        fill_camera = new OrthographicCamera();
+        fill_viewport = new FillViewport(1280, 720, fill_camera);
+        fill_viewport.apply();
+        fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
+        fill_viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         boats = null;
 
         // Initialise colour of Text Display Overlay
@@ -42,6 +54,8 @@ class SceneResultsScreen implements Scene {
 
         //If left mouse button is pressed end current scene (a SceneResultsScreen)
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            // don't leave if this is the final results screen
+            for (Boat b : boats) if (b.getLegTimes().size() > 3) return scene_id;
             return 1;
         }
         // otherwise remain in current scene (a SceneResultsScreen)
@@ -63,6 +77,8 @@ class SceneResultsScreen implements Scene {
         //Initialise colouring
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // todo draw using this camera
+        //batch.setProjectionMatrix(fill_camera.combined);
 
         // Find player's boat in list of boats in order to use x and y axis
         PlayerBoat thePlayerBoat = null;
@@ -99,7 +115,7 @@ class SceneResultsScreen implements Scene {
             }
 
             // Shift to next column to allowing wrapping of times as table
-            if (boats.indexOf(b) % 20 == 0) {
+            if (boats.indexOf(b) % 21 == 0) {
                 column_num++;
                 column_idx = 0;
             }
@@ -128,6 +144,8 @@ class SceneResultsScreen implements Scene {
      * @author Umer Fakher
      */
     public void resize(int width, int height) {
+        fill_viewport.update(width, height);
+        fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
     }
 
     /**
