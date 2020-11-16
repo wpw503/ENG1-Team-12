@@ -15,12 +15,12 @@ class AIBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
+    
     protected float number_of_rays;
     protected float ray_angle_range;
     protected float ray_range;
     protected float ray_step_size;
     protected boolean regen;
-
 
     /* ################################### //
               CONSTRUCTORS
