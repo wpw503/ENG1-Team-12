@@ -115,7 +115,8 @@ class SceneStartScreen implements Scene {
         if (options_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             options_sprite.setTexture(options_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                return 2;
+                // todo enable options when implemented
+                //return 2;
             }
         } else
             options_sprite.setTexture(options);
