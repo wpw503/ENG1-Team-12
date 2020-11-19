@@ -111,7 +111,7 @@ class AIBoat extends Boat {
                 regen = true;
             }
         } else {
-            if (stamina >= 0.3) {
+            if (stamina >= 0.5) {
                 regen = false;
             }
         }
