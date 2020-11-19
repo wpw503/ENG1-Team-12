@@ -41,7 +41,7 @@ class BoatRace {
      * <p>
      * Initialises lists of boats and obstacles as well as the colour of the Time Elapsed Overlay.
      *
-     * @param race_boats List<Boat> A list of ai boats and the player boat.
+     * @param race_boats List of Boat A list of ai boats and the player boat.
      * @author William Walton
      * @author Umer Fakher
      * JavaDoc by Umer Fakher
@@ -187,7 +187,7 @@ class BoatRace {
     /**
      * Returns a list of all sprites in the PixelBoat game including boats and obstacles.
      *
-     * @return List<Sprites> A list of all sprites in the PixelBoat game.
+     * @return List of Sprites A list of all sprites in the PixelBoat game.
      * @author William Walton
      * @author Umer Fakher
      */

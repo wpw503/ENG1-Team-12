@@ -227,7 +227,6 @@ class PlayerBoat extends Boat {
     /**
      * Update the position and size of the UI elements (e.g. stamina bar and durability bar) according to their values.
      * <p>
-     * <p>
      * The stamina decreases as player requests the boat to row and move. It increases when this is not the case.
      * Durability decreases according to the collisions with other obstacles.
      * Dynamically updates the size of the stamina bar and durability bar

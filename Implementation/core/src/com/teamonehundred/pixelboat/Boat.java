@@ -246,7 +246,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Returns recorded leg times of this boat.
      *
-     * @return List<Long> Returns a list of long types in milliseconds.
+     * @return List of Long Returns a list of long types in milliseconds.
      * @author Umer Fakher
      */
     public List<Long> getLegTimes() {
