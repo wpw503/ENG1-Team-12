@@ -21,6 +21,8 @@ This repository contains documentation and Java code for the single player, Java
 * Risk assessment and mitigation (Work In Progress)
 * Implementation (Work In Progress)
 
+## Production
+![Gantt Chart](https://github.com/wpw503/ENG1-Team-12/blob/main/images/gantt_chart.png?raw=true)
 
 ## Inspiration
 
