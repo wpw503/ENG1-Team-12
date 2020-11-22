@@ -16,10 +16,10 @@ This repository contains documentation and Java code for the single player, Java
 
 ## Documentation
 * [User Requirements](https://github.com/wpw503/ENG1-Team-12/blob/main/Documentation/Req1.pdf)
-* Architecture (Work In Progress)
-* Method selection and planning (Work In Progress)
-* Risk assessment and mitigation (Work In Progress)
-* Implementation (Work In Progress)
+* [Architecture](https://github.com/wpw503/ENG1-Team-12/tree/main/Documentation/Arch1.pdf)
+* [Method selection and planning](https://github.com/wpw503/ENG1-Team-12/tree/main/Documentation/Plan1.pdf)
+* [Risk assessment and mitigation](https://github.com/wpw503/ENG1-Team-12/tree/main/Documentation/Risk1.pdf)
+* [Implementation](https://github.com/wpw503/ENG1-Team-12/tree/main/Documentation/Impl1.pdf)
 
 ## Production
 ![Gantt Chart](https://github.com/wpw503/ENG1-Team-12/blob/main/images/gantt_chart.png?raw=true)
