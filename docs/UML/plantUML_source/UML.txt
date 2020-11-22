@@ -1,4 +1,5 @@
 @startuml
+
 class AIBoat
 abstract class Boat
 class BoatRace
@@ -187,7 +188,6 @@ abstract class GameObject {
   h:integer,texture_path:final String):void
   finalize():void
   isShown():boolean
-  getSprite():Sprite
   getBounds():CollisionBounds
   setAnimationFrame(i:integer):void
 }
@@ -230,25 +230,10 @@ abstract class Boat{
   #has_started_leg:boolean
   
   hasCollided():void
-  getFramesRaced():long
-  setFramesRaced():void
   addFrameRaced(frames_raced:long):void
-  getName():String
-  setName(name:String):void
-  setStartTime(start_time:long):void
-  getStartTime(inSeconds:boolean):long
-  setEndTime(long end_time):void
-  getEndTime(inSeconds:boolean):long
   getCalcTime():long
   setLegTime():void
-  getLegTimes():long[0..n]
-  getTimeToAdd():long
-  setTimeToAdd(time_to_add:long):void
   checkCollisions(object:CollisionObject):void
-  hasFinishedLeg():boolean
-  setHasFinishedLeg(has_finished_leg:boolean):void
-  hasStartedLeg():boolean
-  setHasStartedLeg(has_started_leg:boolean):void
   reset():void
   getBestTime():long
   
@@ -279,7 +264,6 @@ class PlayerBoat{
   initialise():void
   updatePosition():void
   getUISprites():Sprite[0..n]
-  getCamera():OrthographicCamera
   resetCameraPos():void
   updaetUISprites():void 
 }
@@ -311,10 +295,6 @@ class CollisionBounds{
   
   getShapes():Shape2D[0..n]
   getPolygon(r1:Rectangle, rot1:float, o1:Vector2):Polygon
-  getRotation():float
-  setRotation(new_rotation:float):void
-  getOrigin():Vector2
-  setOrigin(o:Vector2):void
   addBound(new_bound:Shape2D):void
   isColliding(collider:CollisionBounds):boolean
   rectOnRectCollides(r1:Rectangle, rot1:float, o1:Vector2, r2:Rectangle, rot2:float, o2:Vector2):boolean
