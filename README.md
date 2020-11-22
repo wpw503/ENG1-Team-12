@@ -39,7 +39,7 @@ University of York Engineering 1 Cohort 2 Team 12:
 * [@WilliamWalton](https://github.com/wpw503)
 * [@RichardLiiv](https://github.com/sumsare)
 * [@OllyWortley](https://github.com/orw511)
-* @JoeCambridge
+* [@JoeCambridge](https://github.com/JoeCambridge)
 
 ## References
 
