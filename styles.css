@@ -111,6 +111,7 @@ body {
 
 .section > ul {
     font-size: 14px;
+    line-height: 16px;
 }
 
 #gantt {
