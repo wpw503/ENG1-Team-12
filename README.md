@@ -43,4 +43,5 @@ University of York Engineering 1 Cohort 2 Team 12:
 
 ## References
 
+* LibGDX Java Game development library: https://libgdx.badlogicgames.com/
 * Software Engineering Skills Development: I. Sommerville, Software Engineering, Pearson Education, 2008
