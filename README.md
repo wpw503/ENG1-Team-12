@@ -22,7 +22,7 @@ This repository contains documentation and Java code for the single player, Java
 * [Implementation](https://github.com/wpw503/ENG1-Team-12/tree/main/Documentation/Impl1.pdf)
 
 ## Production
-![Gantt Chart](https://github.com/wpw503/ENG1-Team-12/blob/main/images/gantt_chart.png?raw=true)
+![Gantt Chart](https://github.com/wpw503/ENG1-Team-12/blob/main/images/week8.png?raw=true)
 
 ## Inspiration
 
