@@ -1,4 +1,4 @@
-![logo](https://github.com/wpw503/ENG1-Team-12/blob/main/images/new_logo_t.png?raw=true)
+# Dragon Boat Racing 2022
 
 # ENG1-Team-12
 
