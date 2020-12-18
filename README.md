@@ -1,11 +1,27 @@
-# Dragon Boat Racing 2022
+# pixel-boat
 
-# ENG1-Team-12
+Originally developed by ENG1-Team-12
 
 This repository is for developing the single player, Java-based game inspired by the Annual Dragon Boat Race in York.
 
+## Developing (IntelliJ IDEA)
 
-## [Website](https://wpw503.github.io/ENG1-Team-12/)
+After cloning the repo you will want to open it in the IDE.
+
+Then you will want to open `Edit Run/Debug Configurations` available on the top bar.
+Add a new `application` then you will want to configure it with the following options:
+
+Main class: `com.hardgforgif.dragonboatracing.desktop.DesktopLauncher`  
+Working directory: `complete path to cloned repo\game\desktop\src\assets`  
+Use classpath of module: `game.desktop.main`  
+
+Then select the new configuration, and you will be able to run it.
+
+## Releasing
+
+gradlew desktop:dist
+
+## Original website
 
 Team 12 Assessment Website.
 Please click the link: https://wpw503.github.io/ENG1-Team-12/
