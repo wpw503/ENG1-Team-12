@@ -5,6 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.teamonehundred.pixelboat.entities.AIBoat;
+import com.teamonehundred.pixelboat.entities.Boat;
+import com.teamonehundred.pixelboat.entities.CollisionObject;
+import com.teamonehundred.pixelboat.entities.Obstacle;
+import com.teamonehundred.pixelboat.entities.ObstacleBranch;
+import com.teamonehundred.pixelboat.entities.ObstacleDuck;
+import com.teamonehundred.pixelboat.entities.ObstacleFloatingBranch;
+import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
+import com.teamonehundred.pixelboat.entities.PlayerBoat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +25,7 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class BoatRace {
+public class BoatRace {
     protected List<Boat> boats;
 
     protected BitmapFont font; //TimingTest
@@ -46,7 +55,7 @@ class BoatRace {
      * @author Umer Fakher
      * JavaDoc by Umer Fakher
      */
-    BoatRace(List<Boat> race_boats) {
+    public BoatRace(List<Boat> race_boats) {
         lane_sep = new Texture("lane_buoy.png");
         start_banner = new Texture("start_banner.png");
         bleachers_l = new Texture("bleachers_l.png");

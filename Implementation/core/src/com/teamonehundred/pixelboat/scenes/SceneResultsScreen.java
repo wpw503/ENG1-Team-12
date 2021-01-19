@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.teamonehundred.pixelboat.entities.Boat;
+import com.teamonehundred.pixelboat.entities.PlayerBoat;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class SceneResultsScreen implements Scene {
+public class SceneResultsScreen implements Scene {
     protected int scene_id = 4;
 
     protected List<Boat> boats;
@@ -27,7 +29,7 @@ class SceneResultsScreen implements Scene {
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
 
-    SceneResultsScreen() {
+    public SceneResultsScreen() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
         fill_viewport.apply();

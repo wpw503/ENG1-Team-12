@@ -3,6 +3,7 @@ package com.teamonehundred.pixelboat;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.teamonehundred.pixelboat.scenes.*;
 
 /**
  * Main class for the PixelBoat game.

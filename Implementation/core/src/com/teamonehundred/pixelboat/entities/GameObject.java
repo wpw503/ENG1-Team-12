@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-abstract class GameObject {
+public abstract class GameObject {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -31,7 +31,7 @@ abstract class GameObject {
     /**
      * Stores the texture of the object and positional information (x and y coordinates, width and height, rotation)
      */
-    protected Sprite sprite;
+    public Sprite sprite;
     /**
      * Used to determine if the object should be rendered or not. Also used in collision detection
      */

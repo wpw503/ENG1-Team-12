@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.scenes;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-interface Scene {
+public interface Scene {
     /**
      * Draw method for displaying text and objects onto the screen.
      *

@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 
@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-abstract class Obstacle extends MovableObject implements CollisionObject {
+public abstract class Obstacle extends MovableObject implements CollisionObject {
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */

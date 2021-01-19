@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class PlayerBoat extends Boat {
+public class PlayerBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -29,7 +29,7 @@ class PlayerBoat extends Boat {
     protected Sprite stamina_bar;
     protected Sprite durability_bar;
 
-    protected int ui_bar_width = 500;
+    public int ui_bar_width = 500;
 
     /* ################################### //
                   CONSTRUCTORS
@@ -42,7 +42,7 @@ class PlayerBoat extends Boat {
      * @param y int coordinate for the bottom left point of the boat
      * @author William Walton
      */
-    PlayerBoat(int x, int y) {
+    public PlayerBoat(int x, int y) {
         super(x, y);
 
         initialise();

@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class SceneBoatSelection implements Scene {
+public class SceneBoatSelection implements Scene {
     protected int scene_id = 5;
 
     protected boolean is_new_click = false;

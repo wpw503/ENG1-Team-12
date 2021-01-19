@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.entities;
 
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author James Frost
  * JavaDoc by Umer Fakher
  */
-class AIBoat extends Boat {
+public class AIBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -33,7 +33,7 @@ class AIBoat extends Boat {
      * @param y int coordinate for the bottom left point of the boat
      * @author James Frost
      */
-    AIBoat(int x, int y) {
+    public AIBoat(int x, int y) {
         super(x, y);
 
         initialise();

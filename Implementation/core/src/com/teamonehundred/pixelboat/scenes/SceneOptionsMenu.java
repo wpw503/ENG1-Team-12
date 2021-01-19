@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

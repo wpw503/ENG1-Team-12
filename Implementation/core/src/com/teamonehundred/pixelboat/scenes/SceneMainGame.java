@@ -1,9 +1,13 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.teamonehundred.pixelboat.entities.AIBoat;
+import com.teamonehundred.pixelboat.entities.Boat;
+import com.teamonehundred.pixelboat.BoatRace;
+import com.teamonehundred.pixelboat.entities.PlayerBoat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +21,7 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class SceneMainGame implements Scene {
+public class SceneMainGame implements Scene {
 
     protected int scene_id = 1;
 
@@ -44,7 +48,7 @@ class SceneMainGame implements Scene {
      *
      * @author William Walton
      */
-    SceneMainGame() {
+    public SceneMainGame() {
         player = new PlayerBoat(-15, 0);
         player.setName("Player");
         all_boats = new ArrayList<>();

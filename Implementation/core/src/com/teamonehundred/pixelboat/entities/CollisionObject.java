@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.entities;
 
 /**
  * Represents the CollisionObject as an interface.
@@ -7,7 +7,7 @@ package com.teamonehundred.pixelboat;
  * @author William Walton
  * @author Umer Fakher
  */
-interface CollisionObject {
+public interface CollisionObject {
     /**
      * Called when this object collides with something
      */

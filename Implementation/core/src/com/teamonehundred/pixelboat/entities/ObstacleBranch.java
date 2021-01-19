@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.entities;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class ObstacleBranch extends Obstacle {
+public class ObstacleBranch extends Obstacle {
 
     /**
      * A constructor for an Obstacle taking its position (x and y).
@@ -22,7 +22,7 @@ class ObstacleBranch extends Obstacle {
      * @author James Frost
      * @author William Walton
      */
-    ObstacleBranch(int x, int y) {
+    public ObstacleBranch(int x, int y) {
         super(x, y, 60, 60, "obstacle_branch.png");
         sprite.setRotation(-90 + (float) Math.random() * 180);
     }

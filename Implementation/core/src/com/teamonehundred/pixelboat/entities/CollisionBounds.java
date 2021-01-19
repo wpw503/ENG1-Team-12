@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.entities;
 
 import com.badlogic.gdx.math.*;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class CollisionBounds {
+public class CollisionBounds {
 
     // Class attributes
     protected List<Shape2D> bounds;  // shapes that represent the area of the object

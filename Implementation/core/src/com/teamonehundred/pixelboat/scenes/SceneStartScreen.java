@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class SceneStartScreen implements Scene {
+public class SceneStartScreen implements Scene {
     protected int scene_id = 0;
 
     protected Texture bg;
@@ -42,7 +42,7 @@ class SceneStartScreen implements Scene {
      *
      * @author William Walton
      */
-    SceneStartScreen() {
+    public SceneStartScreen() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
         fill_viewport.apply();

@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -33,7 +33,7 @@ public class SceneTutorial implements Scene {
      *
      * @author William Walton
      */
-    SceneTutorial() {
+    public SceneTutorial() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
         fill_viewport.apply();

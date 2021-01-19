@@ -1,4 +1,4 @@
-package com.teamonehundred.pixelboat;
+package com.teamonehundred.pixelboat.entities;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author William Walton
  * @author Umer Fakher
  */
-abstract class Boat extends MovableObject implements CollisionObject {
+public abstract class Boat extends MovableObject implements CollisionObject {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -37,8 +37,8 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected int current_animation_frame = 0;
     protected int frames_elapsed = 0;
 
-    protected boolean has_finished_leg = false;
-    protected boolean has_started_leg = false;
+    public boolean has_finished_leg = false;
+    public boolean has_started_leg = false;
 
     /* ################################### //
                   CONSTRUCTORS
