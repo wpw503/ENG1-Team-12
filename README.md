@@ -1,5 +1,6 @@
 ![logo](https://github.com/wpw503/ENG1-Team-12/blob/main/images/new_logo_t.png?raw=true)
 
+![Java CI with Gradle](https://github.com/Frinksy/PixelBoat/workflows/Java%20CI%20with%20Gradle/badge.svg)
 # ENG1-Team-12
 
 This repository is for developing the single player, Java-based game inspired by the Annual Dragon Boat Race in York.
