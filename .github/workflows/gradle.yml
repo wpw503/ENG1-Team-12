@@ -7,10 +7,12 @@ on:
   push:
     paths: 
       - 'Implementation/**'
+      - '.github/workflows/**'
     branches: [ main ]
   pull_request:
     paths: 
       - 'Implementation/**'
+      - '.github/workflows/**'
     branches: [ main ]
 
 jobs:
