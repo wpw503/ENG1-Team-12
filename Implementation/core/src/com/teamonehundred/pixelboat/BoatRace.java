@@ -14,7 +14,6 @@ import com.teamonehundred.pixelboat.entities.ObstacleDuck;
 import com.teamonehundred.pixelboat.entities.ObstacleFloatingBranch;
 import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
 import com.teamonehundred.pixelboat.entities.PlayerBoat;
-import com,badlogic.gdx
 import java.util.ArrayList;
 import java.util.List;
 
