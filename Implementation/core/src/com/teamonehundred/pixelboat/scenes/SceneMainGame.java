@@ -27,8 +27,8 @@ public class SceneMainGame implements Scene {
 
     protected int leg_number = 0;
 
-    protected int boats_per_race = 7;
-    protected int groups_per_game = 3;
+    protected int boats_per_race = 5;
+    protected int groups_per_game = 1;
 
     protected PlayerBoat player;
     protected List<Boat> all_boats;
@@ -107,8 +107,9 @@ public class SceneMainGame implements Scene {
      */
     public int update() {
         if (player.hasFinishedLeg()) {
-            while (!race.isFinished()) race.runStep();
-        }
+            // while (!race.isFinished()) race.runStep();
+            race.estimateEndTimes();
+        }  
         if (!race.isFinished()) race.runStep();
             // only run 3 guaranteed legs
         else if (leg_number < 3) {

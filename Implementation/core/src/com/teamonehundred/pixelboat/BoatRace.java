@@ -302,4 +302,43 @@ public class BoatRace {
 
         }
     }
+    /**
+     * Estimates the times for all boats at the end of a race. 
+     * It also sets the boats to the finished state. The race is also set to finished.
+     * @author Adam Blanchet
+     */
+    public void estimateEndTimes() {
+
+        // Loop through all the boats that haven't finished the leg
+
+        for (Boat boat: boats) {
+
+            if (!boat.hasFinishedLeg()) {
+
+                boat.setStartTime(0);
+                
+                // TODO: make sure this is accurate enough
+                // Estimate the remaining time: using 50% of max speed as an estimate
+                float distance_to_finish = end_y - boat.getSprite().getY();
+
+                double cruise_speed = boat.max_speed * 0.5;
+
+                float remaining_time = (float) (distance_to_finish / cruise_speed);
+
+                // Set the time for the boat and then set the boat as finished
+                boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced()) + remaining_time));
+                boat.setLegTime();
+
+                boat.setHasFinishedLeg(true);
+
+            }
+
+        }
+
+        // Set the race as finished
+
+        this.is_finished = true;
+
+    }
+
 }
