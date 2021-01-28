@@ -31,9 +31,6 @@ public class PlayerBoat extends Boat {
 
     public int ui_bar_width = 500;
 
-    private static int screen_width = 1920;
-    private static int screen_height = 1080;
-
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */
@@ -121,7 +118,7 @@ public class PlayerBoat extends Boat {
         stamina_bar.setPosition(-ui_bar_width / 2, 5);
         durability_bar.setPosition(-ui_bar_width / 2, 20);
 
-        camera = new OrthographicCamera(screen_width, screen_height);
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(0, Gdx.graphics.getHeight() / 3, 0);
         camera.update();
     }

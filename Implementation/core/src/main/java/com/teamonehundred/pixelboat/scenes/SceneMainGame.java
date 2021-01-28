@@ -27,8 +27,8 @@ public class SceneMainGame implements Scene {
 
     protected int leg_number = 0;
 
-    protected int boats_per_race = 5;
-    protected int groups_per_game = 1;
+    protected int boats_per_race = 7;
+    protected int groups_per_game = 3;
 
     protected PlayerBoat player;
     protected List<Boat> all_boats;
@@ -58,7 +58,7 @@ public class SceneMainGame implements Scene {
             all_boats.add(new AIBoat(0, 40));
             all_boats.get(all_boats.size() - 1).setName("AI Boat " + Integer.toString(i));
         }
-        Collections.swap(all_boats, 0, 2); // move player to middle of first group
+        Collections.swap(all_boats, 0, 3); // move player to middle of first group
 
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
@@ -158,8 +158,8 @@ public class SceneMainGame implements Scene {
      * @author Umer Fakher
      */
     public void resize(int width, int height) {
-        //player.getCamera().viewportHeight = height;
-        //player.getCamera().viewportWidth = width;
+        player.getCamera().viewportHeight = height;
+        player.getCamera().viewportWidth = width;
     }
 
     /**
