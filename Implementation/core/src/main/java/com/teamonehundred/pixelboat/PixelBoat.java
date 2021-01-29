@@ -26,6 +26,7 @@ public class PixelBoat extends ApplicationAdapter {
     // 3 = tutorial
     // 4 = results
     // 5 =boat selection
+    // 6 = difficulty options
     protected int scene_id = 0;
 
     /**
