@@ -111,15 +111,17 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         System.out.println('a');
         System.out.println(name + ' ' + max_speed);
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
-        max_speed -= 1;
+        if (max_speed >= 10){
+            max_speed -= 1;
+        }
+        
     }
 
     public void hasCollidedSpeed() {
         System.out.println('b');
         System.out.println(name + ' ' + max_speed);
-        max_speed += 1;
         if (max_speed <= 20){
-            max_speed = 20;
+            max_speed += 2;
         }
     }
 
