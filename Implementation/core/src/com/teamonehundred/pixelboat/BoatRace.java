@@ -14,6 +14,8 @@ import com.teamonehundred.pixelboat.entities.ObstacleDuck;
 import com.teamonehundred.pixelboat.entities.ObstacleFloatingBranch;
 import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
 import com.teamonehundred.pixelboat.entities.PlayerBoat;
+import com.teamonehundred.pixelboat.entities.PowerUp;
+import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class BoatRace {
     protected Texture bleachers_r;
 
     protected List<CollisionObject> obstacles;
+    protected List<CollisionObject> powerups;
 
     protected int start_y = 200;
     protected int end_y = 40000;
@@ -100,6 +103,13 @@ public class BoatRace {
             }
         }
 
+        powerups = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++)
+            powerups.add(new PowerUpSpeed(
+                    (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+
         // Initialise colour of Time Elapsed Overlay
         font = new BitmapFont();
         font.setColor(Color.RED);
@@ -139,6 +149,11 @@ public class BoatRace {
             if (c instanceof ObstacleLaneWall) {
                 ((ObstacleLaneWall) c).setAnimationFrame(0);
             }
+        }
+
+        for (CollisionObject c : powerups) {
+            if (c instanceof PowerUp)
+                ((PowerUp) c).updatePosition();
         }
 
         for (Boat boat : boats) {
@@ -181,6 +196,11 @@ public class BoatRace {
                     boats.get(i).checkCollisions(obstacle);
             }
 
+            for (CollisionObject powerup : powerups) {
+                if (powerup.isShown())
+                    boats.get(i).checkCollisions(powerup);
+            }
+
             // check if out of lane
             if (boats.get(i).getSprite().getX() > getLaneCentre(i) + lane_width / 2 ||
                     boats.get(i).getSprite().getX() < getLaneCentre(i) - lane_width / 2)
@@ -207,6 +227,12 @@ public class BoatRace {
             // check if can be cast back up
             if (obs instanceof Obstacle && obs.isShown())
                 all_sprites.add(((Obstacle) obs).getSprite());
+        }
+
+        for (CollisionObject pus : powerups) {
+            // check if can be cast back up
+            if (pus instanceof PowerUp && pus.isShown())
+                all_sprites.add(((PowerUp) pus).getSprite());
         }
 
         for (Boat b : boats) {
