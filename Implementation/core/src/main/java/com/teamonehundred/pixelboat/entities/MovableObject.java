@@ -15,7 +15,7 @@ public abstract class MovableObject extends GameObject {
     // ################################### */
 
     public float max_speed = 15;
-    protected float speed = 0;
+    public float speed = 0;
     protected float drag = .04f;  // amount speed is reduced by every frame naturally
     protected float acceleration = .2f;
     protected float rotation_speed = 2.f;
@@ -33,7 +33,7 @@ public abstract class MovableObject extends GameObject {
      * @param h            int for height of object
      * @param texture_path String of object's file path
      */
-    MovableObject(int x, int y, int w, int h, String texture_path) {
+    MovableObject(float x, float y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path);
     }
 
@@ -45,10 +45,10 @@ public abstract class MovableObject extends GameObject {
      * @param y            int for vertical position of object
      * @param w            int for width of object
      * @param h            int for height of object
-     * @param texture_path String of object's file path
+     * @param t String of object's file path
      * @param frame_count  int frame count
      */
-    MovableObject(int x, int y, int w, int h, String texture_path, int frame_count) {
+    MovableObject(float x, float y, int w, int h, String texture_path, int frame_count) {
         super(x, y, w, h, texture_path, frame_count);
     }
 
@@ -62,7 +62,7 @@ public abstract class MovableObject extends GameObject {
      * @param t           Direct Texture
      * @param frame_count int frame count
      */
-    MovableObject(int x, int y, int w, int h, Texture t, int frame_count) {
+    MovableObject(float x, float y, int w, int h, Texture t, int frame_count) {
         super(x, y, w, h, t, frame_count);
     }
 

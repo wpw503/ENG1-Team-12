@@ -42,7 +42,7 @@ public class PlayerBoat extends Boat {
      * @param y int coordinate for the bottom left point of the boat
      * @author William Walton
      */
-    public PlayerBoat(int x, int y) {
+    public PlayerBoat(float x, float y) {
         super(x, y);
 
         initialise();
@@ -88,10 +88,10 @@ public class PlayerBoat extends Boat {
     /**
      * Destructor disposes of this texture once it is no longer referenced.
      */
-    protected void finalize() {
-        stamina_texture.dispose();
-        durability_texture.dispose();
-    }
+    // protected void finalize() {
+    //     stamina_texture.dispose();
+    //     durability_texture.dispose();
+    // }
 
     /* ################################### //
                     METHODS
@@ -119,7 +119,7 @@ public class PlayerBoat extends Boat {
         durability_bar.setPosition(-ui_bar_width / 2, 20);
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.set(0, Gdx.graphics.getHeight() / 3, 0);
+        camera.position.set(sprite.getX(), Gdx.graphics.getHeight() / 3 +sprite.getY(), 0);
         camera.update();
     }
 

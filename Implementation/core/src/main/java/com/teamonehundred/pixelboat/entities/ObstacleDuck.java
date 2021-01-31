@@ -22,7 +22,7 @@ public class ObstacleDuck extends Obstacle {
      * @author James Frost
      * @author William Walton
      */
-    public ObstacleDuck(int x, int y) {
+    public ObstacleDuck(float x, float y) {
         super(x, y, 30, 30, "obstacle_duck.png");
         // give each duck a random rotation
         sprite.setOriginCenter();

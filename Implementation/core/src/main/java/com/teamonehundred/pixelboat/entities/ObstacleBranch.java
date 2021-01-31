@@ -22,7 +22,7 @@ public class ObstacleBranch extends Obstacle {
      * @author James Frost
      * @author William Walton
      */
-    public ObstacleBranch(int x, int y) {
+    public ObstacleBranch(float x, float y) {
         super(x, y, 60, 60, "obstacle_branch.png");
         sprite.setRotation(-90 + (float) Math.random() * 180);
     }

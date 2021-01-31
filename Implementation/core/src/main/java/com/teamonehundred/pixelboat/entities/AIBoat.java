@@ -33,7 +33,7 @@ public class AIBoat extends Boat {
      * @param y int coordinate for the bottom left point of the boat
      * @author James Frost
      */
-    public AIBoat(int x, int y) {
+    public AIBoat(float x, float y) {
         super(x, y);
 
         initialise();

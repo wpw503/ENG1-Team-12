@@ -35,7 +35,7 @@ public abstract class GameObject {
     /**
      * Used to determine if the object should be rendered or not. Also used in collision detection
      */
-    protected Boolean is_shown;
+    public Boolean is_shown;
 
     // set to null if not animated
     /**
@@ -56,7 +56,7 @@ public abstract class GameObject {
      * @param h            int for height of object
      * @param texture_path String of object's file path
      */
-    GameObject(int x, int y, int w, int h, final String texture_path) {
+    GameObject(float x, float y, int w, int h, final String texture_path) {
         initialise(x, y, w, h, texture_path);
 
         animation_regions = null;
@@ -76,10 +76,10 @@ public abstract class GameObject {
      * @param y            int for vertical position of object
      * @param w            int for width of object
      * @param h            int for height of object
-     * @param texture_path String of object's file path
+     * @param t String of object's file path
      * @param frame_count  int frame count
      */
-    GameObject(int x, int y, int w, int h, final String texture_path, int frame_count) {
+    GameObject(float x, float y, int w, int h, final String texture_path, int frame_count) {
         initialise(x, y, w, h, texture_path);
 
         animation_regions = new TextureRegion[frame_count];
@@ -104,7 +104,7 @@ public abstract class GameObject {
      * @param texture     Direct Texture
      * @param frame_count int frame count
      */
-    GameObject(int x, int y, int w, int h, Texture texture, int frame_count) {
+    GameObject(float x, float y, int w, int h, Texture texture, int frame_count) {
         this.texture = texture;
         is_shown = true;
 
@@ -129,7 +129,7 @@ public abstract class GameObject {
      * @param h            int for height of object
      * @param texture_path String of object's file path
      */
-    void initialise(int x, int y, int w, int h, final String texture_path) {
+    void initialise(float x, float y, int w, int h, final String texture_path) {
         texture = new Texture(texture_path);
         is_shown = true;
     }
@@ -137,9 +137,9 @@ public abstract class GameObject {
     /**
      * Destructor disposes of this texture once it is no longer referenced.
      */
-    protected void finalize() {
-        texture.dispose();
-    }
+    // protected void finalize() {
+    //     texture.dispose();
+    // }
 
     /* ################################### //
                     METHODS
