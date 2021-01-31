@@ -107,8 +107,9 @@ public class SceneMainGame implements Scene {
      */
     public int update() {
         if (player.hasFinishedLeg()) {
-            while (!race.isFinished()) race.runStep();
-        }
+            // while (!race.isFinished()) race.runStep();
+            race.estimateEndTimes();
+        }  
         if (!race.isFinished()) race.runStep();
             // only run 3 guaranteed legs
         else if (leg_number < 3) {
