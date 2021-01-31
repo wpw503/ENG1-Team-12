@@ -16,6 +16,8 @@ import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
 import com.teamonehundred.pixelboat.entities.PlayerBoat;
 import com.teamonehundred.pixelboat.entities.PowerUp;
 import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
+import com.teamonehundred.pixelboat.entities.PowerUpHealth;
+import com.teamonehundred.pixelboat.entities.PowerUpEnergy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +111,17 @@ public class BoatRace {
             powerups.add(new PowerUpSpeed(
                     (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+
+        for (int i = 0; i < 100; i++)
+            powerups.add(new PowerUpHealth(
+                    (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+
+        for (int i = 0; i < 100; i++)
+            powerups.add(new PowerUpEnergy(
+                    (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+
 
         // Initialise colour of Time Elapsed Overlay
         font = new BitmapFont();

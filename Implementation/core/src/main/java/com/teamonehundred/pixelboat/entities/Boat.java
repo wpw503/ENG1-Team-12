@@ -108,25 +108,33 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      * @author William Walton
      */
     public void hasCollided() {
-        System.out.println('a');
-        System.out.println(name + ' ' + max_speed);
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
         if (max_speed >= 10){
-            max_speed -= 1;
+            max_speed -= 0.5;
         }
         
     }
 
     public void hasCollidedSpeed() {
-        System.out.println('b');
-        System.out.println(name + ' ' + max_speed);
         if (max_speed <= 20){
-            max_speed += 2;
+            max_speed += 3;
         }
     }
 
     public void hasCollidedHealth() {
-        durability += 5;
+        if (durability < 0.9){
+            durability += 0.1;
+        } else {
+            durability = 1;
+        }
+    }
+
+    public void hasCollidedEnergy() {
+        if (stamina < 0.75){
+            stamina += 0.25;
+        } else {
+            stamina = 1;
+        }
     }
 
 
@@ -305,6 +313,10 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         if (this.getBounds().isColliding(object.getBounds())) {
             if (object instanceof PowerUpSpeed)
                 hasCollidedSpeed();
+            else if (object instanceof PowerUpHealth)
+                hasCollidedHealth();
+            else if (object instanceof PowerUpEnergy)
+                hasCollidedEnergy();
             else{
                 hasCollided();
             }
