@@ -27,6 +27,8 @@ public class SceneDifficulity implements Scene {
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
 
+    public int diffFactor; 
+
     public SceneDifficulity() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
@@ -66,18 +68,28 @@ public class SceneDifficulity implements Scene {
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
                     if (i == 0){
                         System.out.println("easy");
+                        diffFactor = 1;
                         //implement easy
+                        //spawn same amount of obs
+                        //smae collision damage
                     }
                     if (i ==1){
                         System.out.println("easy");
+                        diffFactor =1.5;
                         //med
+                        //spawn 1.5 the amount of obs
+                        //collosion increase 1.5 amount
                     }
                     if (i ==2){
-                        System.out.println("easy");
+                        System.out.println("hard");
+                        diffFactor =2;
                         //hard
+                        //spawn 2 the amount of obs
+                        //collision increase 2 amount
                     }
                     if (i ==3){
-                        return 3;  // return 3 to exit
+                        //exit to the tutorial 
+                        return 3;  
                     }
                 }
             }
@@ -91,10 +103,13 @@ public class SceneDifficulity implements Scene {
         batch.setProjectionMatrix(fill_camera.combined);
         batch.begin();
         bg_sprite.draw(batch);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 0; i++) {
             diff_option_sprites[i].draw(batch);
         }
         batch.end();
+    }
+    public int getDiffFactor() {
+        return diffFactor;
     }
 
 }
