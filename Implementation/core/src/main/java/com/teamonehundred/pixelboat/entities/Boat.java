@@ -109,8 +109,34 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      */
     public void hasCollided() {
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
-        max_speed -= max_speed - 1 <= 5 ? 0 : 1;
+        if (max_speed >= 10){
+            max_speed -= 0.5;
+        }
+        
     }
+
+    public void hasCollidedSpeed() {
+        if (max_speed <= 20){
+            max_speed += 3;
+        }
+    }
+
+    public void hasCollidedHealth() {
+        if (durability < 0.9){
+            durability += 0.1;
+        } else {
+            durability = 1;
+        }
+    }
+
+    public void hasCollidedEnergy() {
+        if (stamina < 0.75){
+            stamina += 0.25;
+        } else {
+            stamina = 1;
+        }
+    }
+
 
     /**
      * Function called when the boat accelerates
@@ -285,11 +311,20 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                         ((Obstacle) object).getSprite().getX() < sprite.getX() + 200))
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
-            if (!(object instanceof ObstacleLaneWall))
+            if (object instanceof PowerUpSpeed)
+                hasCollidedSpeed();
+            else if (object instanceof PowerUpHealth)
+                hasCollidedHealth();
+            else if (object instanceof PowerUpEnergy)
+                hasCollidedEnergy();
+            else{
                 hasCollided();
+            }
+            //if (object instanceof PowerUpSpeed)
+            //    hasCollidedSpeed();
             object.hasCollided();
         }
-    }
+        }
 
     /**
      * Used to return the CollisionBounds object representing this boat. Used for collision detection
