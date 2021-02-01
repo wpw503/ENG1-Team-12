@@ -18,6 +18,11 @@ import com.teamonehundred.pixelboat.entities.PlayerBoat;
 
 public class GameState implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6916029576714596394L;
+
     private enum ObjectType {
         BOAT,
         DUCK,
@@ -55,7 +60,8 @@ public class GameState implements Serializable {
         protected long end_time = -1;  // ms since epoch when starting and finishing current leg
         protected long frames_raced = 0;  // number of frames taken to do current leg
         protected long time_to_add = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
-
+        protected long time_since_start = 0; // time elapsed from start time
+        protected long time_leg = 0;
         protected int frames_to_animate = 0;
         protected int current_animation_frame = 0;
         protected int frames_elapsed = 0;
@@ -97,7 +103,6 @@ public class GameState implements Serializable {
         for (Boat boat : allBoats) {
             if (boat instanceof PlayerBoat) {
                 this.playerBoatIndex = allBoats.indexOf(boat);
-                System.out.println(String.format("Player boat at %f %f", boat.getSprite().getX(), boat.getSprite().getY()));
             }
             float x = boat.getSprite().getX();
             float y = boat.getSprite().getY();
@@ -121,6 +126,13 @@ public class GameState implements Serializable {
             obj.leg_times.addAll(boat.getLegTimes());
             obj.start_time = boat.getStartTime(false);
             obj.end_time = boat.getEndTime(false);
+
+            // Deal with delta times
+            obj.time_since_start = System.currentTimeMillis() - boat.getStartTime(false);
+            if (boat.has_finished_leg) {
+                obj.time_leg = boat.getCalcTime();
+            }
+
             obj.frames_raced = boat.getFramesRaced();
             obj.time_to_add = boat.getTimeToAdd();
             
@@ -203,8 +215,14 @@ public class GameState implements Serializable {
                     player.stamina_usage = obj.stamina_regen;
 
                     player.leg_times = obj.leg_times;
-                    player.start_time = obj.start_time;
-                    player.end_time = obj.end_time;
+
+
+                    // Deal with time deltas
+                    player.start_time = System.currentTimeMillis() - obj.time_since_start;
+                    if (obj.has_finished_leg) {
+                        player.end_time =  player.start_time + obj.time_leg;
+                    }
+                    
                     player.frames_raced = obj.frames_raced;
                     player.time_to_add = obj.time_to_add;
                     
@@ -261,7 +279,7 @@ public class GameState implements Serializable {
     public List<CollisionObject> getCollisionObjects () {
 
         List<CollisionObject> output = new ArrayList<CollisionObject>();
-
+        Texture lane_wall_texture = new Texture("lane_buoy.png");
 
         for (SerializableGameObject obj : gameObjects) {
             switch (obj.type) {
@@ -270,7 +288,6 @@ public class GameState implements Serializable {
                     duck.speed = obj.speed;
                     duck.is_shown = obj.is_shown;
                     duck.getSprite().setRotation(obj.rotation);
-
                     output.add(duck);
                     break;
             
@@ -293,7 +310,7 @@ public class GameState implements Serializable {
                     break;
 
                 case LANE_WALL:
-                    ObstacleLaneWall lane_wall = new ObstacleLaneWall(obj.x, obj.y, "lane_buoy.png");
+                    ObstacleLaneWall lane_wall = new ObstacleLaneWall(obj.x, obj.y, lane_wall_texture);
                     lane_wall.is_shown = obj.is_shown;
 
                     output.add(lane_wall);
