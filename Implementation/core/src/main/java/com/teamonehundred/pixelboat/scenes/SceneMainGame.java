@@ -218,7 +218,7 @@ public class SceneMainGame implements Scene {
     private void saveGame(String saveName) throws IOException {
         // Create GameState object
         List<CollisionObject> objects = race.obstacles;
-        GameState gameState = new GameState(all_boats, player, objects, leg_number, last_run, race.is_finished, race.total_frames);
+        GameState gameState = new GameState(all_boats, player, objects, race.powerups, leg_number, last_run, race.is_finished, race.total_frames);
 
         // Serialize GameState object to a String
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -267,6 +267,7 @@ public class SceneMainGame implements Scene {
         List<Boat> boat_list = gameState.getBoatList();
         PlayerBoat playerBoat = (PlayerBoat) boat_list.get(gameState.getPlayerIndex());
         List<CollisionObject> obstacle_list = gameState.getCollisionObjects();
+        List<CollisionObject> powerup_list = gameState.getPowerupsList();
 
         this.all_boats = boat_list;
         this.player = playerBoat;
@@ -277,6 +278,7 @@ public class SceneMainGame implements Scene {
         
         this.race.boats = boat_list.subList(0, boats_per_race);
         this.race.obstacles = obstacle_list;
+        this.race.powerups = powerup_list;
         this.race.is_finished = gameState.isFinished;
         this.race.total_frames = gameState.totalFrames;
     }

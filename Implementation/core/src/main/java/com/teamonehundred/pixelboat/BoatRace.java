@@ -39,7 +39,7 @@ public class BoatRace {
     protected Texture bleachers_r;
 
     public List<CollisionObject> obstacles;
-    protected List<CollisionObject> powerups;
+    public List<CollisionObject> powerups;
 
     protected int start_y = 200;
     protected int end_y = 40000;

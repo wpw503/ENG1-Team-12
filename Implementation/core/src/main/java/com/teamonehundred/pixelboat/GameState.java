@@ -15,6 +15,10 @@ import com.teamonehundred.pixelboat.entities.ObstacleDuck;
 import com.teamonehundred.pixelboat.entities.ObstacleFloatingBranch;
 import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
 import com.teamonehundred.pixelboat.entities.PlayerBoat;
+import com.teamonehundred.pixelboat.entities.PowerUp;
+import com.teamonehundred.pixelboat.entities.PowerUpEnergy;
+import com.teamonehundred.pixelboat.entities.PowerUpHealth;
+import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
 
 public class GameState implements Serializable {
 
@@ -29,6 +33,9 @@ public class GameState implements Serializable {
         BRANCH,
         FLOATING_BRANCH,
         LANE_WALL,
+        POWERUP_SPEED,
+        POWERUP_ENERGY,
+        POWERUP_HEALTH,
     }
 
     private class SerializableGameObject implements Serializable {
@@ -92,7 +99,7 @@ public class GameState implements Serializable {
     public boolean isFinished;
     public long totalFrames;
 
-    public GameState (List<Boat> allBoats, PlayerBoat playerBoat, List<CollisionObject> obstacles, int legNumber, boolean lastRun, boolean isFinsihed, long totalFrames) {
+    public GameState (List<Boat> allBoats, PlayerBoat playerBoat, List<CollisionObject> obstacles, List<CollisionObject> powerups, int legNumber, boolean lastRun, boolean isFinsihed, long totalFrames) {
         
         this.legNumber = legNumber;
         this.lastRun = lastRun;
@@ -184,6 +191,41 @@ public class GameState implements Serializable {
                 gameObjects.add(obj);
             }
                 
+        }
+
+
+        for (CollisionObject powerup : powerups) {
+
+            ObjectType type = null;
+
+            if (powerup instanceof PowerUpEnergy) {
+                type = ObjectType.POWERUP_ENERGY;
+            } else if (powerup instanceof PowerUpHealth) {
+                type = ObjectType.POWERUP_HEALTH;
+            } else if (powerup instanceof PowerUpSpeed) {
+                type = ObjectType.POWERUP_SPEED;
+            }
+            
+            if (type == null) {
+                continue; // We skip this powerup because we don't know what it is
+            } else {
+
+                PowerUp powerup_cast = (PowerUp) powerup;
+
+                float x = powerup_cast.getSprite().getX();
+                float y = powerup_cast.getSprite().getY();
+                float width = powerup_cast.getSprite().getWidth();
+                float height = powerup_cast.getSprite().getHeight();
+                float rotation = powerup_cast.getSprite().getRotation();
+                float speed = powerup_cast.speed;
+                Boolean is_shown = powerup_cast.is_shown;
+
+                SerializableGameObject obj = new SerializableGameObject(x, y, width, height, rotation, type, speed, is_shown);
+
+                gameObjects.add(obj);
+
+            }
+
         }
 
     }
@@ -323,6 +365,51 @@ public class GameState implements Serializable {
 
         return output;
 
+    }
+
+
+    public List<CollisionObject> getPowerupsList() {
+        
+        List<CollisionObject> output = new ArrayList<CollisionObject>();
+
+
+        for (SerializableGameObject obj : gameObjects) {
+            switch (obj.type) {
+                case POWERUP_ENERGY:
+                    
+                    PowerUpEnergy powerupEnergy = new PowerUpEnergy(obj.x, obj.y);
+                    powerupEnergy.speed = obj.speed;
+                    powerupEnergy.is_shown = obj.is_shown;
+                    powerupEnergy.getSprite().setRotation(obj.rotation);
+
+                    output.add(powerupEnergy);
+
+                    break;
+
+                case POWERUP_SPEED:
+                    PowerUpSpeed powerUpSpeed = new PowerUpSpeed(obj.x, obj.y);
+                    powerUpSpeed.speed = obj.speed;
+                    powerUpSpeed.is_shown = obj.is_shown;
+                    powerUpSpeed.getSprite().setRotation(obj.rotation);
+
+                    output.add(powerUpSpeed);
+            
+
+                case POWERUP_HEALTH:
+                    PowerUpHealth powerUpHealth = new PowerUpHealth(obj.x, obj.y);
+                    powerUpHealth.speed = obj.speed;
+                    powerUpHealth.is_shown = obj.is_shown;
+                    powerUpHealth.getSprite().setRotation(obj.rotation);
+
+                    output.add(powerUpHealth);
+                default:
+                    break;
+            }
+        }
+
+
+        return output;
+        
     }
 
 

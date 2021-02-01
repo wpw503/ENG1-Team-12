@@ -20,7 +20,7 @@ public class PowerUpHealth extends PowerUp {
      *
      * @author Ben Dunbar
      */
-    public PowerUpHealth(int x, int y) {
+    public PowerUpHealth(float x, float y) {
         super(x, y, 60, 60, "power_up_health.png");
         sprite.setRotation(0);
     }
