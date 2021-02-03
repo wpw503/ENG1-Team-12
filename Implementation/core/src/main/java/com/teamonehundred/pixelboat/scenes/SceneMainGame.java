@@ -178,8 +178,9 @@ public class SceneMainGame implements Scene {
      * @param spec Integer for player spec.
      * @author Umer Fakher
      */
-    public void setPlayerSpec(int spec) {
+    public void setPlayerSpec(int spec, float diffDecrease) {
         player.setSpec(spec);
+        player.setDiff(diffDecrease);
     }
 
     /**

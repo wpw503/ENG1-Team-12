@@ -44,7 +44,8 @@ public class PixelBoat extends ApplicationAdapter {
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
         all_scenes[6] = new SceneDifficulty();
-        System.out.println(all_scenes[6].getDiffDecrease());
+        System.out.println(((SceneBoatSelection) all_scenes[5]).getSpecID());
+        System.out.println(((SceneDifficulty) all_scenes[6]).getDiffDecrease());
 
         batch = new SpriteBatch();
     }
@@ -65,7 +66,7 @@ public class PixelBoat extends ApplicationAdapter {
             if (new_scene_id == 4)
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
             else if (new_scene_id == 3 && scene_id == 5)
-                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID(),((SceneDifficulty) all_scenes[6]).getDiffDecrease());
 
 
             // check if we need to change scene

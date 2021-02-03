@@ -79,26 +79,22 @@ public class SceneDifficulty implements Scene {
 
         if (hardSprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             System.out.println("hard");
-            double diffFactor = 2;
-            float diffDecrease = 0.7f;
+            float diffDecrease = 0.0000000000005f;
             }
         
         if (medSprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             System.out.println("med");
-            double diffFactor = 1.5;
             float diffDecrease = 0.85f;
             }
 
         if (easySprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             System.out.println("esay");
-            double diffFactor = 1;
             float diffDecrease = 1.0f;
             }   
 
         if (readySprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             return 3;
             }
-        
         return scene_id;
     }
     
