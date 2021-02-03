@@ -49,8 +49,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Construct a Boat object at point (x,y) with default size, texture and animation.
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
+     * @param x float coordinate for the bottom left point of the boat
+     * @param y float coordinate for the bottom left point of the boat
      * @author William Walton
      */
     Boat(float x, float y) {

@@ -214,7 +214,11 @@ public class SceneMainGame implements Scene {
         player.setDiff(diffDecrease);
     }
 
-
+    /**
+     * Saves the current state of the game to the filesystem
+     * @param saveName the name of the save state
+     * @throws IOException if an ObjectOutputStream or a ByteArrayOutputStream cannot be created
+     */
     private void saveGame(String saveName) throws IOException {
         // Create GameState object
         List<CollisionObject> objects = race.obstacles;
@@ -239,7 +243,12 @@ public class SceneMainGame implements Scene {
         prefs.flush();
 
     }
-
+    
+    /**
+     * Restore the state of the game from the filesystem
+     * @param saveName the name of the save state
+     * @throws IOException if an ByteArrayInputStream or ObjectInputStream cannot be created
+     */
     private void restoreGame(String saveName) throws IOException {
 
         // Get serialized object from preferences

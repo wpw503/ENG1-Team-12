@@ -50,8 +50,8 @@ public abstract class GameObject {
     /**
      * A constructor for GameObject for static textures.
      *
-     * @param x            int for horizontal position of object
-     * @param y            int for vertical position of object
+     * @param x            float for horizontal position of object
+     * @param y            float for vertical position of object
      * @param w            int for width of object
      * @param h            int for height of object
      * @param texture_path String of object's file path

@@ -29,8 +29,8 @@ public class AIBoat extends Boat {
     /**
      * Construct a AIBoat object at point (x,y) with default size, texture and animation.
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
+     * @param x float coordinate for the bottom left point of the boat
+     * @param y float coordinate for the bottom left point of the boat
      * @author James Frost
      */
     public AIBoat(float x, float y) {

@@ -27,8 +27,8 @@ public abstract class MovableObject extends GameObject {
     /**
      * A constructor for MovableObject.
      *
-     * @param x            int for horizontal position of object
-     * @param y            int for vertical position of object
+     * @param x            float for horizontal position of object
+     * @param y            float for vertical position of object
      * @param w            int for width of object
      * @param h            int for height of object
      * @param texture_path String of object's file path
@@ -41,8 +41,8 @@ public abstract class MovableObject extends GameObject {
     /**
      * A constructor for MovableObject.
      *
-     * @param x            int for horizontal position of object
-     * @param y            int for vertical position of object
+     * @param x            float for horizontal position of object
+     * @param y            float for vertical position of object
      * @param w            int for width of object
      * @param h            int for height of object
      * @param t String of object's file path
@@ -55,8 +55,8 @@ public abstract class MovableObject extends GameObject {
     /**
      * A constructor for MovableObject.
      *
-     * @param x           int for horizontal position of object
-     * @param y           int for vertical position of object
+     * @param x           float for horizontal position of object
+     * @param y           float for vertical position of object
      * @param w           int for width of object
      * @param h           int for height of object
      * @param t           Direct Texture

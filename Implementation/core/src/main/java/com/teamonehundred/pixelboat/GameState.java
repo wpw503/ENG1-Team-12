@@ -23,10 +23,13 @@ import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
 public class GameState implements Serializable {
 
     /**
-     *
+     * serialVersionUID for the GameState object
      */
     private static final long serialVersionUID = -6916029576714596394L;
 
+    /**
+     * Private enum to store type of object to be saved
+     */
     private enum ObjectType {
         BOAT,
         DUCK,
@@ -41,7 +44,7 @@ public class GameState implements Serializable {
     private class SerializableGameObject implements Serializable {
         
         /**
-         *
+         *  serialVersionUID for the SerializableGameObject object
          */
         private static final long serialVersionUID = 304000522049061736L;
         float x;
@@ -76,7 +79,19 @@ public class GameState implements Serializable {
         public boolean has_finished_leg = false;
         public boolean has_started_leg = false;
 
-
+        /**
+         * Create a SerializableGameObject
+         * @param x the x position of the object 
+         * @param y the y position of the object
+         * @param width the width of the object
+         * @param height the height of the object
+         * @param rotation the rotation angle of the object
+         * @param type the type of the object
+         * @param speed the current speed of the object
+         * @param is_shown the visibility of the object
+         * 
+         * @author Adam Blanchet
+         */
         SerializableGameObject(float x, float y, float width, float height, float rotation, ObjectType type, float speed, Boolean is_shown) {
             this.x = x;
             this.y = y;
@@ -99,6 +114,17 @@ public class GameState implements Serializable {
     public boolean isFinished;
     public long totalFrames;
 
+    /**
+     * 
+     * @param allBoats the list of all boats from SceneMainGame
+     * @param playerBoat the PlayerBoat object
+     * @param obstacles the list of all obstacles in the race
+     * @param powerups the list of all powerups in the race
+     * @param legNumber the current leg number
+     * @param lastRun true if it is the final leg, false otherwise
+     * @param isFinsihed true if the race is finished, false otherwise
+     * @param totalFrames number of frames elapsed since the start of the race
+     */
     public GameState (List<Boat> allBoats, PlayerBoat playerBoat, List<CollisionObject> obstacles, List<CollisionObject> powerups, int legNumber, boolean lastRun, boolean isFinsihed, long totalFrames) {
         
         this.legNumber = legNumber;
@@ -230,11 +256,18 @@ public class GameState implements Serializable {
 
     }
 
-
+    /**
+     * Get the index of the player boat in the boat list
+     * @return the index of the player in the boat list
+     */
     public int getPlayerIndex() {
         return playerBoatIndex;
     }
 
+    /**
+     * Get the list of boats from the GameState
+     * @return the list of boats from the GameState
+     */
     public List<Boat> getBoatList() {
         
         List<Boat> output = new ArrayList<Boat>();
@@ -318,6 +351,10 @@ public class GameState implements Serializable {
 
     }
 
+    /**
+     * Get the list of collision objects in from the GameState (non powerups)
+     * @return the list of collision objects from the GameState (non powerups)
+     */
     public List<CollisionObject> getCollisionObjects () {
 
         List<CollisionObject> output = new ArrayList<CollisionObject>();
@@ -367,7 +404,10 @@ public class GameState implements Serializable {
 
     }
 
-
+    /**
+     * Get the list of powerup objects from the GameState
+     * @return the list of powerup objects from the GameState
+     */
     public List<CollisionObject> getPowerupsList() {
         
         List<CollisionObject> output = new ArrayList<CollisionObject>();
