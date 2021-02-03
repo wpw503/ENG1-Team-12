@@ -162,8 +162,6 @@ public class PlayerBoat extends Boat {
             stamina_usage *=1.7f;
             durability_per_hit *=7.0f;
         }
-        System.out.println(stamina_regen);
-        System.out.println(stamina_regen);
     }
 
     /**
