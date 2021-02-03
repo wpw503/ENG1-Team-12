@@ -26,6 +26,7 @@ public class PixelBoat extends ApplicationAdapter {
     // 3 = tutorial
     // 4 = results
     // 5 =boat selection
+    // 6 = difficulty options
     protected int scene_id = 0;
 
     /**
@@ -35,13 +36,14 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void create() {
-        all_scenes = new Scene[6];
+        all_scenes = new Scene[7];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame();
         all_scenes[2] = new SceneOptionsMenu();
         all_scenes[3] = new SceneTutorial();
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
+        all_scenes[6] = new SceneDifficulty();
 
         batch = new SpriteBatch();
     }
@@ -61,8 +63,8 @@ public class PixelBoat extends ApplicationAdapter {
             // special case updates
             if (new_scene_id == 4)
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
-            else if (new_scene_id == 3 && scene_id == 5)
-                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+            else if (new_scene_id == 3 && scene_id == 6)
+                ((SceneMainGame) all_scenes[1]).setPlayerStats(((SceneBoatSelection) all_scenes[5]).getSpecID(),((SceneDifficulty) all_scenes[6]).getDiffDecrease());
 
 
             // check if we need to change scene

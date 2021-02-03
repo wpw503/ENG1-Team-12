@@ -88,7 +88,7 @@ public class SceneBoatSelection implements Scene {
             if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
                     spec_id = i;
-                    return 3;  // return 3 to exit
+                    return 6;  // return 3 to exit
                 }
             }
 

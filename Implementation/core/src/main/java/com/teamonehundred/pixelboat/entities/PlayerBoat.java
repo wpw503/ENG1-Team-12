@@ -151,6 +151,18 @@ public class PlayerBoat extends Boat {
                 break;
         }
     }
+    public void setDiff(int diffDecrease){
+        if (diffDecrease == 2){
+            stamina_regen *= 0.7f; //decrease 0-1
+            stamina_usage *= 1.3f; //increase 0-1
+            durability_per_hit *=2.0f; //increase 0-1
+        }
+        if (diffDecrease ==3){
+            stamina_regen *=0.4f;
+            stamina_usage *=1.7f;
+            durability_per_hit *=3.0f;
+        }
+    }
 
     /**
      * Updates the position based on the user's input.
