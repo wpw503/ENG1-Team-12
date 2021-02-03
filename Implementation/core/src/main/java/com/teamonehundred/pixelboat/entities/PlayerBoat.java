@@ -151,10 +151,19 @@ public class PlayerBoat extends Boat {
                 break;
         }
     }
-    public void setDiff(float diffDecrease){
-        stamina_regen *= diffDecrease;
-        stamina_usage *= diffDecrease;
-        durability_per_hit *= 1f + diffDecrease;
+    public void setDiff(int diffDecrease){
+        if (diffDecrease == 2){
+            stamina_regen *= 0.7f; //decrease 0-1
+            stamina_usage *= 1.3f; //increase 0-1
+            durability_per_hit *=1.9f; //increase 0-1
+        }
+        if (diffDecrease ==3){
+            stamina_regen *=0.4f;
+            stamina_usage *=1.7f;
+            durability_per_hit *=7.0f;
+        }
+        System.out.println(stamina_regen);
+        System.out.println(stamina_regen);
     }
 
     /**

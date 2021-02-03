@@ -38,7 +38,7 @@ public class SceneDifficulty implements Scene {
     protected OrthographicCamera fill_camera;
 
    
-    public float diffDecrease = 1f;
+    public int diffDecrease = 1;
 
     public SceneDifficulty() {
         fill_camera = new OrthographicCamera();
@@ -79,17 +79,17 @@ public class SceneDifficulty implements Scene {
 
         if (hardSprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             System.out.println("hard");
-            float diffDecrease = 0.0000000000005f;
+            int diffDecrease = 3;
             }
         
         if (medSprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             System.out.println("med");
-            float diffDecrease = 0.85f;
+            int diffDecrease = 2;
             }
 
         if (easySprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             System.out.println("esay");
-            float diffDecrease = 1.0f;
+            int diffDecrease = 1;
             }   
 
         if (readySprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -111,7 +111,7 @@ public class SceneDifficulty implements Scene {
         batch.end();
     }
  
-    public float getDiffDecrease(){
+    public int getDiffDecrease(){
         return diffDecrease;
     }
 

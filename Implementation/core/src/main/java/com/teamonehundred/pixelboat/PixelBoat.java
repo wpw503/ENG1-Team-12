@@ -66,7 +66,7 @@ public class PixelBoat extends ApplicationAdapter {
             if (new_scene_id == 4)
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
             else if (new_scene_id == 3 && scene_id == 5)
-                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID(),((SceneDifficulty) all_scenes[6]).getDiffDecrease());
+                ((SceneMainGame) all_scenes[1]).setPlayerStats(((SceneBoatSelection) all_scenes[5]).getSpecID(),((SceneDifficulty) all_scenes[6]).getDiffDecrease());
 
 
             // check if we need to change scene
