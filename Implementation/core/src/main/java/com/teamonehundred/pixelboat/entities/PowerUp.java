@@ -24,7 +24,7 @@ public abstract class PowerUp extends MovableObject implements CollisionObject {
      * @author James Frost
      * @author William Walton
      */
-    PowerUp(int x, int y, int w, int h, String texture_path) {
+    PowerUp(float x, float y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path);
         //todo implement this
     }

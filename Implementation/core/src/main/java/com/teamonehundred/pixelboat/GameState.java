@@ -1,0 +1,457 @@
+package com.teamonehundred.pixelboat;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.teamonehundred.pixelboat.entities.AIBoat;
+import com.teamonehundred.pixelboat.entities.Boat;
+import com.teamonehundred.pixelboat.entities.CollisionObject;
+import com.teamonehundred.pixelboat.entities.Obstacle;
+import com.teamonehundred.pixelboat.entities.ObstacleBranch;
+import com.teamonehundred.pixelboat.entities.ObstacleDuck;
+import com.teamonehundred.pixelboat.entities.ObstacleFloatingBranch;
+import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
+import com.teamonehundred.pixelboat.entities.PlayerBoat;
+import com.teamonehundred.pixelboat.entities.PowerUp;
+import com.teamonehundred.pixelboat.entities.PowerUpEnergy;
+import com.teamonehundred.pixelboat.entities.PowerUpHealth;
+import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
+
+public class GameState implements Serializable {
+
+    /**
+     * serialVersionUID for the GameState object
+     */
+    private static final long serialVersionUID = -6916029576714596394L;
+
+    /**
+     * Private enum to store type of object to be saved
+     */
+    private enum ObjectType {
+        BOAT,
+        DUCK,
+        BRANCH,
+        FLOATING_BRANCH,
+        LANE_WALL,
+        POWERUP_SPEED,
+        POWERUP_ENERGY,
+        POWERUP_HEALTH,
+    }
+
+    private class SerializableGameObject implements Serializable {
+        
+        /**
+         *  serialVersionUID for the SerializableGameObject object
+         */
+        private static final long serialVersionUID = 304000522049061736L;
+        float x;
+        float y;
+        float width;
+        float height;
+        float rotation;
+        ObjectType type;
+        float speed;
+        Boolean is_shown;
+        
+        // Boat specific attributes
+        protected String name = "default boat name";
+
+        protected float durability = 1.f;  // from 0 to 1
+        protected float durability_per_hit = .1f;
+        protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
+        protected float stamina_usage = 0.005f;  //todo change this after testing
+        protected float stamina_regen = .002f;
+
+        protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
+        protected long start_time = -1;
+        protected long end_time = -1;  // ms since epoch when starting and finishing current leg
+        protected long frames_raced = 0;  // number of frames taken to do current leg
+        protected long time_to_add = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
+        protected long time_since_start = 0; // time elapsed from start time
+        protected long time_leg = 0;
+        protected int frames_to_animate = 0;
+        protected int current_animation_frame = 0;
+        protected int frames_elapsed = 0;
+
+        public boolean has_finished_leg = false;
+        public boolean has_started_leg = false;
+
+        /**
+         * Create a SerializableGameObject
+         * @param x the x position of the object 
+         * @param y the y position of the object
+         * @param width the width of the object
+         * @param height the height of the object
+         * @param rotation the rotation angle of the object
+         * @param type the type of the object
+         * @param speed the current speed of the object
+         * @param is_shown the visibility of the object
+         * 
+         * @author Adam Blanchet
+         */
+        SerializableGameObject(float x, float y, float width, float height, float rotation, ObjectType type, float speed, Boolean is_shown) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.rotation = rotation;
+            this.type = type;
+            this.speed = speed;
+            this.is_shown = is_shown;
+
+        }
+
+    }
+
+    
+    List<SerializableGameObject> gameObjects;
+    int playerBoatIndex = 0;
+    public int legNumber;
+    public boolean lastRun;
+    public boolean isFinished;
+    public long totalFrames;
+
+    /**
+     * 
+     * @param allBoats the list of all boats from SceneMainGame
+     * @param playerBoat the PlayerBoat object
+     * @param obstacles the list of all obstacles in the race
+     * @param powerups the list of all powerups in the race
+     * @param legNumber the current leg number
+     * @param lastRun true if it is the final leg, false otherwise
+     * @param isFinsihed true if the race is finished, false otherwise
+     * @param totalFrames number of frames elapsed since the start of the race
+     */
+    public GameState (List<Boat> allBoats, PlayerBoat playerBoat, List<CollisionObject> obstacles, List<CollisionObject> powerups, int legNumber, boolean lastRun, boolean isFinsihed, long totalFrames) {
+        
+        this.legNumber = legNumber;
+        this.lastRun = lastRun;
+        this.isFinished = isFinsihed;
+        this.totalFrames = totalFrames;
+        this.gameObjects = new ArrayList<SerializableGameObject>();
+
+        for (Boat boat : allBoats) {
+            if (boat instanceof PlayerBoat) {
+                this.playerBoatIndex = allBoats.indexOf(boat);
+            }
+            float x = boat.getSprite().getX();
+            float y = boat.getSprite().getY();
+            float width = boat.getSprite().getWidth();
+            float height = boat.getSprite().getHeight();
+            float rotation = boat.getSprite().getRotation();
+            ObjectType type = ObjectType.BOAT;
+            float speed = boat.speed;
+            Boolean is_shown = boat.isShown() || true;
+            
+            SerializableGameObject obj = new SerializableGameObject(x, y, width, height, rotation, type, speed, is_shown);
+
+            // Set boat specific stats
+            obj.name = boat.getName();
+            obj.durability = boat.durability;
+            obj.durability_per_hit = boat.durability_per_hit;
+            obj.stamina = boat.stamina;
+            obj.stamina_usage = boat.stamina_usage;
+            obj.stamina_usage = boat.stamina_regen;
+
+            obj.leg_times.addAll(boat.getLegTimes());
+            obj.start_time = boat.getStartTime(false);
+            obj.end_time = boat.getEndTime(false);
+
+            // Deal with delta times
+            obj.time_since_start = System.currentTimeMillis() - boat.getStartTime(false);
+            if (boat.has_finished_leg) {
+                obj.time_leg = boat.getCalcTime();
+            }
+
+            obj.frames_raced = boat.getFramesRaced();
+            obj.time_to_add = boat.getTimeToAdd();
+            
+            obj.frames_to_animate = boat.frames_to_animate;
+            obj.current_animation_frame = boat.current_animation_frame;
+            obj.frames_elapsed = boat.frames_elapsed;
+
+            obj.has_finished_leg = boat.has_finished_leg;
+            obj.has_started_leg = boat.has_started_leg;
+
+
+            this.gameObjects.add(obj);
+
+            
+        }
+
+        for (CollisionObject obstacle : obstacles){
+
+            ObjectType type = null;
+
+            if (obstacle instanceof ObstacleBranch) {
+                type = ObjectType.BRANCH;
+            } else if (obstacle instanceof ObstacleFloatingBranch) {
+                type = ObjectType.FLOATING_BRANCH;
+            } else if (obstacle instanceof ObstacleDuck) {
+                type = ObjectType.DUCK;
+            } else if (obstacle instanceof ObstacleLaneWall) {
+                type = ObjectType.LANE_WALL;
+            }
+
+
+            if (type == null) {
+                continue; // We skip this object because we don't know what it is
+            } else {
+                // We know it's a type of obstacle
+
+                Obstacle obstacle_cast = (Obstacle) obstacle; 
+                
+                float x = obstacle_cast.getSprite().getX();
+                float y = obstacle_cast.getSprite().getY();
+                float width = obstacle_cast.getSprite().getWidth();
+                float height = obstacle_cast.getSprite().getHeight();
+                float rotation = obstacle_cast.getSprite().getRotation();
+                float speed = obstacle_cast.speed;
+                Boolean is_shown = obstacle.isShown();
+
+                SerializableGameObject obj = new SerializableGameObject(x, y, width, height, rotation, type, speed, is_shown);
+                
+                gameObjects.add(obj);
+            }
+                
+        }
+
+
+        for (CollisionObject powerup : powerups) {
+
+            ObjectType type = null;
+
+            if (powerup instanceof PowerUpEnergy) {
+                type = ObjectType.POWERUP_ENERGY;
+            } else if (powerup instanceof PowerUpHealth) {
+                type = ObjectType.POWERUP_HEALTH;
+            } else if (powerup instanceof PowerUpSpeed) {
+                type = ObjectType.POWERUP_SPEED;
+            }
+            
+            if (type == null) {
+                continue; // We skip this powerup because we don't know what it is
+            } else {
+
+                PowerUp powerup_cast = (PowerUp) powerup;
+
+                float x = powerup_cast.getSprite().getX();
+                float y = powerup_cast.getSprite().getY();
+                float width = powerup_cast.getSprite().getWidth();
+                float height = powerup_cast.getSprite().getHeight();
+                float rotation = powerup_cast.getSprite().getRotation();
+                float speed = powerup_cast.speed;
+                Boolean is_shown = powerup_cast.is_shown;
+
+                SerializableGameObject obj = new SerializableGameObject(x, y, width, height, rotation, type, speed, is_shown);
+
+                gameObjects.add(obj);
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Get the index of the player boat in the boat list
+     * @return the index of the player in the boat list
+     */
+    public int getPlayerIndex() {
+        return playerBoatIndex;
+    }
+
+    /**
+     * Get the list of boats from the GameState
+     * @return the list of boats from the GameState
+     */
+    public List<Boat> getBoatList() {
+        
+        List<Boat> output = new ArrayList<Boat>();
+        int i = 0;
+        for (SerializableGameObject obj : gameObjects) {
+
+            if (obj.type.equals(ObjectType.BOAT)) {
+                
+                if (i == playerBoatIndex) { // Create a PlayerBoat object instead
+                    PlayerBoat player = new PlayerBoat(obj.x, obj.y);
+                    player.speed = obj.speed;
+                    player.is_shown = obj.is_shown;
+                    player.getSprite().setRotation(obj.rotation);
+
+                    player.name = obj.name;
+                    player.durability = obj.durability;
+                    player.durability_per_hit = obj.durability_per_hit;
+                    player.stamina = obj.stamina;
+                    player.stamina_usage = obj.stamina_usage;
+                    player.stamina_usage = obj.stamina_regen;
+
+                    player.leg_times = obj.leg_times;
+
+
+                    // Deal with time deltas
+                    player.start_time = System.currentTimeMillis() - obj.time_since_start;
+                    if (obj.has_finished_leg) {
+                        player.end_time =  player.start_time + obj.time_leg;
+                    }
+                    
+                    player.frames_raced = obj.frames_raced;
+                    player.time_to_add = obj.time_to_add;
+                    
+                    player.frames_to_animate = obj.frames_to_animate;
+                    player.current_animation_frame = obj.current_animation_frame;
+                    player.frames_elapsed = obj.frames_elapsed;
+
+                    player.has_finished_leg = obj.has_finished_leg;
+                    player.has_started_leg = obj.has_started_leg;
+
+                    output.add(player);
+
+                } else {
+                    // Create an AIBoat
+                    AIBoat ai = new AIBoat(obj.x, obj.y);
+                    ai.speed = obj.speed;
+                    ai.is_shown = obj.is_shown;
+                    ai.getSprite().setRotation(obj.rotation);
+
+                    ai.name = obj.name;
+                    ai.durability = obj.durability;
+                    ai.durability_per_hit = obj.durability_per_hit;
+                    ai.stamina = obj.stamina;
+                    ai.stamina_usage = obj.stamina_usage;
+                    ai.stamina_usage = obj.stamina_regen;
+
+                    ai.leg_times = obj.leg_times;
+                    ai.start_time = obj.start_time;
+                    ai.end_time = obj.end_time;
+                    ai.frames_raced = obj.frames_raced;
+                    ai.time_to_add = obj.time_to_add;
+                    
+                    ai.frames_to_animate = obj.frames_to_animate;
+                    ai.current_animation_frame = obj.current_animation_frame;
+                    ai.frames_elapsed = obj.frames_elapsed;
+
+                    ai.has_finished_leg = obj.has_finished_leg;
+                    ai.has_started_leg = obj.has_started_leg;
+
+                    output.add(ai);
+
+                }
+            }
+            i++;
+
+        }
+
+
+        return output;
+
+
+    }
+
+    /**
+     * Get the list of collision objects in from the GameState (non powerups)
+     * @return the list of collision objects from the GameState (non powerups)
+     */
+    public List<CollisionObject> getCollisionObjects () {
+
+        List<CollisionObject> output = new ArrayList<CollisionObject>();
+        Texture lane_wall_texture = new Texture("lane_buoy.png");
+
+        for (SerializableGameObject obj : gameObjects) {
+            switch (obj.type) {
+                case DUCK:
+                    ObstacleDuck duck = new ObstacleDuck(obj.x, obj.y);
+                    duck.speed = obj.speed;
+                    duck.is_shown = obj.is_shown;
+                    duck.getSprite().setRotation(obj.rotation);
+                    output.add(duck);
+                    break;
+            
+                case BRANCH:
+                    ObstacleBranch branch = new ObstacleBranch(obj.x, obj.y);
+                    branch.speed = obj.speed;
+                    branch.is_shown = obj.is_shown;
+                    branch.getSprite().setRotation(obj.rotation);
+
+                    output.add(branch);
+                    break;
+
+                case FLOATING_BRANCH:
+                    ObstacleFloatingBranch floating_branch = new ObstacleFloatingBranch(obj.x, obj.y);
+                    floating_branch.speed = obj.speed;
+                    floating_branch.is_shown = obj.is_shown;
+                    floating_branch.getSprite().setRotation(obj.rotation);
+
+                    output.add(floating_branch);
+                    break;
+
+                case LANE_WALL:
+                    ObstacleLaneWall lane_wall = new ObstacleLaneWall(obj.x, obj.y, lane_wall_texture);
+                    lane_wall.is_shown = obj.is_shown;
+
+                    output.add(lane_wall);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        return output;
+
+    }
+
+    /**
+     * Get the list of powerup objects from the GameState
+     * @return the list of powerup objects from the GameState
+     */
+    public List<CollisionObject> getPowerupsList() {
+        
+        List<CollisionObject> output = new ArrayList<CollisionObject>();
+
+
+        for (SerializableGameObject obj : gameObjects) {
+            switch (obj.type) {
+                case POWERUP_ENERGY:
+                    
+                    PowerUpEnergy powerupEnergy = new PowerUpEnergy(obj.x, obj.y);
+                    powerupEnergy.speed = obj.speed;
+                    powerupEnergy.is_shown = obj.is_shown;
+                    powerupEnergy.getSprite().setRotation(obj.rotation);
+
+                    output.add(powerupEnergy);
+
+                    break;
+
+                case POWERUP_SPEED:
+                    PowerUpSpeed powerUpSpeed = new PowerUpSpeed(obj.x, obj.y);
+                    powerUpSpeed.speed = obj.speed;
+                    powerUpSpeed.is_shown = obj.is_shown;
+                    powerUpSpeed.getSprite().setRotation(obj.rotation);
+
+                    output.add(powerUpSpeed);
+            
+
+                case POWERUP_HEALTH:
+                    PowerUpHealth powerUpHealth = new PowerUpHealth(obj.x, obj.y);
+                    powerUpHealth.speed = obj.speed;
+                    powerUpHealth.is_shown = obj.is_shown;
+                    powerUpHealth.getSprite().setRotation(obj.rotation);
+
+                    output.add(powerUpHealth);
+                default:
+                    break;
+            }
+        }
+
+
+        return output;
+        
+    }
+
+
+}
+

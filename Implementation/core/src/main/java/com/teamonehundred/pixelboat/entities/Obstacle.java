@@ -24,7 +24,7 @@ public abstract class Obstacle extends MovableObject implements CollisionObject 
      * @author James Frost
      * @author William Walton
      */
-    Obstacle(int x, int y, int w, int h, String texture_path) {
+    Obstacle(float x, float y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path);
         //todo implement this
     }
@@ -38,7 +38,7 @@ public abstract class Obstacle extends MovableObject implements CollisionObject 
      * @author James Frost
      * @author William Walton
      */
-    Obstacle(int x, int y, int w, int h, String texture_path, int frame_count) {
+    Obstacle(float x, float y, int w, int h, String texture_path, int frame_count) {
         super(x, y, w, h, texture_path, frame_count);
     }
 
@@ -51,7 +51,7 @@ public abstract class Obstacle extends MovableObject implements CollisionObject 
      * @author James Frost
      * @author William Walton
      */
-    Obstacle(int x, int y, int w, int h, Texture t, int frame_count) {
+    Obstacle(float x, float y, int w, int h, Texture t, int frame_count) {
         super(x, y, w, h, t, frame_count);
     }
 

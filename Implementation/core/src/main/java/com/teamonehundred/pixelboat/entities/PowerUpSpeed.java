@@ -20,7 +20,7 @@ public class PowerUpSpeed extends PowerUp {
      *
      * @author Ben Dunbar
      */
-    public PowerUpSpeed(int x, int y) {
+    public PowerUpSpeed(float x, float y) {
         super(x, y, 60, 60, "power_up_speed.png");
         sprite.setRotation(0);
     }

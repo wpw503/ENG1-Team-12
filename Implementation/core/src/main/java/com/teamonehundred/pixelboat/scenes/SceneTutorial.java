@@ -49,9 +49,9 @@ public class SceneTutorial implements Scene {
     /**
      * Destructor disposes of this texture once it is no longer referenced.
      */
-    protected void finalize() {
-        bg.dispose();
-    }
+    // protected void finalize() {
+    //     bg.dispose();
+    // }
 
     /**
      * Draw function for SceneTutorial.

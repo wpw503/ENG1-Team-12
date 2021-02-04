@@ -20,7 +20,7 @@ public class PowerUpEnergy extends PowerUp {
      *
      * @author Ben Dunbar
      */
-    public PowerUpEnergy(int x, int y) {
+    public PowerUpEnergy(float x, float y) {
         super(x, y, 60, 60, "power_up_energy.png");
         sprite.setRotation(0);
     }

@@ -22,8 +22,13 @@ public class ObstacleLaneWall extends Obstacle {
      * @author James Frost
      * @author William Walton
      */
-    public ObstacleLaneWall(int x, int y, Texture t) {
-        super(x, y, 32, texture_height, t, 2);
+    public ObstacleLaneWall(float x, float y, Texture texture) {
+        super(x, y, 32, texture_height, texture, 2);
+        setAnimationFrame(0);
+    }
+
+    public ObstacleLaneWall(float x, float y, String texture_path) {
+        super(x, y, 32, texture_height, texture_path, 2);
         setAnimationFrame(0);
     }
 

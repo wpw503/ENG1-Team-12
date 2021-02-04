@@ -19,23 +19,23 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                    ATTRIBUTES
     // ################################### */
 
-    protected String name = "default boat name";
+    public String name = "default boat name";
 
-    protected float durability = 1.f;  // from 0 to 1
-    protected float durability_per_hit = .1f;
-    protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    protected float stamina_usage = 0.005f;  //todo change this after testing
-    protected float stamina_regen = .002f;
+    public float durability = 1.f;  // from 0 to 1
+    public float durability_per_hit = .1f;
+    public float stamina = 1.f;  // from 0 to 1, percentage of stamina max
+    public float stamina_usage = 0.005f;  //todo change this after testing
+    public float stamina_regen = .002f;
 
-    protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
-    protected long start_time = -1;
-    protected long end_time = -1;  // ms since epoch when starting and finishing current leg
-    protected long frames_raced = 0;  // number of frames taken to do current leg
-    protected long time_to_add = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
+    public List<Long> leg_times = new ArrayList<>();  // times for every previous leg
+    public long start_time = -1;
+    public long end_time = -1;  // ms since epoch when starting and finishing current leg
+    public long frames_raced = 0;  // number of frames taken to do current leg
+    public long time_to_add = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
 
-    protected int frames_to_animate = 0;
-    protected int current_animation_frame = 0;
-    protected int frames_elapsed = 0;
+    public int frames_to_animate = 0;
+    public int current_animation_frame = 0;
+    public int frames_elapsed = 0;
 
     public boolean has_finished_leg = false;
     public boolean has_started_leg = false;
@@ -49,11 +49,11 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Construct a Boat object at point (x,y) with default size, texture and animation.
      *
-     * @param x int coordinate for the bottom left point of the boat
-     * @param y int coordinate for the bottom left point of the boat
+     * @param x float coordinate for the bottom left point of the boat
+     * @param y float coordinate for the bottom left point of the boat
      * @author William Walton
      */
-    Boat(int x, int y) {
+    Boat(float x, float y) {
         super(x, y, 80, 100, "boat.png", 4);
     }
 

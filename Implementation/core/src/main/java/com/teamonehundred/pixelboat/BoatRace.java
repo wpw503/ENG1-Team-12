@@ -30,7 +30,7 @@ import java.util.List;
  * JavaDoc by Umer Fakher
  */
 public class BoatRace {
-    protected List<Boat> boats;
+    public List<Boat> boats;
 
     protected BitmapFont font; //TimingTest
     protected Texture lane_sep;
@@ -38,8 +38,8 @@ public class BoatRace {
     protected Texture bleachers_l;
     protected Texture bleachers_r;
 
-    protected List<CollisionObject> obstacles;
-    protected List<CollisionObject> powerups;
+    public List<CollisionObject> obstacles;
+    public List<CollisionObject> powerups;
 
     protected int start_y = 200;
     protected int end_y = 40000;
@@ -47,8 +47,8 @@ public class BoatRace {
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
-    protected boolean is_finished = false;
-    protected long total_frames = 0;
+    public boolean is_finished = false;
+    public long total_frames = 0;
 
     /**
      * Main constructor for a BoatRace.
