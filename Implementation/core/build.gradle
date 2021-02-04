@@ -9,3 +9,10 @@ tasks.withType(JavaCompile) {
     targetCompatibility = '1.7'
     sourceCompatibility = '1.7'
 }
+
+apply plugin: "checkstyle"
+
+checkstyle {
+    toolVersion = "8.40"
+    configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+}
