@@ -7,90 +7,90 @@ import com.teamonehundred.pixelboat.scenes.*;
 
 /**
  * Main class for the PixelBoat game.
- * <p>
- * Extends Libgdx ApplicationAdapter.
+ * 
+ * <p>extends Libgdx ApplicationAdapter.
  *
  * @author William Walton
  * @author James Frost
  * @author Umer Fakher
- * JavaDoc by Umer Fakher
+   JavaDoc by Umer Fakher
  */
 public class PixelBoat extends ApplicationAdapter {
-    protected Scene[] all_scenes;  // stores all game scenes and their data
-    protected SpriteBatch batch;  // thing that draws the sprites
+  protected Scene[] allScenes;  // stores all game scenes and their data
+  protected SpriteBatch batch;  // thing that draws the sprites
 
-    // id of current game state
-    // 0 = start menu
-    // 1 = game
-    // 2 = options
-    // 3 = tutorial
-    // 4 = results
-    // 5 =boat selection
-    protected int scene_id = 0;
+  // id of current game state
+  // 0 = start menu
+  // 1 = game
+  // 2 = options
+  // 3 = tutorial
+  // 4 = results
+  // 5 =boat selection
+  protected int sceneID = 0;
 
-    /**
-     * Create method runs when the game starts.
-     * <p>
-     * Runs every scene in Game.
-     */
-    @Override
-    public void create() {
-        all_scenes = new Scene[6];
-        all_scenes[0] = new SceneStartScreen();
-        all_scenes[1] = new SceneMainGame();
-        all_scenes[2] = new SceneOptionsMenu();
-        all_scenes[3] = new SceneTutorial();
-        all_scenes[4] = new SceneResultsScreen();
-        all_scenes[5] = new SceneBoatSelection();
+  /**
+   * Create method runs when the game starts.
+   * 
+   * <p>Runs every scene in Game.
+   */
+  @Override
+  public void create() {
+    allScenes = new Scene[6];
+    allScenes[0] = new SceneStartScreen();
+    allScenes[1] = new SceneMainGame();
+    allScenes[2] = new SceneOptionsMenu();
+    allScenes[3] = new SceneTutorial();
+    allScenes[4] = new SceneResultsScreen();
+    allScenes[5] = new SceneBoatSelection();
 
-        batch = new SpriteBatch();
+    batch = new SpriteBatch();
+  }
+
+  /**
+   * Render function runs every frame.
+   * 
+   * <p>Controls functionality of frame switching.
+   */
+  @Override
+  public void render() {
+    // run the current scene
+    int newSceneID = allScenes[sceneID].update();
+    allScenes[sceneID].draw(batch);
+
+    if (sceneID != newSceneID) {
+      // special case updates
+      if (newSceneID == 4) {
+        ((SceneResultsScreen) allScenes[4]).setBoats(((SceneMainGame) allScenes[1]).getAllBoats());
+      } else if (newSceneID == 3 && sceneID == 5) {
+        ((SceneMainGame) allScenes[1]).setPlayerSpec(((SceneBoatSelection)
+            allScenes[5]).getSpecID());
+      }
+      // check if we need to change scene
+      sceneID = newSceneID;
     }
+  }
 
-    /**
-     * Render function runs every frame.
-     * <p>
-     * Controls functionality of frame switching.
-     */
-    @Override
-    public void render() {
-        // run the current scene
-        int new_scene_id = all_scenes[scene_id].update();
-        all_scenes[scene_id].draw(batch);
+  /**
+   * Disposes unneeded SpriteBatch and exits application.
+   * 
+   * <p>Runs when the game needs to close.
+   */
+  @Override
+  public void dispose() {
+    batch.dispose();
 
-        if (scene_id != new_scene_id) {
-            // special case updates
-            if (new_scene_id == 4)
-                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
-            else if (new_scene_id == 3 && scene_id == 5)
-                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+    Gdx.app.exit();
+    System.exit(0);
+  }
 
-
-            // check if we need to change scene
-            scene_id = new_scene_id;
-        }
-    }
-
-    /**
-     * Disposes unneeded SpriteBatch and exits application.
-     * <p>
-     * Runs when the game needs to close.
-     */
-    @Override
-    public void dispose() {
-        batch.dispose();
-
-        Gdx.app.exit();
-        System.exit(0);
-    }
-
-    /**
-     * Resize used and passed to resize method of each scene based on width and height attributes.
-     *
-     * @param width  int for scene
-     * @param height int for scene
-     */
-    @Override
-    public void resize(int width, int height) {
-        all_scenes[scene_id].resize(width, height);
-    }
+  /**
+   * Resize used and passed to resize method of each scene based on width and height attributes.
+   *
+   * @param width  int for scene
+   * @param height int for scene
+   */
+  @Override
+  public void resize(int width, int height) {
+    allScenes[sceneID].resize(width, height);
+  }
 }

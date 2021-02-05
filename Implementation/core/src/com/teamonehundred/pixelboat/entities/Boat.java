@@ -15,9 +15,9 @@ import java.util.List;
  * @author Umer Fakher
  */
 public abstract class Boat extends MovableObject implements CollisionObject {
-    /* ################################### //
-                   ATTRIBUTES
-    // ################################### */
+  /* ################################### //
+                 ATTRIBUTES
+  // ################################### */
 
   public String name = "default boat name";
 
@@ -30,7 +30,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   public long startTime = -1;
   public long endTime = -1;  // ms since epoch when starting and finishing current leg
   public long framesRaced = 0;  // number of frames taken to do current leg
-  public long timeToAdd = 0;  // ms to add to the end time for this leg. Accumulated by crossing the lines
+  public long timeToAdd = 0;  
+  // ms to add to the end time for this leg. Accumulated by crossing the lines
 
   public int framesToAnimate = 0;
   public int currentAnimationFrame = 0;
@@ -89,7 +90,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   * @author William Walton
   */
   Boat(int x, int y, int w, int h, String texturePath, String name,
-    float durabilityPerHit, float staminaUsage, float staminaRegen) {
+      float durabilityPerHit, float staminaUsage, float staminaRegen) {
     super(x, y, w, h, texturePath, 4);
     this.name = name;
     this.durabilityPerHit = durabilityPerHit;
@@ -102,38 +103,49 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   // ################################### */
 
   /**
-  * Function called when this boat collides with another object
+  * Function called when this boat collides with another object.
   *
   * @author Ben Dunbar
   */
   public void hasCollided() {
     durability -= durability - durabilityPerHit <= 0 ? 0 : durabilityPerHit;
-    if (maxSpeed >= 10){
+    if (maxSpeed >= 10) {
       maxSpeed -= 0.5;
     }      
   }
 
   /**
-  * Function called when this boat collides with a speed power-up 
+  * Function called when this boat collides with a speed power-up. 
   *
   * @author Ben Dunbar
   */
   public void hasCollidedSpeed() {
-    if (maxSpeed <= 20){
+    if (maxSpeed <= 20) {
       maxSpeed += 3;
     }
   }
 
+  /**
+  * Function called when this boat collides with a Health power-up.
+  *
+  * @author Ben Dunbar
+  */
   public void hasCollidedHealth() {
-    if (durability < 0.9){
+    if (durability < 0.9) {
       durability += 0.1;
     } else {
       durability = 1;
     }
   }
 
+  /**
+  * Function called when this boat collides with a energy power-up. 
+  *
+  * @author Ben Dunbar
+  */
+
   public void hasCollidedEnergy() {
-    if (stamina < 0.75){
+    if (stamina < 0.75) {
       stamina += 0.25;
     } else {
       stamina = 1;
@@ -142,7 +154,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
 
   /**
-  * Function called when the boat accelerates
+  * Function called when the boat accelerates.
   *
   * @author William Walton
   */
@@ -157,9 +169,10 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     if (framesToAnimate > 0) {
       setAnimationFrame(currentAnimationFrame);
       framesElapsed++;
-      if (framesElapsed % 15 == 0)
+      if (framesElapsed % 15 == 0) {
         currentAnimationFrame++;
         framesToAnimate--;
+      }
     } else {
       // reset everything
       setAnimationFrame(0);
@@ -170,7 +183,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   }
 
   /**
-  * Function called every frame when the game updates all objects positions
+  * Function called every frame when the game updates all objects positions.
   *
   * @author William Walton
   */
@@ -243,7 +256,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   * Returns the long value end time of the boat.
   *
   * @param inSeconds boolean to decide if the time should be returned in seconds or in 
-  * milliseconds.
+    milliseconds.
   * @return the long value end time
   * @author Umer Fakher
   */
@@ -309,10 +322,10 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   */
   public void checkCollisions(CollisionObject object) {
     if (object instanceof Obstacle && !(
-        ((Obstacle) object).getSprite().getY() > sprite.getY() - 200 &&
-        ((Obstacle) object).getSprite().getY() < sprite.getY() + 200 &&
-        ((Obstacle) object).getSprite().getX() > sprite.getX() - 200 &&
-        ((Obstacle) object).getSprite().getX() < sprite.getX() + 200)){
+        ((Obstacle) object).getSprite().getY() > sprite.getY() - 200 
+        && ((Obstacle) object).getSprite().getY() < sprite.getY() + 200 
+        && ((Obstacle) object).getSprite().getX() > sprite.getX() - 200 
+        && ((Obstacle) object).getSprite().getX() < sprite.getX() + 200)) {
       return;
     }
 
@@ -328,6 +341,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
       }
       object.hasCollided();
     }
+  }
 
   /**
   * Used to return the CollisionBounds object representing this boat. Used for collision detection
@@ -338,18 +352,18 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   public CollisionBounds getBounds() {
     // create a new collision bounds object representing my current position
     // see the collision bounds visualisation folder in assets for a visual representation
-    CollisionBounds my_bounds = new CollisionBounds();
-    Rectangle main_rect = new Rectangle(
-      sprite.getX() + (0.32f * sprite.getWidth()),
-      sprite.getY() + (0.117f * sprite.getHeight()),
-      0.32f * sprite.getWidth(),
-      0.77f * sprite.getHeight());
-    my_bounds.addBound(main_rect);
-    my_bounds.setOrigin(new Vector2(
-      sprite.getX() + (sprite.getWidth() / 2),
-      sprite.getY() + (sprite.getHeight() / 2)));
-    my_bounds.setRotation(sprite.getRotation());
-    return my_bounds;
+    CollisionBounds myBounds = new CollisionBounds();
+    Rectangle mainRect = new Rectangle(
+        sprite.getX() + (0.32f * sprite.getWidth()),
+        sprite.getY() + (0.117f * sprite.getHeight()),
+        0.32f * sprite.getWidth(),
+        0.77f * sprite.getHeight());
+    myBounds.addBound(mainRect);
+    myBounds.setOrigin(new Vector2(
+        sprite.getX() + (sprite.getWidth() / 2),
+         sprite.getY() + (sprite.getHeight() / 2)));
+    myBounds.setRotation(sprite.getRotation());
+    return myBounds;
   }
 
   // Getters and Setters for hasStartedLeg and hasFinishedLeg
@@ -371,7 +385,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   }
 
   /**
-   * Reset maxSpeed, durability and stamina to defaults
+   * Reset maxSpeed, durability and stamina to defaults.
    */
   public void reset() {
     this.maxSpeed = 15;
@@ -388,8 +402,9 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     long currentBest = -1;
 
     for (long time : legTimes) {
-      if (time > currentBest)
+      if (time > currentBest) {
         currentBest = time;
+      }
     }
     return currentBest;
   }

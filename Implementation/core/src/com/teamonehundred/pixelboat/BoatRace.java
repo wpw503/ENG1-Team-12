@@ -15,9 +15,9 @@ import com.teamonehundred.pixelboat.entities.ObstacleFloatingBranch;
 import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
 import com.teamonehundred.pixelboat.entities.PlayerBoat;
 import com.teamonehundred.pixelboat.entities.PowerUp;
-import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
-import com.teamonehundred.pixelboat.entities.PowerUpHealth;
 import com.teamonehundred.pixelboat.entities.PowerUpEnergy;
+import com.teamonehundred.pixelboat.entities.PowerUpHealth;
+import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,358 +27,346 @@ import java.util.List;
  *
  * @author William Walton
  * @author Umer Fakher
- * JavaDoc by Umer Fakher
+   JavaDoc by Umer Fakher
  */
 public class BoatRace {
-    protected List<Boat> boats;
+  protected List<Boat> boats;
+  protected BitmapFont font; //TimingTest
+  protected Texture laneSep;
+  protected Texture startBanner;
+  protected Texture bleachersL;
+  protected Texture bleachersR;
+  protected List<CollisionObject> obstacles;
+  protected List<CollisionObject> powerups;
+  protected int startY = 200;
+  protected int endY = 40000;
+  protected int laneWidth = 400;
+  protected int penaltyPerFrame = 1; // ms to add per frame when over the lane
+  protected boolean isFinsihed = false;
+  protected long totalFrames = 0;
 
-    protected BitmapFont font; //TimingTest
-    protected Texture lane_sep;
-    protected Texture start_banner;
-    protected Texture bleachers_l;
-    protected Texture bleachers_r;
-
-    protected List<CollisionObject> obstacles;
-    protected List<CollisionObject> powerups;
-
-    protected int start_y = 200;
-    protected int end_y = 40000;
-
-    protected int lane_width = 400;
-    protected int penalty_per_frame = 1; // ms to add per frame when over the lane
-
-    protected boolean is_finished = false;
-    protected long total_frames = 0;
-
-    /**
-     * Main constructor for a BoatRace.
-     * <p>
-     * Initialises lists of boats and obstacles as well as the colour of the Time Elapsed Overlay.
-     *
-     * @param race_boats List of Boat A list of ai boats and the player boat.
-     * @author William Walton
-     * @author Umer Fakher
-     * JavaDoc by Umer Fakher
-     */
-    public BoatRace(List<Boat> race_boats) {
-        lane_sep = new Texture("lane_buoy.png");
-        start_banner = new Texture("start_banner.png");
-        bleachers_l = new Texture("bleachers_l.png");
-        bleachers_r = new Texture("bleachers_r.png");
-
-        boats = new ArrayList<>();
-        boats.addAll(race_boats);
-
-        for (int i = 0; i < boats.size(); i++) {
-            boats.get(i).has_started_leg = false;
-            boats.get(i).has_finished_leg = false;
-
-            boats.get(i).reset_motion();
-            boats.get(i).sprite.setPosition(getLaneCentre(i), 40);  // reset boats y and place in lane
-            boats.get(i).setFramesRaced(0);
-            boats.get(i).reset();
-
-            if (boats.get(i) instanceof PlayerBoat)
-                ((PlayerBoat) boats.get(i)).resetCameraPos();
-        }
-
-        obstacles = new ArrayList<>();
-
-        // add some random obstacles
-        for (int i = 0; i < 100; i++)
-            obstacles.add(new ObstacleBranch(
-                    (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
-                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
-
-        for (int i = 0; i < 100; i++)
-            obstacles.add(new ObstacleFloatingBranch((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
-                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
-
-        for (int i = 0; i < 100; i++)
-            obstacles.add(new ObstacleDuck((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
-                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
-
-        // add the lane separators
-        for (int lane = 0; lane <= boats.size(); lane++) {
-            for (int height = 0; height <= end_y; height += ObstacleLaneWall.texture_height) {
-                obstacles.add(new ObstacleLaneWall(getLaneCentre(lane) - lane_width / 2, height, lane_sep));
-            }
-        }
-
-        powerups = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++)
-            powerups.add(new PowerUpSpeed(
-                    (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
-                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
-
-        for (int i = 0; i < 100; i++)
-            powerups.add(new PowerUpHealth(
-                    (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
-                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
-
-        for (int i = 0; i < 100; i++)
-            powerups.add(new PowerUpEnergy(
-                    (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
-                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
-
-
-        // Initialise colour of Time Elapsed Overlay
-        font = new BitmapFont();
-        font.setColor(Color.RED);
+  /**
+   * Main constructor for a BoatRace.
+   * 
+   * <p>Initialises lists of boats and obstacles as well as the colour of the Time Elapsed Overlay.
+   *
+   * @param raceBoats List of Boat A list of ai boats and the player boat.
+   * @author William Walton
+   * @author Umer Fakher
+     JavaDoc by Umer Fakher
+   */
+  public BoatRace(List<Boat> raceBoats) {
+    laneSep = new Texture("lane_buoy.png");
+    startBanner = new Texture("startBanner.png");
+    bleachersL = new Texture("bleachersL.png");
+    bleachersR = new Texture("bleachersR.png");
+    boats = new ArrayList<>();
+    boats.addAll(raceBoats);
+    for (int i = 0; i < boats.size(); i++) {
+      boats.get(i).hasStartedLeg = false;
+      boats.get(i).hasFinishedLeg = false;
+      boats.get(i).resetMotion();
+      boats.get(i).sprite.setPosition(getLaneCentre(i), 40);  // reset boats y and place in lane
+      boats.get(i).setFramesRaced(0);
+      boats.get(i).reset();
+      if (boats.get(i) instanceof PlayerBoat) {
+        ((PlayerBoat) boats.get(i)).resetCameraPos();
+      }
     }
 
-    private int getLaneCentre(int boat_index) {
-        int race_width = boats.size() * lane_width;
-        return (-race_width / 2) + (lane_width * (boat_index + 1)) - (lane_width / 2);
+    obstacles = new ArrayList<>();
+    // add some random obstacles
+
+    for (int i = 0; i < 100; i++) {
+      obstacles.add(new ObstacleBranch(
+            (int) (-(laneWidth * boats.size() / 2) + Math.random() * (laneWidth * boats.size())),
+            (int) (startY + 50 + Math.random() * (endY - startY - 50))));
+    } 
+    for (int i = 0; i < 100; i++) {
+      obstacles.add(new ObstacleFloatingBranch((int) (-(laneWidth * boats.size() / 2) 
+          + Math.random() * (laneWidth * boats.size())), 
+          (int) (startY + 50 + Math.random() * (endY - startY - 50))));
+    }
+    for (int i = 0; i < 100; i++) {
+      obstacles.add(new ObstacleDuck((int) (-(laneWidth * boats.size() / 2) 
+          + Math.random() * (laneWidth * boats.size())),
+          (int) (startY + 50 + Math.random() * (endY - startY - 50))));
+    }
+    // add the lane separators
+    for (int lane = 0; lane <= boats.size(); lane++) {
+      for (int height = 0; height <= endY; height += ObstacleLaneWall.texture_height) {
+        obstacles.add(new ObstacleLaneWall(getLaneCentre(lane) - laneWidth / 2, height, laneSep));
+      }
     }
 
-    /**
-     * Main method called for BoatRace.
-     * <p>
-     * This method is the main game loop that checks if any boats have started or finished a leg and
-     * calls the update methods for the movements for player boat and AI boats obstacles.
-     * Also this method checks for collisions.
-     *
-     * @author William Walton
-     * @author Umer Fakher
-     */
-    public void runStep() {
-        // dnf after 5 mins
-        if (total_frames++ > 60 * 60 * 5) {
-            is_finished = true;
-            for (Boat b : boats) {
-                if (!b.hasFinishedLeg()) {
-                    b.setStartTime(0);
-                    b.setEndTime((long) (b.getStartTime(false) + ((1000.0 / 60.0) * b.getFramesRaced())));
-                    b.setLegTime();
-                }
-            }
-        }
+    powerups = new ArrayList<>();
+    // add some random powerups
 
-        for (CollisionObject c : obstacles) {
-            if (c instanceof Obstacle)
-                ((Obstacle) c).updatePosition();
-            if (c instanceof ObstacleLaneWall) {
-                ((ObstacleLaneWall) c).setAnimationFrame(0);
-            }
-        }
-
-        for (CollisionObject c : powerups) {
-            if (c instanceof PowerUp)
-                ((PowerUp) c).updatePosition();
-        }
-
-        for (Boat boat : boats) {
-            // check if any boats have finished
-            if (!boat.hasFinishedLeg() && boat.getSprite().getY() > end_y) {
-                // store the leg time in the object
-                boat.setStartTime(0);
-                boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced())));
-                boat.setLegTime();
-
-                boat.setHasFinishedLeg(true);
-            }
-            // check if any boats have started
-            else if (!boat.hasStartedLeg() && boat.getSprite().getY() > start_y) {
-                boat.setStartTime(System.currentTimeMillis());
-                boat.setHasStartedLeg(true);
-                boat.setFramesRaced(0);
-            } else {
-                // if not start or end, must be racing
-                boat.addFrameRaced();
-            }
-        }
-
-        boolean not_finished = false;
-
-        for (int i = 0; i < boats.size(); i++) {
-            // all boats
-            if (!boats.get(i).hasFinishedLeg()) not_finished = true;
-
-            // update boat (handles inputs if player, etc)
-            if (boats.get(i) instanceof AIBoat) {
-                ((AIBoat) boats.get(i)).updatePosition(obstacles);
-            } else if (boats.get(i) instanceof PlayerBoat) {
-                boats.get(i).updatePosition();
-            }
-
-            // check for collisions
-            for (CollisionObject obstacle : obstacles) {
-                if (obstacle.isShown())
-                    boats.get(i).checkCollisions(obstacle);
-            }
-
-            for (CollisionObject powerup : powerups) {
-                if (powerup.isShown())
-                    boats.get(i).checkCollisions(powerup);
-            }
-
-            // check if out of lane
-            if (boats.get(i).getSprite().getX() > getLaneCentre(i) + lane_width / 2 ||
-                    boats.get(i).getSprite().getX() < getLaneCentre(i) - lane_width / 2)
-                boats.get(i).setTimeToAdd(boats.get(i).getTimeToAdd() + penalty_per_frame);
-        }
-        is_finished = !not_finished;
+    for (int i = 0; i < 100; i++) {
+      powerups.add(new PowerUpSpeed(
+          (int) (-(laneWidth * boats.size() / 2) + Math.random() * (laneWidth * boats.size())),
+          (int) (startY + 50 + Math.random() * (endY - startY - 50))));
+    }
+    for (int i = 0; i < 100; i++) {
+      powerups.add(new PowerUpHealth(
+          (int) (-(laneWidth * boats.size() / 2) + Math.random() 
+          * (laneWidth * boats.size())),
+          (int) (startY + 50 + Math.random() * (endY - startY - 50))));
+    }
+    for (int i = 0; i < 100; i++) {
+      powerups.add(new PowerUpEnergy(
+          (int) (-(laneWidth * boats.size() / 2) + Math.random() * (laneWidth * boats.size())),
+          (int) (startY + 50 + Math.random() * (endY - startY - 50))));
     }
 
-    public boolean isFinished() {
-        return is_finished;
+    // Initialise colour of Time Elapsed Overlay
+    font = new BitmapFont();
+    font.setColor(Color.RED);
+  }
+
+  private int getLaneCentre(int boatIndex) {
+    int raceWidth = boats.size() * laneWidth;
+    return (-raceWidth / 2) + (laneWidth * (boatIndex + 1)) - (laneWidth / 2);
+  }
+
+  /**
+   * Main method called for BoatRace.
+   * 
+   * <p>This method is the main game loop that checks if any boats have started or finished a leg 
+   * and calls the update methods for the movements for player boat and AI boats obstacles.
+   * Also this method checks for collisions.
+   *
+   * @author William Walton
+   * @author Umer Fakher
+   */
+  public void runStep() {
+    // dnf after 5 mins
+    if (totalFrames++ > 60 * 60 * 5) {
+      isFinsihed = true;
+      for (Boat b : boats) {
+        if (!b.hasFinishedLeg()) {
+          b.setStartTime(0);
+          b.setEndTime((long) (b.getStartTime(false) + ((1000.0 / 60.0) * b.getFramesRaced())));
+          b.setLegTime();
+        }
+      }
     }
 
-    /**
-     * Returns a list of all sprites in the PixelBoat game including boats and obstacles.
-     *
-     * @return List of Sprites A list of all sprites in the PixelBoat game.
-     * @author William Walton
-     * @author Umer Fakher
-     */
-    public List<Sprite> getSprites() {
-        List<Sprite> all_sprites = new ArrayList<>();
-
-        for (CollisionObject obs : obstacles) {
-            // check if can be cast back up
-            if (obs instanceof Obstacle && obs.isShown())
-                all_sprites.add(((Obstacle) obs).getSprite());
-        }
-
-        for (CollisionObject pus : powerups) {
-            // check if can be cast back up
-            if (pus instanceof PowerUp && pus.isShown())
-                all_sprites.add(((PowerUp) pus).getSprite());
-        }
-
-        for (Boat b : boats) {
-            all_sprites.add(b.getSprite());
-            if (b instanceof PlayerBoat)
-                all_sprites.addAll(((PlayerBoat) b).getUISprites());
-        }
-
-        return all_sprites;
+    for (CollisionObject c : obstacles) {
+      if (c instanceof Obstacle) {
+        ((Obstacle) c).updatePosition();
+      }
+      if (c instanceof ObstacleLaneWall) {
+        ((ObstacleLaneWall) c).setAnimationFrame(0);
+      }
     }
 
-    /**
-     * Calculates and displays the Time Elapsed Overlay for player boat from the start of a leg.
-     * <p>
-     * The displayed time is updated in real-time and the position is consistent with the player hud (i.e. stamina
-     * and durability bar positions).
-     *
-     * @param batch
-     * @author Umer Fakher
-     */
-    public void draw(SpriteBatch batch) {
-
-        // Retrieves sprites and calls function recursively.
-        for (Sprite sp : getSprites())
-            sp.draw(batch);
-
-        for (Boat b : boats) {
-            //If current boat b is the player's boat then can display hud for this boat
-            if (b instanceof PlayerBoat) {
-                if (((PlayerBoat) b).hasStartedLeg()) {
-                    //Calculate time elapsed from the start in milliseconds
-                    long i = (System.currentTimeMillis() - ((PlayerBoat) b).getStartTime(false));
-
-                    //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
-                    drawTimeDisplay(batch, b, "", i, -((PlayerBoat) b).ui_bar_width / 2,
-                            500 + ((PlayerBoat) b).getSprite().getY());
-
-                    //Draws a leg time display on the screen when the given boat has completed a leg of the race.
-                    drawLegTimeDisplay(batch, b);
-                }
-            }
-        }
-
-        int race_width = boats.size() * lane_width;
-        Texture temp = new Texture("object_placeholder.png");
-
-        for (int i = -1000; i < end_y + 1000; i += 800)
-            batch.draw(bleachers_r, race_width / 2 + 400, i, 400, 800);
-        for (int i = -1000; i < end_y + 1000; i += 800)
-            batch.draw(bleachers_l, -race_width / 2 - 800, i, 400, 800);
-        for (int i = 0; i < boats.size(); i++)
-            batch.draw(start_banner, (getLaneCentre(i)) - (lane_width / 2), start_y, lane_width, lane_width / 2);
-        batch.draw(temp, -race_width / 2, end_y, race_width, 5);
-
-        temp.dispose();
+    for (CollisionObject c : powerups) {
+      if (c instanceof PowerUp) {
+        ((PowerUp) c).updatePosition();
+      }
     }
 
-    /**
-     * Draws the a time display on the screen.
-     *
-     * @param batch      SpriteBatch instance
-     * @param b          Boat instance
-     * @param label_text label for text. If "" empty string passed in then default time display shown.
-     * @param time       time to be shown in milliseconds
-     * @param x          horizontal position of display
-     * @param y          vertical position of display
-     * @author Umer Fakher
-     */
-    public void drawTimeDisplay(SpriteBatch batch, Boat b, String label_text, long time, float x, float y) {
-        if (label_text.equals("")) {
-            label_text = "Time (min:sec) = %02d:%02d";
-        }
-        font.draw(batch, String.format(label_text, time / 60000, time / 1000 % 60), x, y);
+    for (Boat boat : boats) {
+      // check if any boats have finished
+      if (!boat.hasFinishedLeg() && boat.getSprite().getY() > endY) {
+        // store the leg time in the object
+        boat.setStartTime(0);
+        boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) 
+            * boat.getFramesRaced())));
+        boat.setLegTime();
+        boat.setHasFinishedLeg(true);
+      } else if (!boat.hasStartedLeg() && boat.getSprite().getY() > startY) {
+        // check if any boats have started
+        boat.setStartTime(System.currentTimeMillis());
+        boat.setHasStartedLeg(true);
+        boat.setFramesRaced(0);
+      } else {
+        // if not start or end, must be racing
+        boat.addFrameRaced();
+      }
     }
 
-    /**
-     * Draws a leg time display on the screen when the given boat has completed a leg of the race.
-     * <p>
-     * This function gets the leg times list for the given boat instance, gets the last updated leg time
-     * and formats a leg time display string which shows which leg was completed and in what time.
-     * The function then passes on the drawing of this formatted leg time display to drawTimeDisplay.
-     *
-     * @param batch SpriteBatch instance
-     * @param b     Boat instance
-     * @author Umer Fakher
-     */
-    public void drawLegTimeDisplay(SpriteBatch batch, Boat b) {
-        if (b.getEndTime(false) != -1) {
-            for (long l : b.getLegTimes()) {
-                String label = String.format("Leg Time %d (min:sec) = ", b.getLegTimes().indexOf(l) + 1) + "%02d:%02d";
-                drawTimeDisplay(batch, b, label, l, -((PlayerBoat) b).ui_bar_width / 2,
-                        500 - ((b.getLegTimes().indexOf(l) + 1) * 20) + ((PlayerBoat) b).getSprite().getY());
-            }
-
+    boolean notFinished = false;
+    for (int i = 0; i < boats.size(); i++) {
+      // all boats
+      if (!boats.get(i).hasFinishedLeg()) {
+        notFinished = true;
+      }
+      // update boat (handles inputs if player, etc)
+      if (boats.get(i) instanceof AIBoat) {
+        ((AIBoat) boats.get(i)).updatePosition(obstacles);
+      } else if (boats.get(i) instanceof PlayerBoat) {
+        boats.get(i).updatePosition();
+      }
+      // check for collisions
+      for (CollisionObject obstacle : obstacles) {
+        if (obstacle.isShown()) {
+          boats.get(i).checkCollisions(obstacle);
         }
-    }
-    /**
-     * Estimates the times for all boats at the end of a race. 
-     * It also sets the boats to the finished state. The race is also set to finished.
-     * @author Adam Blanchet
-     */
-    public void estimateEndTimes() {
-
-        // Loop through all the boats that haven't finished the leg
-
-        for (Boat boat: boats) {
-
-            if (!boat.hasFinishedLeg()) {
-
-                boat.setStartTime(0);
-                
-                // TODO: make sure this is accurate enough
-                // Estimate the remaining time: using 50% of max speed as an estimate
-                float distance_to_finish = end_y - boat.getSprite().getY();
-
-                double cruise_speed = boat.max_speed * 0.5;
-
-                float remaining_time = (float) (distance_to_finish / cruise_speed);
-
-                // Set the time for the boat and then set the boat as finished
-                boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced()) + remaining_time));
-                boat.setLegTime();
-
-                boat.setHasFinishedLeg(true);
-
-            }
-
+      }
+      for (CollisionObject powerup : powerups) {
+        if (powerup.isShown()) {
+          boats.get(i).checkCollisions(powerup);
         }
-
-        // Set the race as finished
-
-        this.is_finished = true;
-
+      }
+      // check if out of lane
+      if (boats.get(i).getSprite().getX() > getLaneCentre(i) + laneWidth / 2 
+          || boats.get(i).getSprite().getX() < getLaneCentre(i) - laneWidth / 2) {
+        boats.get(i).setTimeToAdd(boats.get(i).getTimeToAdd() + penaltyPerFrame);
+      }
     }
+    isFinsihed = !notFinished;
+  }
+
+  public boolean isFinished() {
+    return isFinsihed;
+  }
+
+  /**
+   * Returns a list of all sprites in the PixelBoat game including boats and obstacles.
+   *
+   * @return List of Sprites A list of all sprites in the PixelBoat game.
+   * @author William Walton
+   * @author Umer Fakher
+   */
+  public List<Sprite> getSprites() {
+    List<Sprite> allSprites = new ArrayList<>();
+    for (CollisionObject obs : obstacles) {
+      // check if can be cast back up
+      if (obs instanceof Obstacle && obs.isShown()) {
+        allSprites.add(((Obstacle) obs).getSprite());
+      }
+    }
+    for (CollisionObject pus : powerups) {
+      // check if can be cast back up
+      if (pus instanceof PowerUp && pus.isShown()) {
+        allSprites.add(((PowerUp) pus).getSprite());
+      }
+    }
+    for (Boat b : boats) {
+      allSprites.add(b.getSprite());
+      if (b instanceof PlayerBoat) {
+        allSprites.addAll(((PlayerBoat) b).getUISprites());
+      }
+    }
+    return allSprites;
+  }
+
+  /**
+   * Calculates and displays the Time Elapsed Overlay for player boat from the start of a leg.
+   * 
+   * <p>The displayed time is updated in real-time and the position is consistent with the 
+   * player hud (i.e. stamina and durability bar positions).
+   *
+   * @param batch
+   * @author Umer Fakher
+   */
+  public void draw(SpriteBatch batch) {
+    // Retrieves sprites and calls function recursively.
+    for (Sprite sp : getSprites()) {
+      sp.draw(batch);
+    }
+    for (Boat b : boats) {
+      //If current boat b is the player's boat then can display hud for this boat
+      if (b instanceof PlayerBoat) {
+        if (((PlayerBoat) b).hasStartedLeg()) {
+          //Calculate time elapsed from the start in milliseconds
+          long i = (System.currentTimeMillis() - ((PlayerBoat) b).getStartTime(false));
+          //Displays and updates the time elapsed overlay and keeps position consistent 
+          //with player's boat
+          drawTimeDisplay(batch, b, "", i, -((PlayerBoat) b).ui_bar_width / 2,
+              500 + ((PlayerBoat) b).getSprite().getY());
+          //Draws a leg time display on the screen when the given boat has completed a leg 
+          //of the race.
+          drawLegTimeDisplay(batch, b);
+        }
+      }
+    }
+
+    int raceWidth = boats.size() * laneWidth;
+    Texture temp = new Texture("object_placeholder.png");
+    for (int i = -1000; i < endY + 1000; i += 800) {
+      batch.draw(bleachersR, raceWidth / 2 + 400, i, 400, 800);
+    }
+    for (int i = -1000; i < endY + 1000; i += 800) {
+      batch.draw(bleachersL, -raceWidth / 2 - 800, i, 400, 800);
+    }
+    for (int i = 0; i < boats.size(); i++) {
+      batch.draw(startBanner, (getLaneCentre(i)) - (laneWidth / 2), startY, laneWidth,
+          laneWidth / 2);
+    }
+    batch.draw(temp, -raceWidth / 2, endY, raceWidth, 5);
+    temp.dispose();
+  }
+
+  /**
+   * Draws the a time display on the screen.
+   *
+   * @param batch      SpriteBatch instance
+   * @param b          Boat instance
+   * @param labelText label for text. If "" empty string passed in then default time display shown.
+   * @param time       time to be shown in milliseconds
+   * @param x          horizontal position of display
+   * @param y          vertical position of display
+   * @author Umer Fakher
+   */
+  public void drawTimeDisplay(SpriteBatch batch, Boat b, String labelText, long time,
+      float x, float y) {
+    if (labelText.equals("")) {
+      labelText = "Time (min:sec) = %02d:%02d";
+    }
+    font.draw(batch, String.format(labelText, time / 60000, time / 1000 % 60), x, y);
+  }
+
+  /**
+   * Draws a leg time display on the screen when the given boat has completed a leg of the race.
+   * 
+   * <p>This function gets the leg times list for the given boat instance, gets the last updated 
+   * leg time and formats a leg time display string which shows which leg was completed and in 
+   * what time.
+   * The function then passes on the drawing of this formatted leg time display to drawTimeDisplay.
+   *
+   * @param batch SpriteBatch instance
+   * @param b     Boat instance
+   * @author Umer Fakher
+   */
+  public void drawLegTimeDisplay(SpriteBatch batch, Boat b) {
+    if (b.getEndTime(false) != -1) {
+      for (long l : b.getLegTimes()) {
+        String label = String.format("Leg Time %d (min:sec) = ", b.getLegTimes().indexOf(l) + 1)
+            + "%02d:%02d";
+        drawTimeDisplay(batch, b, label, l, -((PlayerBoat) b).ui_bar_width / 2,
+            500 - ((b.getLegTimes().indexOf(l) + 1) * 20) + ((PlayerBoat) b).getSprite().getY());
+      }
+    }
+  }
+
+  /**
+   * Estimates the times for all boats at the end of a race. 
+   * It also sets the boats to the finished state. The race is also set to finished.
+   * @author Adam Blanchet
+   */
+  public void estimateEndTimes() {
+    // Loop through all the boats that haven't finished the leg
+    for (Boat boat: boats) {
+      if (!boat.hasFinishedLeg()) {
+        boat.setStartTime(0);
+        
+        // TODO: make sure this is accurate enough
+        // Estimate the remaining time: using 50% of max speed as an estimate
+        float distanceToFinish = endY - boat.getSprite().getY();
+        double cruiseSpeed = boat.maxSpeed * 0.5;
+        float remainingType = (float) (distanceToFinish / cruiseSpeed);
+        // Set the time for the boat and then set the boat as finished
+        boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced())
+            + remainingType));
+        boat.setLegTime();
+        boat.setHasFinishedLeg(true);
+      }
+    }
+    // Set the race as finished
+    this.isFinsihed = true;
+  }
 
 }

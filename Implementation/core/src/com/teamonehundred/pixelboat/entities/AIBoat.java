@@ -9,7 +9,7 @@ import java.util.List;
  * Represents the AI's boat.
  *
  * @author James Frost
- * JavaDoc by Umer Fakher
+   JavaDoc by Umer Fakher
  */
 public class AIBoat extends Boat {
   /* ################################### //
@@ -95,8 +95,8 @@ public class AIBoat extends Boat {
 
   /**
   * Updates position of objects AIBoat based on acceleration and stamina.
-  * <p>
-  * Checks if AIBoat can turn and updates position accordingly, 
+  * 
+  * <p>Checks if AIBoat can turn and updates position accordingly, 
   * based on any collision objects that may overlap.
   *
   * @param collidables List of Collision Objects
@@ -157,7 +157,7 @@ public class AIBoat extends Boat {
   * isn't obstructed by an object, preference the middle (maybe put a preference to side as well)
   * if every ray is obstructed either (keep turning [left or right] on the spot until one is,
   * or choose the one that is obstructed furthest away the second option
-  * (choose the one that is obstructed furthest away) is better
+  * (choose the one that is obstructed furthest away) is better.
   *
   * @param collidables List of Collision Objects
   * @author James Frost
@@ -190,10 +190,10 @@ public class AIBoat extends Boat {
         for (CollisionObject collideable : collidables) {
           // very lazy way of optimising this code. will break if the collidable isn't an obstacle
           if (collideable.isShown() &&
-              ((Obstacle) collideable).getSprite().getY() > sprite.getY() - 200 &&
-              ((Obstacle) collideable).getSprite().getY() < sprite.getY() + 200 &&
-              ((Obstacle) collideable).getSprite().getX() > sprite.getX() - 200 &&
-              ((Obstacle) collideable).getSprite().getX() < sprite.getX() + 200){
+              ((Obstacle) collideable).getSprite().getY() > sprite.getY() - 200 
+              && ((Obstacle) collideable).getSprite().getY() < sprite.getY() + 200 
+              && ((Obstacle) collideable).getSprite().getX() > sprite.getX() - 200 
+              && ((Obstacle) collideable).getSprite().getX() < sprite.getX() + 200) {
             for (Shape2D bound : collideable.getBounds().getShapes()) {
               if (bound.contains((float) tempx, (float) tempy)) {
                 if (cheekyBitOfCoding) {
