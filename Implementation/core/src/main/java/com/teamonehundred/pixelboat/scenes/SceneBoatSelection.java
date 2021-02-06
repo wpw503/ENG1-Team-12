@@ -12,127 +12,131 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Represents the Boat Selection Scene for when the player wants to select which boat to play with before the race
- * starts.
+ * Represents the Boat Selection Scene for when the player wants to select
+ * which boat to play with before the race starts.
  *
- * @author William Walton
- * JavaDoc by Umer Fakher
+ * @author William Walton, JavaDoc by Umer Fakher
  */
 public class SceneBoatSelection implements Scene {
-    protected int scene_id = 5;
+  protected int sceneId = 5;
 
-    protected boolean is_new_click = false;
+  protected boolean isNewClick = false;
 
-    protected int spec_id = 0;
-    protected int num_specs = 3;
+  protected int specId = 0;
+  protected int numSpecs = 3;
 
-    protected Texture bg;
-    protected Sprite bg_sprite;
+  protected Texture bg;
+  protected Sprite bgSprite;
 
-    protected Texture[] boat_options;
-    protected Sprite[] boat_option_sprites;
+  protected Texture[] boatOptions;
+  protected Sprite[] boatOptionSprites;
 
-    protected Viewport fill_viewport;
-    protected OrthographicCamera fill_camera;
+  protected Viewport fillWiewport;
+  protected OrthographicCamera fillCamera;
 
-    /**
-     * Main constructor for a SceneBoatSelection.
-     * <p>
-     * Initialises a Scene textures for Boat Selection and camera.
-     *
-     * @author William Walton
-     */
-    public SceneBoatSelection() {
-        fill_camera = new OrthographicCamera();
-        fill_viewport = new FillViewport(1280, 720, fill_camera);
-        fill_viewport.apply();
-        fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
-        fill_viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+  /**
+   * Main constructor for a SceneBoatSelection.
+   *
+   * <p>Initialises a Scene textures for Boat Selection and camera.
+   *
+   * @author William Walton
+   */
+  public SceneBoatSelection() {
+    fillCamera = new OrthographicCamera();
+    fillWiewport = new FillViewport(1280, 720, fillCamera);
+    fillWiewport.apply();
+    fillCamera.position.set(fillCamera.viewportWidth / 2, fillCamera.viewportHeight / 2, 0);
+    fillWiewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        bg = new Texture("boat_selection_screen.png");
-        bg_sprite = new Sprite(bg);
-        bg_sprite.setPosition(0, 0);
-        bg_sprite.setSize(1280, 720);
+    bg = new Texture("boat_selection_screen.png");
+    bgSprite = new Sprite(bg);
+    bgSprite.setPosition(0, 0);
+    bgSprite.setSize(1280, 720);
 
-        boat_options = new Texture[num_specs];
-        boat_option_sprites = new Sprite[num_specs];
+    boatOptions = new Texture[numSpecs];
+    boatOptionSprites = new Sprite[numSpecs];
 
-        boat_options[0] = new Texture("boat_selection_debug.png");
-        boat_options[1] = new Texture("boat_selection_default.png");
-        boat_options[2] = new Texture("boat_selection_fastlowdurability.png");
+    boatOptions[0] = new Texture("boat_selection_debug.png");
+    boatOptions[1] = new Texture("boat_selection_default.png");
+    boatOptions[2] = new Texture("boat_selection_fastlowdurability.png");
 
-        for (int i = 0; i < num_specs; i++) {
-            boat_option_sprites[i] = new Sprite(boat_options[i]);
-            boat_option_sprites[i].setSize(512 / 2, 256 / 2);
-            boat_option_sprites[i].setPosition(
-                    (fill_camera.viewportWidth / 2) - (boat_option_sprites[i].getWidth() / 2),
-                    (fill_camera.viewportHeight / 2) + (boat_option_sprites[i].getHeight() / 2) - i * (boat_option_sprites[i].getHeight()));
+    for (int i = 0; i < numSpecs; i++) {
+      boatOptionSprites[i] = new Sprite(boatOptions[i]);
+      boatOptionSprites[i].setSize(512 / 2, 256 / 2);
+      boatOptionSprites[i].setPosition(
+          (fillCamera.viewportWidth / 2) - (boatOptionSprites[i].getWidth() / 2),
+          (fillCamera.viewportHeight / 2) + (boatOptionSprites[i].getHeight() / 2) - i
+            * (boatOptionSprites[i].getHeight()));
+    }
+  }
+
+  /**
+   * Update function for SceneBoatSelection. Ends SceneBoatSelection based
+   * on user input otherwise stays in scene.
+   *
+   * <p>Returns an specified integer when you want to exit the screen else
+   * return scene_id if you want to stay in scene.
+   *
+   * @return the scene_id ofwhich screen is next (either this screen still or another)
+   * @author William Walton
+   */
+  public int update() {
+    if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+      isNewClick = true;
+    }
+
+    Vector3 mousePos = fillCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+    for (int i = 0; i < numSpecs; i++) {
+      if (boatOptionSprites[i].getBoundingRectangle().contains(mousePos.x, mousePos.y)) {
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && isNewClick) {
+          specId = i;
+          return 6;  // return 3 to exit
         }
+      }
     }
 
-    /**
-     * Update function for SceneBoatSelection. Ends SceneBoatSelection based on user input otherwise stays in scene.
-     * <p>
-     * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
-     *
-     * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
-     * @author William Walton
-     */
-    public int update() {
-        if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT))
-            is_new_click = true;
+    return sceneId;
+  }
 
-        Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+  /**
+   * Draw function for SceneBoatSelection.
+   *
+   * <p>Draws BoatSelection for the PixelBoat game.
+   *
+   * @param batch SpriteBatch used for drawing to screen.
+   * @author William Walton
+   */
+  public void draw(SpriteBatch batch) {
+    Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        for (int i = 0; i < num_specs; i++)
-            if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
-                    spec_id = i;
-                    return 6;  // return 3 to exit
-                }
-            }
-
-        return scene_id;
+    batch.setProjectionMatrix(fillCamera.combined);
+    batch.begin();
+    bgSprite.draw(batch);
+    for (int i = 0; i < 3; i++) {
+      boatOptionSprites[i].draw(batch);
     }
+    batch.end();
+  }
 
-    /**
-     * Draw function for SceneBoatSelection.
-     * <p>
-     * Draws BoatSelection for the PixelBoat game.
-     *
-     * @param batch SpriteBatch used for drawing to screen.
-     * @author William Walton
-     */
-    public void draw(SpriteBatch batch) {
-        Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+  /**
+   * Temp resize method if needed for camera extension.
+   *
+   * @param width  Integer width to be resized to
+   * @param height Integer height to be resized to
+   * @author Umer Fakher
+   */
+  public void resize(int width, int height) {
+  }
 
-        batch.setProjectionMatrix(fill_camera.combined);
-        batch.begin();
-        bg_sprite.draw(batch);
-        for (int i = 0; i < 3; i++) {
-            boat_option_sprites[i].draw(batch);
-        }
-        batch.end();
-    }
-
-    /**
-     * Temp resize method if needed for camera extension.
-     *
-     * @param width  Integer width to be resized to
-     * @param height Integer height to be resized to
-     * @author Umer Fakher
-     */
-    public void resize(int width, int height) {
-    }
-
-    /**
-     * Getter method for the specified boat's spec_id.
-     *
-     * @return boat's spec id
-     * @author William Walton
-     */
-    public int getSpecID() {
-        return spec_id;
-    }
+  /**
+   * Getter method for the specified boat's spec_id.
+   *
+   * @return boat's spec id
+   * @author William Walton
+   */
+  public int getSpecId() {
+    return specId;
+  }
 }

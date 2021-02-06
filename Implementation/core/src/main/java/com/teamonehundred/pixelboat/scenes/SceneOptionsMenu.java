@@ -12,165 +12,174 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Represents the Options Menu Scene for when the player wants to select/edit the options before the race starts.
+ * Represents the Options Menu Scene for when the player wants
+ * to select/edit the options before the race starts.
  *
- * @author William Walton
- * JavaDoc by Umer Fakher
+ * @author William Walton, JavaDoc by Umer Fakher
  */
 public class SceneOptionsMenu implements Scene {
-    protected int scene_id = 2;
+  protected int sceneId = 2;
 
-    protected boolean is_fullscreen = false;
+  protected boolean isFullscreen = false;
 
-    protected Texture bg;
-    protected Sprite bg_sprite;
+  protected Texture bg;
+  protected Sprite bgSprite;
 
-    protected Texture full;
-    protected Sprite full_sprite;
-    protected Texture full_check_yes;
-    protected Texture full_check_no;
-    protected Sprite full_check_sprite;
+  protected Texture full;
+  protected Sprite fullSprite;
+  protected Texture fullCheckYes;
+  protected Texture fullCheckNo;
+  protected Sprite fullCheckSprite;
 
-    protected Texture accel;
-    protected Sprite accel_sprite;
+  protected Texture accel;
+  protected Sprite accelSprite;
 
-    protected Texture left;
-    protected Sprite left_sprite;
+  protected Texture left;
+  protected Sprite leftSprite;
 
-    protected Texture right;
-    protected Sprite right_sprite;
+  protected Texture right;
+  protected Sprite rightSprite;
 
-    protected Texture back;
-    protected Texture back_hovered;
-    protected Sprite back_sprite;
+  protected Texture back;
+  protected Texture backHovered;
+  protected Sprite backSprite;
 
-    protected Viewport fill_viewport;
-    protected OrthographicCamera fill_camera;
+  protected Viewport fillViewPort;
+  protected OrthographicCamera fillCamera;
 
-    /**
-     * Main constructor for a SceneOptionsMenu.
-     * <p>
-     * Initialises a Scene textures for Options Menu and camera.
-     * When options are hovered over they will change texture indicating what the user is about to select.
-     *
-     * @author William Walton
-     */
-    public SceneOptionsMenu() {
-        fill_camera = new OrthographicCamera();
-        fill_viewport = new FillViewport(1280, 720, fill_camera);
-        fill_viewport.apply();
-        fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
-        fill_viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+  /**
+   * Main constructor for a SceneOptionsMenu.
+   *
+   * <p>Initialises a Scene textures for Options Menu and camera.
+   * When options are hovered over they will change texture indicating
+   * what the user is about to select.
+   *
+   * @author William Walton
+   */
+  public SceneOptionsMenu() {
+    fillCamera = new OrthographicCamera();
+    fillViewPort = new FillViewport(1280, 720, fillCamera);
+    fillViewPort.apply();
+    fillCamera.position.set(fillCamera.viewportWidth / 2, fillCamera.viewportHeight / 2, 0);
+    fillViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        bg = new Texture("start_screen.png");
-        bg_sprite = new Sprite(bg);
-        bg_sprite.setPosition(0, 0);
-        bg_sprite.setSize(1280, 720);
+    bg = new Texture("start_screen.png");
+    bgSprite = new Sprite(bg);
+    bgSprite.setPosition(0, 0);
+    bgSprite.setSize(1280, 720);
 
-        full = new Texture("options_menu_fullscreen.png");
-        full_check_yes = new Texture("options_menu_checkbox_yes.png");
-        full_check_no = new Texture("options_menu_checkbox_no.png");
-        full = new Texture("options_menu_fullscreen.png");
-        full_sprite = new Sprite(full);
-        full_check_sprite = new Sprite(full_check_no);
-        full_sprite.setSize(512 / 2, 128 / 2);
-        full_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), (Gdx.graphics.getHeight() / 2) + (full_sprite.getHeight() * 1.5f));
-        full_check_sprite.setSize(128 / 2, 128 / 2);
-        full_check_sprite.setPosition((fill_camera.viewportWidth / 2) + (full_sprite.getWidth() / 2), (Gdx.graphics.getHeight() / 2) + (full_sprite.getHeight() * 1.5f));
+    full = new Texture("options_menu_fullscreen.png");
+    fullCheckYes = new Texture("options_menu_checkbox_yes.png");
+    fullCheckNo = new Texture("options_menu_checkbox_no.png");
+    full = new Texture("options_menu_fullscreen.png");
+    fullSprite = new Sprite(full);
+    fullCheckSprite = new Sprite(fullCheckNo);
+    fullSprite.setSize(512 / 2, 128 / 2);
+    fullSprite.setPosition((fillCamera.viewportWidth / 2) - (fullSprite.getWidth()),
+                           (Gdx.graphics.getHeight() / 2) + (fullSprite.getHeight() * 1.5f));
+    fullCheckSprite.setSize(128 / 2, 128 / 2);
+    fullCheckSprite.setPosition((fillCamera.viewportWidth / 2) + (fullSprite.getWidth() / 2),
+                                (Gdx.graphics.getHeight() / 2) + (fullSprite.getHeight() * 1.5f));
 
-        accel = new Texture("options_menu_fullscreen.png");
-        accel_sprite = new Sprite(accel);
-        accel_sprite.setSize(512 / 2, 128 / 2);
-        accel_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), (Gdx.graphics.getHeight() / 2) + (full_sprite.getHeight() * .5f));
+    accel = new Texture("options_menu_fullscreen.png");
+    accelSprite = new Sprite(accel);
+    accelSprite.setSize(512 / 2, 128 / 2);
+    accelSprite.setPosition((fillCamera.viewportWidth / 2) - (fullSprite.getWidth()),
+                            (Gdx.graphics.getHeight() / 2) + (fullSprite.getHeight() * .5f));
 
-        left = new Texture("options_menu_fullscreen.png");
-        left_sprite = new Sprite(left);
-        left_sprite.setSize(512 / 2, 128 / 2);
-        left_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), (Gdx.graphics.getHeight() / 2) - (full_sprite.getHeight() * .5f));
+    left = new Texture("options_menu_fullscreen.png");
+    leftSprite = new Sprite(left);
+    leftSprite.setSize(512 / 2, 128 / 2);
+    leftSprite.setPosition((fillCamera.viewportWidth / 2) - (fullSprite.getWidth()),
+                           (Gdx.graphics.getHeight() / 2) - (fullSprite.getHeight() * .5f));
 
-        right = new Texture("options_menu_fullscreen.png");
-        right_sprite = new Sprite(right);
-        right_sprite.setSize(512 / 2, 128 / 2);
-        right_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), (Gdx.graphics.getHeight() / 2) - (full_sprite.getHeight() * 1.5f));
+    right = new Texture("options_menu_fullscreen.png");
+    rightSprite = new Sprite(right);
+    rightSprite.setSize(512 / 2, 128 / 2);
+    rightSprite.setPosition((fillCamera.viewportWidth / 2) - (fullSprite.getWidth()),
+                            (Gdx.graphics.getHeight() / 2) - (fullSprite.getHeight() * 1.5f));
 
-        back = new Texture("options_menu_back.png");
-        back_hovered = new Texture("options_menu_back_hovered.png");
-        back_sprite = new Sprite(back);
-        back_sprite.setSize(512 / 2, 128 / 2);
-        back_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), 70);
+    back = new Texture("options_menu_back.png");
+    backHovered = new Texture("options_menu_back_hovered.png");
+    backSprite = new Sprite(back);
+    backSprite.setSize(512 / 2, 128 / 2);
+    backSprite.setPosition((fillCamera.viewportWidth / 2) - (fullSprite.getWidth()), 70);
+  }
+
+  /**
+   * Draw function for SceneOptionsMenu.
+   *
+   * <p>Draws Options Menu for the PixelBoat game.
+   *
+   * @param batch SpriteBatch used for drawing to screen.
+   * @author William Walton
+   */
+  public void draw(SpriteBatch batch) {
+    Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+    batch.setProjectionMatrix(fillCamera.combined);
+    batch.begin();
+    bgSprite.draw(batch);
+    fullSprite.draw(batch);
+    accelSprite.draw(batch);
+    leftSprite.draw(batch);
+    rightSprite.draw(batch);
+    backSprite.draw(batch);
+    fullCheckSprite.draw(batch);
+    batch.end();
+  }
+
+  /**
+   * Update function for SceneOptionsMenu.
+   * Ends SceneOptionsMenu based on user input otherwise stays in scene.
+   *
+   * <p>Returns an specified integer when you want to exit the screen else return scene_id
+   * if you want to stay in scene.
+   * In this case left clicking with the mouse on  the back button will stop the Options Menu Scene
+   * and continue with the Main Menu Scene.
+   *
+   * @return the scene_id of which screen is next (either this screen still or another)
+   * @author William Walton
+   */
+  public int update() {
+    Vector3 mousePos = fillCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+    if (backSprite.getBoundingRectangle().contains(mousePos.x, mousePos.y)) {
+      backSprite.setTexture(backHovered);
+      if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        return 0;
+      }
+    } else {
+      backSprite.setTexture(back);
     }
 
-    /**
-     * Draw function for SceneOptionsMenu.
-     * <p>
-     * Draws Options Menu for the PixelBoat game.
-     *
-     * @param batch SpriteBatch used for drawing to screen.
-     * @author William Walton
-     */
-    public void draw(SpriteBatch batch) {
-        Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.setProjectionMatrix(fill_camera.combined);
-        batch.begin();
-        bg_sprite.draw(batch);
-        full_sprite.draw(batch);
-        accel_sprite.draw(batch);
-        left_sprite.draw(batch);
-        right_sprite.draw(batch);
-        back_sprite.draw(batch);
-        full_check_sprite.draw(batch);
-        batch.end();
-    }
-
-    /**
-     * Update function for SceneOptionsMenu. Ends SceneOptionsMenu based on user input otherwise stays in scene.
-     * <p>
-     * Returns an specified integer when you want to exit the screen else return scene_id if you want to stay in scene.
-     * In this case left clicking with the mouse on  the back button will stop the Options Menu Scene
-     * and continue with the Main Menu Scene.
-     *
-     * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
-     * @author William Walton
-     */
-    public int update() {
-        Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-
-        if (back_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            back_sprite.setTexture(back_hovered);
-            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                return 0;
-            }
-        } else
-            back_sprite.setTexture(back);
-
-        // todo add single click detection to stop this changing every frame
-        if (full_check_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            //full_check_sprite.setTexture(full_check_);
-            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                if (is_fullscreen) {
-                    full_check_sprite.setTexture(full_check_no);
-                    is_fullscreen = !is_fullscreen;
-                } else {
-                    full_check_sprite.setTexture(full_check_yes);
-                    is_fullscreen = !is_fullscreen;
-                }
-            }
+    // todo add single click detection to stop this changing every frame
+    if (fullCheckSprite.getBoundingRectangle().contains(mousePos.x, mousePos.y)) {
+      //full_check_sprite.setTexture(full_check_);
+      if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (isFullscreen) {
+          fullCheckSprite.setTexture(fullCheckNo);
+          isFullscreen = !isFullscreen;
+        } else {
+          fullCheckSprite.setTexture(fullCheckYes);
+          isFullscreen = !isFullscreen;
         }
-
-        return scene_id;
+      }
     }
 
-    /**
-     * Temp resize method if needed for camera extension.
-     *
-     * @param width  Integer width to be resized to
-     * @param height Integer height to be resized to
-     * @author William Walton
-     */
-    public void resize(int width, int height) {
-        fill_viewport.update(width, height);
-        fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
-    }
+    return sceneId;
+  }
+
+  /**
+   * Temp resize method if needed for camera extension.
+   *
+   * @param width  Integer width to be resized to
+   * @param height Integer height to be resized to
+   * @author William Walton
+   */
+  public void resize(int width, int height) {
+    fillViewPort.update(width, height);
+    fillCamera.position.set(fillCamera.viewportWidth / 2, fillCamera.viewportHeight / 2, 0);
+  }
 }

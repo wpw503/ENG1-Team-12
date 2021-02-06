@@ -8,18 +8,18 @@ package com.teamonehundred.pixelboat.entities;
  * @author Umer Fakher
  */
 public interface CollisionObject {
-    /**
-     * Called when this object collides with something
-     */
-    void hasCollided();
+  /**
+   * Called when this object collides with something.
+   */
+  void hasCollided();
 
-    /**
-     * Returns a collision bounds object for intersection checking
-     */
-    CollisionBounds getBounds();
+  /**
+   * Returns a collision bounds object for intersection checking.
+   */
+  CollisionBounds getBounds();
 
-    /**
-     * Returns true if the object should be considered for collision checking
-     */
-    boolean isShown();
+  /**
+   * Returns true if the object should be considered for collision checking.
+   */
+  boolean isShown();
 }

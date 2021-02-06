@@ -3,17 +3,15 @@ package com.teamonehundred.pixelboat.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.ai.utils.Collision;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.teamonehundred.pixelboat.entities.AIBoat;
-import com.teamonehundred.pixelboat.entities.Boat;
-import com.teamonehundred.pixelboat.entities.CollisionObject;
 import com.teamonehundred.pixelboat.BoatRace;
 import com.teamonehundred.pixelboat.GameState;
+import com.teamonehundred.pixelboat.entities.AiBoat;
+import com.teamonehundred.pixelboat.entities.Boat;
+import com.teamonehundred.pixelboat.entities.CollisionObject;
 import com.teamonehundred.pixelboat.entities.PlayerBoat;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,298 +31,304 @@ import java.util.List;
  */
 public class SceneMainGame implements Scene {
 
-    protected int scene_id = 1;
+  protected int sceneId = 1;
 
-    protected int leg_number = 0;
+  protected int legNumber = 0;
 
-    protected int boats_per_race = 7;
-    protected int groups_per_game = 3;
+  protected int boatsPerRace = 7;
+  protected int groupsPerGame = 3;
 
-    protected PlayerBoat player;
-    protected List<Boat> all_boats;
+  protected PlayerBoat player;
+  protected List<Boat> allBoats;
 
-    protected Texture bg;
+  protected Texture bg;
 
-    protected BoatRace race;
-    protected SceneResultsScreen results;
-    protected SceneBoatSelection boat_selection;
+  protected BoatRace race;
+  protected SceneResultsScreen results;
+  protected SceneBoatSelection boatSelection;
 
-    protected boolean last_run = false;
+  protected boolean lastRun = false;
 
-    /**
-     * Main constructor for a SceneMainGame.
-     * <p>
-     * Initialises a BoatRace, player's boat, AI boats and scene textures.
-     *
-     * @author William Walton
-     */
-    public SceneMainGame() {
-        player = new PlayerBoat(-15, 0);
-        player.setName("Player");
-        all_boats = new ArrayList<>();
+  /**
+   * Main constructor for a SceneMainGame.
+   * 
+   * <p>Initialises a BoatRace, player's boat, AI boats and scene textures.
+   *
+   * @author William Walton
+   */
+  public SceneMainGame() {
+    player = new PlayerBoat(-15, 0);
+    player.setName("Player");
+    allBoats = new ArrayList<>();
 
-        all_boats.add(player);
-        for (int i = 0; i < (boats_per_race * groups_per_game) - 1; i++) {
-            all_boats.add(new AIBoat(0, 40));
-            all_boats.get(all_boats.size() - 1).setName("AI Boat " + Integer.toString(i));
+    allBoats.add(player);
+    for (int i = 0; i < (boatsPerRace * groupsPerGame) - 1; i++) {
+      allBoats.add(new AiBoat(0, 40));
+      allBoats.get(allBoats.size() - 1).setName("AI Boat " + Integer.toString(i));
+    }
+    Collections.swap(allBoats, 0, 3); // move player to middle of first group
+
+    bg = new Texture("water_background.png");
+    bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
+    race = new BoatRace(allBoats.subList(0, boatsPerRace));
+    legNumber++;
+  }
+
+  /*
+   * Destructor disposes of this texture once it is no longer referenced.
+   */
+  // protected void finalize() {
+  //   bg.dispose();
+  // }
+
+  /**
+   * Draws SpriteBatch on display along with updating player camera and player
+   * overlay Using BoatRace.
+   *
+   * @param batch Spritebatch passed for drawing graphic objects onto screen.
+   * @author William Walton
+   */
+  public void draw(SpriteBatch batch) {
+    Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+    player.getCamera().update();
+    batch.setProjectionMatrix(player.getCamera().combined);
+
+    batch.begin();
+
+    batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
+    race.draw(batch);
+
+    batch.end();
+  }
+
+  /**
+   * Calls main runStep method for BoatRace which is repeatedly called for
+   * updating the game state.
+   * 
+   * <p>The BoatRace runStep method checks for started or finished boats in a leg,
+   * calls update methods for the movements for player boat and AI boats obstacles
+   * as well as checking for collisions.
+   *
+   * @author William Walton
+   */
+  public int update() {
+
+    if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+      try {
+        saveGame("testSave");
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+
+    }
+
+    if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+      try {
+        restoreGame("testSave");
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+
+    if (player.hasFinishedLeg()) {
+      // while (!race.isFinished()) race.runStep();
+      race.estimateEndTimes();
+    }
+    if (!race.isFinished()) {
+      race.runStep();
+    } else if (legNumber < 3) { // only run 3 guaranteed legs
+      race = new BoatRace(allBoats.subList(0, boatsPerRace));
+
+      legNumber++;
+
+      // generate some "realistic" times for all boats not shown
+      for (int i = boatsPerRace; i < allBoats.size(); i++) {
+        allBoats.get(i).setStartTime(0);
+        allBoats.get(i).setEndTime((long) (65000 + 10000 * Math.random()));
+        allBoats.get(i).setLegTime();
+      }
+
+      return 4;
+
+    } else if (legNumber == 3) {
+      // sort boats based on best time
+      Collections.sort(allBoats, new Comparator<Boat>() {
+        @Override
+        public int compare(Boat b1, Boat b2) {
+          return (int) (b1.getBestTime() - b2.getBestTime());
         }
-        Collections.swap(all_boats, 0, 3); // move player to middle of first group
+      });
 
-        bg = new Texture("water_background.png");
-        bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+      race = new BoatRace(allBoats.subList(0, boatsPerRace));
+      lastRun = true;
+      legNumber++;
 
-        race = new BoatRace(all_boats.subList(0, boats_per_race));
-        leg_number++;
+      return 4;
     }
 
-    /**
-     * Destructor disposes of this texture once it is no longer referenced.
-     */
-    // protected void finalize() {
-    //     bg.dispose();
-    // }
-
-    /**
-     * Draws SpriteBatch on display along with updating player camera and player
-     * overlay Using BoatRace.
-     *
-     * @param batch Spritebatch passed for drawing graphic objects onto screen.
-     * @author William Walton
-     */
-    public void draw(SpriteBatch batch) {
-        Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        player.getCamera().update();
-        batch.setProjectionMatrix(player.getCamera().combined);
-
-        batch.begin();
-
-        batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
-        race.draw(batch);
-
-        batch.end();
+    // stay in results after all legs done
+    if (race.isFinished() && legNumber > 3) {
+      return 4;
     }
 
-    /**
-     * Calls main runStep method for BoatRace which is repeatedly called for
-     * updating the game state.
-     * <p>
-     * The BoatRace runStep method checks for started or finished boats in a leg,
-     * calls update methods for the movements for player boat and AI boats obstacles
-     * as well as checking for collisions.
-     *
-     * @author William Walton
-     */
-    public int update() {
+    return sceneId;
+  }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            try {
-                saveGame("testSave");
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+  /**
+   * Resize method if for camera extension.
+   *
+   * @param width  Integer width to be resized to
+   * @param height Integer height to be resized to
+   * @author Umer Fakher
+   */
+  public void resize(int width, int height) {
+    player.getCamera().viewportHeight = height;
+    player.getCamera().viewportWidth = width;
+  }
 
-        }
+  /**
+   * Getter method for returning list of boats which contain all boats in scene.
+   *
+   * @return list of boats
+   * @author Umer Fakher
+   */
+  public List<Boat> getAllBoats() {
+    return allBoats;
+  }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
-            try {
-                restoreGame("testSave");
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+  /**
+   * Setter method for player boat spec in the scene.
+   *
+   * @param spec Integer for player spec.
+   * @author Umer Fakher
+   */
+  public void setPlayerStats(int spec, int diffDecrease) {
+    player.setSpec(spec);
+    player.setDiff(diffDecrease);
+  }
 
-        if (player.hasFinishedLeg()) {
-            // while (!race.isFinished()) race.runStep();
-            race.estimateEndTimes();
-        }
-        if (!race.isFinished())
-            race.runStep();
-        // only run 3 guaranteed legs
-        else if (leg_number < 3) {
-            race = new BoatRace(all_boats.subList(0, boats_per_race));
+  /**
+   * Saves the current state of the game to the filesystem.
+   *
+   * @param saveName the name of the save state
+   * @throws IOException if an ObjectOutputStream or a ByteArrayOutputStream cannot be created
+   */
+  private void saveGame(String saveName) throws IOException {
+    // Create GameState object
+    List<CollisionObject> objects = race.obstacles;
+    GameState gameState = new GameState(allBoats, player, objects,
+                                        race.powerups, legNumber,
+                                        lastRun, race.isFinished,
+                                        race.totalFrames);
 
-            leg_number++;
+    // Serialize GameState object to a String
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-            // generate some "realistic" times for all boats not shown
-            for (int i = boats_per_race; i < all_boats.size(); i++) {
-                all_boats.get(i).setStartTime(0);
-                all_boats.get(i).setEndTime((long) (65000 + 10000 * Math.random()));
-                all_boats.get(i).setLegTime();
-            }
+    ObjectOutputStream objStream = new ObjectOutputStream(baos);
 
-            return 4;
+    objStream.writeObject(gameState);
 
-        } else if (leg_number == 3) {
-            // sort boats based on best time
-            Collections.sort(all_boats, new Comparator<Boat>() {
-                @Override
-                public int compare(Boat b1, Boat b2) {
-                    return (int) (b1.getBestTime() - b2.getBestTime());
-                }
-            });
+    objStream.close();
 
-            race = new BoatRace(all_boats.subList(0, boats_per_race));
-            last_run = true;
-            leg_number++;
+    String serializedGameState = Base64.getEncoder().encodeToString(baos.toByteArray());
 
-            return 4;
-        }
+    // Add save to preferences for storage
+    Preferences prefs = Gdx.app.getPreferences("Saves");
 
-        // stay in results after all legs done
-        if (race.isFinished() && leg_number > 3)
-            return 4;
+    prefs.putString(saveName, serializedGameState);
+    // Save preferences
+    prefs.flush();
 
-        return scene_id;
-    }
+  }
+  
+  /**
+   * Restore the state of the game from the filesystem.
+   *
+   * @param saveName the name of the save state
+   * @throws IOException if an ByteArrayInputStream or ObjectInputStream cannot be created
+   */
+  private void restoreGame(String saveName) throws IOException {
 
-    /**
-     * Resize method if for camera extension.
-     *
-     * @param width  Integer width to be resized to
-     * @param height Integer height to be resized to
-     * @author Umer Fakher
-     */
-    public void resize(int width, int height) {
-        player.getCamera().viewportHeight = height;
-        player.getCamera().viewportWidth = width;
-    }
+    // Get serialized object from preferences
+    Preferences prefs = Gdx.app.getPreferences("Saves");
 
-    /**
-     * Getter method for returning list of boats which contain all boats in scene.
-     *
-     * @return list of boats
-     * @author Umer Fakher
-     */
-    public List<Boat> getAllBoats() {
-        return all_boats;
-    }
+    String serializedGameState = prefs.getString(saveName);
 
-    /**
-     * Setter method for player boat spec in the scene.
-     *
-     * @param spec Integer for player spec.
-     * @author Umer Fakher
-     */
-    public void setPlayerStats(int spec, int diffDecrease) {
-        player.setSpec(spec);
-        player.setDiff(diffDecrease);
-    }
-
-    /**
-     * Saves the current state of the game to the filesystem
-     * @param saveName the name of the save state
-     * @throws IOException if an ObjectOutputStream or a ByteArrayOutputStream cannot be created
-     */
-    private void saveGame(String saveName) throws IOException {
-        // Create GameState object
-        List<CollisionObject> objects = race.obstacles;
-        GameState gameState = new GameState(all_boats, player, objects, race.powerups, leg_number, last_run, race.is_finished, race.total_frames);
-
-        // Serialize GameState object to a String
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        ObjectOutputStream objStream = new ObjectOutputStream(baos);
-
-        objStream.writeObject(gameState);
-
-        objStream.close();
-
-        String serializedGameState = Base64.getEncoder().encodeToString(baos.toByteArray());
-
-        // Add save to preferences for storage
-        Preferences prefs = Gdx.app.getPreferences("Saves");
-
-        prefs.putString(saveName, serializedGameState);
-        // Save preferences
-        prefs.flush();
-
-    }
     
-    /**
-     * Restore the state of the game from the filesystem
-     * @param saveName the name of the save state
-     * @throws IOException if an ByteArrayInputStream or ObjectInputStream cannot be created
-     */
-    private void restoreGame(String saveName) throws IOException {
+    // Decode serialize GameState
+    byte[] data = Base64.getDecoder().decode(serializedGameState);
 
-        // Get serialized object from preferences
-        Preferences prefs = Gdx.app.getPreferences("Saves");
+    ByteArrayInputStream bais = new ByteArrayInputStream(data);
 
-        String serializedGameState = prefs.getString(saveName);
+    ObjectInputStream objStream = new ObjectInputStream(bais);
 
-        
-        // Decode serialize GameState
-        byte[] data = Base64.getDecoder().decode(serializedGameState);
+    GameState gameState = null;
 
-        ByteArrayInputStream bais = new ByteArrayInputStream(data);
-
-        ObjectInputStream objStream = new ObjectInputStream(bais);
-
-        GameState gameState = null;
-
-        try {
-            gameState = (GameState) objStream.readObject();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        List<Boat> boat_list = gameState.getBoatList();
-        PlayerBoat playerBoat = (PlayerBoat) boat_list.get(gameState.getPlayerIndex());
-        List<CollisionObject> obstacle_list = gameState.getCollisionObjects();
-        List<CollisionObject> powerup_list = gameState.getPowerupsList();
-
-        this.all_boats = boat_list;
-        this.player = playerBoat;
-        
-        this.leg_number = gameState.legNumber;
-        this.last_run = gameState.lastRun;
-
-        
-        this.race.boats = boat_list.subList(0, boats_per_race);
-        this.race.obstacles = obstacle_list;
-        this.race.powerups = powerup_list;
-        this.race.is_finished = gameState.isFinished;
-        this.race.total_frames = gameState.totalFrames;
+    try {
+      gameState = (GameState) objStream.readObject();
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
 
+    List<Boat> boatList = gameState.getBoatList();
+    PlayerBoat playerBoat = (PlayerBoat) boatList.get(gameState.getPlayerIndex());
+    
+    this.allBoats = boatList;
+    this.player = playerBoat;
+    
+    this.legNumber = gameState.legNumber;
+    this.lastRun = gameState.lastRun;
+    
+    List<CollisionObject> obstacleList = gameState.getCollisionObjects();
+    List<CollisionObject> powerupList = gameState.getPowerupsList();
+    
+    this.race.boats = boatList.subList(0, boatsPerRace);
+    this.race.obstacles = obstacleList;
+    this.race.powerups = powerupList;
+    this.race.isFinished = gameState.isFinished;
+    this.race.totalFrames = gameState.totalFrames;
+  }
+
+
+  /**
+   * RaceThread class for Multi-threading.
+   *
+   * @author William Walton JavaDoc by Umer Fakher
+   */
+  private class RaceThread extends Thread {
+    List<Boat> boats;
+    BoatRace race;
+
+    RaceThread(List<Boat> boats) {
+      this.boats = new ArrayList<>();
+      this.boats.addAll(boats);
+      race = new BoatRace(this.boats);
+    }
 
     /**
-     * RaceThread class for Multi-threading.
+     * Main run method for RaceThread class.
+     *
+     * <p>Runs race until it has finished.
      *
      * @author William Walton
-     * JavaDoc by Umer Fakher
      */
-    private class RaceThread extends Thread {
-        List<Boat> boats;
-        BoatRace race;
+    public void run() {
+      while (!race.isFinished()) {
+        race.runStep();
+      }
 
-        RaceThread(List<Boat> boats) {
-            this.boats = new ArrayList<>();
-            this.boats.addAll(boats);
-            race = new BoatRace(this.boats);
-        }
-
-        /**
-         * Main run method for RaceThread class.
-         * <p>
-         * Runs race until it has finished.
-         *
-         * @author William Walton
-         */
-        public void run() {
-            while (!race.isFinished()) race.runStep();
-
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+      try {
+        Thread.sleep(1);
+      } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     }
+  }
 }
