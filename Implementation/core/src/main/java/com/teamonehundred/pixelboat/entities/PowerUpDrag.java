@@ -24,14 +24,13 @@ public class PowerUpDrag extends PowerUp {
   }
 
   /**
-   * Returns a new collision bounds object for the branch obstacle.
+   * Returns a new collision bounds object for the drag power-up.
    *
-   * <p>Creates a new collision bounds object representing the current position of this branch.
+   * <p>Creates a new collision bounds object representing the current position of this power up.
    * See the collision bounds visualisation folder in assets for a visual representation.
    *
-   * @return CollisionBounds of power up obstacle
-   * @author James Frost
-   * @author William Walton
+   * @return CollisionBounds of power up object
+   * @author Ben Dunbar
    */
   @Override
   public CollisionBounds getBounds() {
