@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Represents the Energy power up
+ * Represents the Energy power up.
  *
  * @author Ben Dunbar
  */

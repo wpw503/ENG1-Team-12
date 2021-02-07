@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Represents the rotation power up
+ * Represents the rotation power up.
  *
  * @author Ben Dunbar
  */
@@ -23,7 +23,7 @@ public class PowerUpRotation extends PowerUp {
     sprite.setRotation(0);
   }
 
-   /**
+  /**
    * Returns a new collision bounds object for the rotation power-up.
    *
    * <p>Creates a new collision bounds object representing the current position of this power up.

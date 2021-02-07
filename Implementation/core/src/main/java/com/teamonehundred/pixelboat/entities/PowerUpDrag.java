@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Represents the drag reduction power up
+ * Represents the drag reduction power up.
  *
  * @author Ben Dunbar
  */
