@@ -129,7 +129,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   /**
    * Applies collision with health bonus.
    * 
-   * @author Ben Dunbar
    */
   public void hasCollidedHealth() {
     if (durability < 0.9) {
@@ -142,7 +141,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   /**
    * Applies collision with energy bonus.
    * 
-   * @author Ben Dunbar
    */
   public void hasCollidedEnergy() {
     if (stamina < 0.75) {
@@ -155,7 +153,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   /**
    * Applies collision with rotation bonus.
    * 
-   * @author Ben Dunbar
    */
   public void hasCollidedRotation() {
     if (rotationSpeed < 2.75) {
@@ -168,7 +165,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   /**
    * Applies collision with rotation bonus.
    * 
-   * @author Ben Dunbar
    */
   public void hasCollidedDrag() {
     if (drag > 0.22f) {
