@@ -15,9 +15,9 @@ public abstract class MovableObject extends GameObject {
 
   public float maxSpeed = 15;
   public float speed = 0;
-  protected float drag = .04f;  // amount speed is reduced by every frame naturally
+  public float drag = .04f;  // amount speed is reduced by every frame naturally
   protected float acceleration = .2f;
-  protected float rotationSpeed = 2.f;
+  public float rotationSpeed = 2.f;
 
   /* ################################### //
           CONSTRUCTORS

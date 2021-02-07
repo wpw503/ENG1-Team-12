@@ -4,11 +4,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Represents the speed power up.
+ * Represents the drag reduction power up.
  *
  * @author Ben Dunbar
  */
-public class PowerUpSpeed extends PowerUp {
+public class PowerUpDrag extends PowerUp {
 
   /**
    * A constructor for an PowerUp taking its position (x and y).
@@ -18,8 +18,8 @@ public class PowerUpSpeed extends PowerUp {
    *
    * @author Ben Dunbar
    */
-  public PowerUpSpeed(float x, float y) {
-    super(x, y, 60, 60, "power_up_speed.png");
+  public PowerUpDrag(float x, float y) {
+    super(x, y, 60, 60, "power_up_drag.png");
     sprite.setRotation(0);
   }
 

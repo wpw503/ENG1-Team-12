@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Represents the simple branch obstacle.
+ * Represents the Health power up.
  *
  * @author Ben Dunbar
  */
@@ -24,14 +24,13 @@ public class PowerUpHealth extends PowerUp {
   }
 
   /**
-   * Returns a new collision bounds object for the branch obstacle.
+   * Returns a new collision bounds object for the health power-up.
    *
-   * <p>Creates a new collision bounds object representing the current position of this branch.
+   * <p>Creates a new collision bounds object representing the current position of this power up.
    * See the collision bounds visualisation folder in assets for a visual representation.
    *
-   * @return CollisionBounds of branch obstacle
-   * @author James Frost
-   * @author William Walton
+   * @return CollisionBounds of power up object
+   * @author Ben Dunbar
    */
   @Override
   public CollisionBounds getBounds() {

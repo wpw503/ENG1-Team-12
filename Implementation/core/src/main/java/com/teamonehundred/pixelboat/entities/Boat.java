@@ -117,6 +117,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
   /**
    * Applies collision with speed bonus.
+   * 
    */
   public void hasCollidedSpeed() {
     if (maxSpeed <= 20) {
@@ -126,6 +127,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
   /**
    * Applies collision with health bonus.
+   * 
    */
   public void hasCollidedHealth() {
     if (durability < 0.9) {
@@ -137,12 +139,37 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
   /**
    * Applies collision with energy bonus.
+   * 
    */
   public void hasCollidedEnergy() {
     if (stamina < 0.75) {
       stamina += 0.25;
     } else {
       stamina = 1;
+    }
+  }
+
+  /**
+   * Applies collision with rotation bonus.
+   * 
+   */
+  public void hasCollidedRotation() {
+    if (rotationSpeed < 2.75) {
+      rotationSpeed += 0.2;
+    } else {
+      rotationSpeed = 3;
+    }
+  }
+
+  /**
+   * Applies collision with rotation bonus.
+   * 
+   */
+  public void hasCollidedDrag() {
+    if (drag > 0.22f) {
+      drag -= 0.02f;
+    } else {
+      drag = 0.2f;
     }
   }
 
@@ -221,7 +248,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     this.startTime = startTime;
   }
 
-  /**
+  /**s
    * Returns the long value start time of the boat.
    *
    * @param inSeconds boolean to decide if the time should be returned in seconds

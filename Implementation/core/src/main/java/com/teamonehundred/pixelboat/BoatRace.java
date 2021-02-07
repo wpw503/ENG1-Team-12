@@ -15,8 +15,10 @@ import com.teamonehundred.pixelboat.entities.ObstacleFloatingBranch;
 import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
 import com.teamonehundred.pixelboat.entities.PlayerBoat;
 import com.teamonehundred.pixelboat.entities.PowerUp;
+import com.teamonehundred.pixelboat.entities.PowerUpDrag;
 import com.teamonehundred.pixelboat.entities.PowerUpEnergy;
 import com.teamonehundred.pixelboat.entities.PowerUpHealth;
+import com.teamonehundred.pixelboat.entities.PowerUpRotation;
 import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +131,20 @@ public class BoatRace {
 
     for (int i = 0; i < 100; i++) {
       powerups.add(new PowerUpEnergy(
+              (int) (-(laneWidth * boats.size() / 2)
+                    + Math.random() * (laneWidth * boats.size())),
+              (int) (startY + 50 + Math.random() * (endY - startY - 50))));
+    }
+
+    for (int i = 0; i < 100; i++) {
+      powerups.add(new PowerUpRotation(
+              (int) (-(laneWidth * boats.size() / 2)
+                    + Math.random() * (laneWidth * boats.size())),
+              (int) (startY + 50 + Math.random() * (endY - startY - 50))));
+    }
+
+    for (int i = 0; i < 100; i++) {
+      powerups.add(new PowerUpDrag(
               (int) (-(laneWidth * boats.size() / 2)
                     + Math.random() * (laneWidth * boats.size())),
               (int) (startY + 50 + Math.random() * (endY - startY - 50))));

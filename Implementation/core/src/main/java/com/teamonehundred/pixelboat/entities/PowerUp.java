@@ -3,11 +3,10 @@ package com.teamonehundred.pixelboat.entities;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * Represents the obstacle as an abstract class that extends from movable object
+ * Represents the power ups as an abstract class that extends from movable object
  * and implements the CollisionObject interface.
  *
- * @author James Frost
- * @author William Walton, JavaDoc by Umer Fakher
+ * @author Ben Dunbar, JavaDoc by Ben Dunbar
  */
 public abstract class PowerUp extends MovableObject implements CollisionObject {
   /* ################################### //
@@ -15,12 +14,11 @@ public abstract class PowerUp extends MovableObject implements CollisionObject {
   // ################################### */
 
   /**
-   * A constructor for an Obstacle taking its position (x and y) and width and height.
+   * A constructor for a Power-Up taking its position (x and y) and width and height.
    *
    * <p>Accepts Texture indirectly through file path. Integer for frame count not needed.
    *
-   * @author James Frost
-   * @author William Walton
+   * @author Ben Dunbar
    */
   PowerUp(float x, float y, int w, int h, String texturePath) {
     super(x, y, w, h, texturePath);
@@ -28,25 +26,23 @@ public abstract class PowerUp extends MovableObject implements CollisionObject {
   }
 
   /**
-   * A constructor for an Obstacle taking its position (x and y) and width and height.
+   * A constructor for a Power-Up taking its position (x and y) and width and height.
    *
    * <p>Accepts Texture indirectly through file path.
    * Integer for frame count needed.
    *
-   * @author James Frost
-   * @author William Walton
+   * @author Ben Dunbar
    */
   PowerUp(int x, int y, int w, int h, String texturePath, int frameCount) {
     super(x, y, w, h, texturePath, frameCount);
   }
 
   /**
-   * A constructor for an Obstacle taking its position (x and y) and width and height.
+   * A constructor for a Power-Up taking its position (x and y) and width and height.
    *
    * <p>Accepts Texture directly. Integer for frame count needed.
    *
-   * @author James Frost
-   * @author William Walton
+   * @author Ben Dunbar
    */
   PowerUp(int x, int y, int w, int h, Texture t, int frameCount) {
     super(x, y, w, h, t, frameCount);

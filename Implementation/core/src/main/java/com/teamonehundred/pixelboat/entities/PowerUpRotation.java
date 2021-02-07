@@ -4,11 +4,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Represents the speed power up.
+ * Represents the rotation power up.
  *
  * @author Ben Dunbar
  */
-public class PowerUpSpeed extends PowerUp {
+public class PowerUpRotation extends PowerUp {
 
   /**
    * A constructor for an PowerUp taking its position (x and y).
@@ -18,13 +18,13 @@ public class PowerUpSpeed extends PowerUp {
    *
    * @author Ben Dunbar
    */
-  public PowerUpSpeed(float x, float y) {
-    super(x, y, 60, 60, "power_up_speed.png");
+  public PowerUpRotation(float x, float y) {
+    super(x, y, 60, 60, "power_up_rotation.png");
     sprite.setRotation(0);
   }
 
   /**
-   * Returns a new collision bounds object for the drag power-up.
+   * Returns a new collision bounds object for the rotation power-up.
    *
    * <p>Creates a new collision bounds object representing the current position of this power up.
    * See the collision bounds visualisation folder in assets for a visual representation.
