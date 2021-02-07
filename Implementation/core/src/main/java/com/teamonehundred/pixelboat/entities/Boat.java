@@ -118,7 +118,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   /**
    * Applies collision with speed bonus.
    * 
-   * @author Ben Dunbar
    */
   public void hasCollidedSpeed() {
     if (maxSpeed <= 20) {
