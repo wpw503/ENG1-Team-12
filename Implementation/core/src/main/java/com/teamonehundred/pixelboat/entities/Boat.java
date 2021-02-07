@@ -117,6 +117,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
   /**
    * Applies collision with speed bonus.
+   * 
+   * @author Ben Dunbar
    */
   public void hasCollidedSpeed() {
     if (maxSpeed <= 20) {
@@ -251,7 +253,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     this.startTime = startTime;
   }
 
-  /**
+  /**s
    * Returns the long value start time of the boat.
    *
    * @param inSeconds boolean to decide if the time should be returned in seconds
