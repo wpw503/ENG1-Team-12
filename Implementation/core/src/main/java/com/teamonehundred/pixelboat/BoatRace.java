@@ -50,6 +50,8 @@ public class BoatRace {
   public boolean isFinished = false;
   public long totalFrames = 0;
 
+  public int legNo = 0;
+
   /**
    * Main constructor for a BoatRace.
    * 
@@ -206,6 +208,7 @@ public class BoatRace {
         boat.setEndTime(
             (long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced())));
         boat.setLegTime();
+        
 
         boat.setHasFinishedLeg(true);
       } else if (!boat.hasStartedLeg() && boat.getSprite().getY() > startY) {
@@ -431,7 +434,6 @@ public class BoatRace {
       }
 
     }
-
     // Set the race as finished
 
     this.isFinished = true;

@@ -415,7 +415,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   }
 
   /**
-   * Reset max_speed, durability and stamina to defaults.
+   * Reset maxSpeed, durability and stamina to defaults.
    */
   public void reset() {
     this.maxSpeed = 15;
@@ -424,20 +424,22 @@ public abstract class Boat extends MovableObject implements CollisionObject {
   }
 
   /**
-   * Gets current best time for boat from its list of leg_times.
+   * Gets current best time for boat from its list of legTimes.
    *
    * @return long time in milliseconds.
    */
   public long getBestTime() {
-    long currentBest = -1;
+    return legTimes.get(1) + legTimes.get(2);
+  }
 
-    for (long time : legTimes) {
-      if (time > currentBest) {
-        currentBest = time;
-      }
-    }
-
-    return currentBest;
+  /**
+   * Sets time of trial leg to zero.
+   *
+   * @author Henry Overton
+   * 
+   */
+  public void setTrialLeg() {
+    legTimes.set(0, 0L);
   }
 }
 

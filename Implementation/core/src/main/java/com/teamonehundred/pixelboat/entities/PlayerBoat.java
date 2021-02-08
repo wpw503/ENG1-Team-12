@@ -153,20 +153,20 @@ public class PlayerBoat extends Boat {
   }
 
   /**
-   * Set the difficulty level.
+   * Change player stats according to difficulty level.
    *
-   * @param diffDecrease difficulty level
+   * @param diffLevel difficulty level
    */
-  public void setDiff(int diffDecrease) {
-    if (diffDecrease == 2) {
-      staminaRegen *= 0.7f; //decrease 0-1
-      staminaUsage *= 1.3f; //increase 0-1
-      durabilityPerHit *= 2.0f; //increase 0-1
+  public void setDiff(int diffLevel) {
+    if (diffLevel == 2) {
+      staminaRegen *= 0.7f; 
+      staminaUsage *= 1.3f; 
+      durabilityPerHit *= 1.7f; 
     }
-    if (diffDecrease == 3) {
-      staminaRegen *= 0.4f;
-      staminaUsage *= 1.7f;
-      durabilityPerHit *= 3.0f;
+    if (diffLevel == 3) {
+      staminaRegen *= 0.5f;
+      staminaUsage *= 1.6f;
+      durabilityPerHit *= 2.5f;
     }
   }
 

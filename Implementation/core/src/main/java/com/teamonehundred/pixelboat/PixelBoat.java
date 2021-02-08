@@ -89,7 +89,7 @@ public class PixelBoat extends ApplicationAdapter {
       } else if (newSceneId == TUTORIAL_SCENE && sceneId == DIFFICULTY_SELECT) {
         ((SceneMainGame) allScenes[GAME_SCENE]).setPlayerStats(
             ((SceneBoatSelection) allScenes[BOAT_SELECT]).getSpecId(),
-            ((SceneDifficulty) allScenes[DIFFICULTY_SELECT]).getDiffDecrease());
+            ((SceneDifficulty) allScenes[DIFFICULTY_SELECT]).getdiffLevel());
         ((SceneMainGame) allScenes[GAME_SCENE]).initialize();
       }
 

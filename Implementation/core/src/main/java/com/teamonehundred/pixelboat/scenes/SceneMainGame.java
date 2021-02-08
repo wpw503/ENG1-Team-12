@@ -205,14 +205,16 @@ public class SceneMainGame implements Scene {
   }
 
   /**
-   * Setter method for player boat spec in the scene.
+   * Setter method for player boat stats in the scene.
    *
    * @param spec Integer for player spec.
-   * @author Umer Fakher
+   * @param diffLevel Integer for player difficulty level
+   * @author Umer Fakher 
+   * @author Henry Overton
    */
-  public void setPlayerStats(int spec, int diffDecrease) {
+  public void setPlayerStats(int spec, int diffLevel) {
     player.setSpec(spec);
-    player.setDiff(diffDecrease);
+    player.setDiff(diffLevel);
   }
 
   /**
