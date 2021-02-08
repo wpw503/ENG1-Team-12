@@ -161,11 +161,11 @@ public class PlayerBoat extends Boat {
     if (diffLevel == 2) {
       staminaRegen *= 0.7f; 
       staminaUsage *= 1.3f; 
-      durabilityPerHit *= 1.7f; 
+      durabilityPerHit *= 2.0f; 
     }
     if (diffLevel == 3) {
-      staminaRegen *= 0.5f;
-      staminaUsage *= 1.6f;
+      staminaRegen *= 0.4f;
+      staminaUsage *= 1.7f;
       durabilityPerHit *= 2.5f;
     }
   }
@@ -261,6 +261,33 @@ public class PlayerBoat extends Boat {
 
     staminaBar.setSize((int) (uiBarWidth * stamina), 10);
     durabilityBar.setSize((int) (uiBarWidth * durability), 10);
+  }
+
+  /**
+   * getter for staminaRegain.
+   *
+   * @return staminaRegain
+   */
+  public float getStaminaRegain() {
+    return staminaRegen;
+  }
+
+  /**
+   * Getter for staminaUsage.
+   *
+   * @return staminaUsage
+   */
+  public float getStaminaUsage() {
+    return staminaUsage;
+  }
+
+  /**
+   * Getter for durabilityPerHit.
+   *
+   * @return durabilityPerHit
+   */
+  public float getDurabilityPerHit() {
+    return durabilityPerHit;
   }
 
 }
