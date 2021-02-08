@@ -38,7 +38,7 @@ jobs:
     - name: Set up Graphviz environment
       uses: kamiazya/setup-graphviz@v1
 
-    - name: Execute documentation update script
+    - name: Execute Documentation Update Script
       env:
         GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       run: cd pixelboat && chmod +x update-docs.sh && ./update-docs.sh
