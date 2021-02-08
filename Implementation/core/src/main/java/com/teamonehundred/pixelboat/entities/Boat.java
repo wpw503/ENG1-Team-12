@@ -166,10 +166,11 @@ public abstract class Boat extends MovableObject implements CollisionObject {
    * 
    */
   public void hasCollidedDrag() {
-    if (drag > 0.22f) {
-      drag -= 0.02f;
+    System.out.println(drag);
+    if (drag > 0.022f) {
+      drag -= 0.002f;
     } else {
-      drag = 0.2f;
+      drag = 0.02f;
     }
   }
 
@@ -363,6 +364,10 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         hasCollidedHealth();
       } else if (object instanceof PowerUpEnergy) {
         hasCollidedEnergy();
+      } else if (object instanceof PowerUpDrag) {
+        hasCollidedDrag();  
+      } else if (object instanceof PowerUpRotation) {
+        hasCollidedRotation();
       } else {
         hasCollided();
       }
