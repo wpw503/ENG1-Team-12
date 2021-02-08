@@ -30,6 +30,10 @@ public class SceneStartScreen implements Scene {
   protected Texture optionsHovered;
   protected Sprite optionsSprite;
 
+  protected Texture load;
+  protected Texture loadHovered;
+  protected Sprite loadSprite;
+
   protected Viewport fillViewport;
   protected OrthographicCamera fillCamera;
 
@@ -60,6 +64,13 @@ public class SceneStartScreen implements Scene {
     playSprite.setSize(512 / 2, 128 / 2);
     playSprite.setPosition((fillCamera.viewportWidth / 2) - (playSprite.getWidth() / 2),
                            (fillCamera.viewportHeight / 2) + (playSprite.getHeight() / 2));
+
+    load = new Texture("load_game.png");
+    loadHovered = new Texture("load_game_hovered.png");
+    loadSprite = new Sprite(load);
+    loadSprite.setSize(512 / 2, 128 / 2);
+    loadSprite.setPosition((fillCamera.viewportWidth / 2) - (loadSprite.getWidth() / 2),
+                          (fillCamera.viewportHeight / 2) * 0.75f - (loadSprite.getHeight() / 2));
 
     options = new Texture("start_menu_options.png");
     optionsHovered = new Texture("start_menu_options_hovered.png");
@@ -93,6 +104,7 @@ public class SceneStartScreen implements Scene {
     bgSprite.draw(batch);
     playSprite.draw(batch);
     optionsSprite.draw(batch);
+    loadSprite.draw(batch);
     batch.end();
   }
 
@@ -116,6 +128,15 @@ public class SceneStartScreen implements Scene {
       }
     } else {
       playSprite.setTexture(play);
+    }
+
+    if (loadSprite.getBoundingRectangle().contains(mousePos.x, mousePos.y)) {
+      loadSprite.setTexture(loadHovered);
+      if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        return 7;
+      }
+    } else {
+      loadSprite.setTexture(load);
     }
 
     if (optionsSprite.getBoundingRectangle().contains(mousePos.x, mousePos.y)) {

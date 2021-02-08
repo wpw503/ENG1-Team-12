@@ -90,6 +90,7 @@ public class SceneBoatSelection implements Scene {
     for (int i = 0; i < numSpecs; i++) {
       if (boatOptionSprites[i].getBoundingRectangle().contains(mousePos.x, mousePos.y)) {
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && isNewClick) {
+          isNewClick = false;
           specId = i;
           return 6;  // return 3 to exit
         }

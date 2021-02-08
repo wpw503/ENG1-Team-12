@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamonehundred.pixelboat.BoatRace;
 import com.teamonehundred.pixelboat.GameState;
+import com.teamonehundred.pixelboat.PixelBoat;
 import com.teamonehundred.pixelboat.entities.AiBoat;
 import com.teamonehundred.pixelboat.entities.Boat;
 import com.teamonehundred.pixelboat.entities.CollisionObject;
@@ -49,6 +50,8 @@ public class SceneMainGame implements Scene {
 
   protected boolean lastRun = false;
 
+  protected PixelBoat parent;
+
   /**
    * Main constructor for a SceneMainGame.
    * 
@@ -57,6 +60,13 @@ public class SceneMainGame implements Scene {
    * @author William Walton
    */
   public SceneMainGame() {
+    initialize();
+  }
+
+  /**
+   * Initialize SceneMainGame and all its elements.
+   */
+  public void initialize() {
     player = new PlayerBoat(-15, 0);
     player.setName("Player");
     allBoats = new ArrayList<>();
@@ -118,7 +128,8 @@ public class SceneMainGame implements Scene {
 
     if (Gdx.input.isKeyPressed(Input.Keys.P)) {
       try {
-        saveGame("testSave");
+        saveGame("save");
+        return PixelBoat.SAVE_SCENE;
       } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -126,14 +137,6 @@ public class SceneMainGame implements Scene {
 
     }
 
-    if (Gdx.input.isKeyPressed(Input.Keys.O)) {
-      try {
-        restoreGame("testSave");
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
 
     if (player.hasFinishedLeg()) {
       // while (!race.isFinished()) race.runStep();
@@ -238,12 +241,15 @@ public class SceneMainGame implements Scene {
     String serializedGameState = Base64.getEncoder().encodeToString(baos.toByteArray());
 
     // Add save to preferences for storage
-    Preferences prefs = Gdx.app.getPreferences("Saves");
+    Preferences prefs = Gdx.app.getPreferences("tempSaves");
 
     prefs.putString(saveName, serializedGameState);
     // Save preferences
     prefs.flush();
 
+    // reset self
+
+  
   }
   
   /**
@@ -252,10 +258,9 @@ public class SceneMainGame implements Scene {
    * @param saveName the name of the save state
    * @throws IOException if an ByteArrayInputStream or ObjectInputStream cannot be created
    */
-  private void restoreGame(String saveName) throws IOException {
+  public void restoreGame(String saveName, Preferences prefs) throws IOException {
 
     // Get serialized object from preferences
-    Preferences prefs = Gdx.app.getPreferences("Saves");
 
     String serializedGameState = prefs.getString(saveName);
 
@@ -293,6 +298,10 @@ public class SceneMainGame implements Scene {
     this.race.powerups = powerupList;
     this.race.isFinished = gameState.isFinished;
     this.race.totalFrames = gameState.totalFrames;
+  }
+
+  public void restoreState(GameState game) {
+
   }
 
 
