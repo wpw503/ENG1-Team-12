@@ -340,4 +340,159 @@ public class SceneMainGame implements Scene {
       }
     }
   }
+
+  /**
+   * Getter for sceneId.
+   *
+   * @return the sceneId.
+   */
+  public int getSceneId() {
+    return sceneId;
+  }
+
+  /**
+   * Setter for sceneId.
+   *
+   * @param sceneId the sceneId to set.
+   */
+  public void setSceneId(int sceneId) {
+    this.sceneId = sceneId;
+  }
+
+  /**
+   * Getter for legNumber.
+   *
+   * @return the legNumber.
+   */
+  public int getLegNumber() {
+    return legNumber;
+  }
+
+  /**
+   * Setter for legNumber.
+   *
+   * @param legNumber the legNumber to set.
+   */
+  public void setLegNumber(int legNumber) {
+    this.legNumber = legNumber;
+  }
+
+  /**
+   * Getter for boatsPerRace.
+   *
+   * @return the boatsPerRace.
+   */
+  public int getBoatsPerRace() {
+    return boatsPerRace;
+  }
+
+  /**
+   * Setter for boatsPerRace.
+   *
+   * @param boatsPerRace the boatsPerRace to set.
+   */
+  public void setBoatsPerRace(int boatsPerRace) {
+    this.boatsPerRace = boatsPerRace;
+  }
+
+  /**
+   * Getter for groupsPerGame.
+   *
+   * @return the groupsPerGame.
+   */
+  public int getGroupsPerGame() {
+    return groupsPerGame;
+  }
+
+  /**
+   * Setter for groupsPerGame.
+   *
+   * @param groupsPerGame the groupsPerGame to set.
+   */
+  public void setGroupsPerGame(int groupsPerGame) {
+    this.groupsPerGame = groupsPerGame;
+  }
+
+  /**
+   * Getter for player.
+   *
+   * @return the player.
+   */
+  public PlayerBoat getPlayer() {
+    return player;
+  }
+
+  /**
+   * Setter for Player.
+   *
+   * @param player the player to set.
+   */
+  public void setPlayer(PlayerBoat player) {
+    this.player = player;
+  }
+
+  /**
+   * Setter for allBoats.
+   *
+   * @param allBoats the allBoats to set.
+   */
+  public void setAllBoats(List<Boat> allBoats) {
+    this.allBoats = allBoats;
+  }
+
+
+  /**
+   * Getter for race.
+   *
+   * @return the race.
+   */
+  public BoatRace getRace() {
+    return race;
+  }
+
+  /**
+   * Setter for race.
+   *
+   * @param race the race to set.
+   */
+  public void setRace(BoatRace race) {
+    this.race = race;
+  }
+
+
+  /**
+   * Getter for lastRun.
+   *
+   * @return the lastRun.
+   */
+  public boolean isLastRun() {
+    return lastRun;
+  }
+
+  /**
+   * Setter for lastRun.
+   *
+   * @param lastRun the lastRun to set.
+   */
+  public void setLastRun(boolean lastRun) {
+    this.lastRun = lastRun;
+  }
+
+  /**
+   * Getter for parent.
+   *
+   * @return the parent.
+   */
+  public PixelBoat getParent() {
+    return parent;
+  }
+
+  /**
+   * Setter for parent.
+   *
+   * @param parent the parent to set.
+   */
+  public void setParent(PixelBoat parent) {
+    this.parent = parent;
+  }
 }

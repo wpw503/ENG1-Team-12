@@ -11,8 +11,10 @@ import com.teamonehundred.pixelboat.entities.ObstacleFloatingBranch;
 import com.teamonehundred.pixelboat.entities.ObstacleLaneWall;
 import com.teamonehundred.pixelboat.entities.PlayerBoat;
 import com.teamonehundred.pixelboat.entities.PowerUp;
+import com.teamonehundred.pixelboat.entities.PowerUpDrag;
 import com.teamonehundred.pixelboat.entities.PowerUpEnergy;
 import com.teamonehundred.pixelboat.entities.PowerUpHealth;
+import com.teamonehundred.pixelboat.entities.PowerUpRotation;
 import com.teamonehundred.pixelboat.entities.PowerUpSpeed;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ public class GameState implements Serializable {
     LANE_WALL,
     POWERUP_SPEED,
     POWERUP_ENERGY,
-    POWERUP_HEALTH,
+    POWERUP_HEALTH, POWERUP_DRAG, POWERUP_ROTATION,
   }
 
   private class SerializableGameObject implements Serializable {
@@ -190,10 +192,10 @@ public class GameState implements Serializable {
 
       ObjectType type = null;
 
-      if (obstacle instanceof ObstacleBranch) {
-        type = ObjectType.BRANCH;
-      } else if (obstacle instanceof ObstacleFloatingBranch) {
+      if (obstacle instanceof ObstacleFloatingBranch) {
         type = ObjectType.FLOATING_BRANCH;
+      } else if (obstacle instanceof ObstacleBranch) {
+        type = ObjectType.BRANCH;
       } else if (obstacle instanceof ObstacleDuck) {
         type = ObjectType.DUCK;
       } else if (obstacle instanceof ObstacleLaneWall) {
@@ -235,6 +237,10 @@ public class GameState implements Serializable {
         type = ObjectType.POWERUP_HEALTH;
       } else if (powerup instanceof PowerUpSpeed) {
         type = ObjectType.POWERUP_SPEED;
+      } else if (powerup instanceof PowerUpDrag) {
+        type = ObjectType.POWERUP_DRAG;
+      } else if (powerup instanceof PowerUpRotation) {
+        type = ObjectType.POWERUP_ROTATION;
       }
       
       if (type == null) {
@@ -454,6 +460,24 @@ public class GameState implements Serializable {
           output.add(powerUpHealth);
           break;
 
+        case POWERUP_DRAG:
+          PowerUpDrag powerUpDrag = new PowerUpDrag(obj.posX, obj.posY);
+          powerUpDrag.speed = obj.speed;
+          powerUpDrag.isShown = obj.isShown;
+          powerUpDrag.getSprite().setRotation(obj.rotation);
+
+          output.add(powerUpDrag);
+          break;
+
+        case POWERUP_ROTATION:
+          PowerUpRotation powerUpRotation = new PowerUpRotation(obj.posX, obj.posY);
+          powerUpRotation.speed = obj.speed;
+          powerUpRotation.isShown = obj.isShown;
+          powerUpRotation.getSprite().setRotation(obj.rotation);
+
+          output.add(powerUpRotation);
+          break;
+          
         default:
           break;
       }
