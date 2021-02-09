@@ -331,7 +331,7 @@ public class PlayerBoat extends Boat {
    *
    * @return rotationSpeed
    */
-  public float getRotation()) {
+  public float getRotation() {
     return rotationSpeed;
   }
 

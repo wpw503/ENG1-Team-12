@@ -83,7 +83,7 @@ public class PowerUpTest {
     assertEquals(expectedDruability, testBoat.getDurability(), 
         "Health: Durability does not match.");
 
-    float expectedSpeed = 15;
+    float expectedSpeed = 18;
     assertEquals(expectedSpeed, testBoat.getSpeed(), 
         "Health: Speed does not match.");
   }
@@ -95,7 +95,7 @@ public class PowerUpTest {
   public void testPowerUpStamina() {
     PlayerBoat testBoat = new PlayerBoat(40, 40);
     
-    testBoat.hasCollidedStamina();
+    testBoat.hasCollidedEnergy();
     float expectedDruability = 1;
     assertEquals(expectedDruability, testBoat.getDurability(), 
         "Stamina: Durability does not match.");
