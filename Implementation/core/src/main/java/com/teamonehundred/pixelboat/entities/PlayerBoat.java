@@ -290,4 +290,32 @@ public class PlayerBoat extends Boat {
     return durabilityPerHit;
   }
 
+  /**
+   * Getter for durabilityPerHit.
+   *
+   * @return durability
+   */
+  public float getDurability() {
+    return durability;
+  }
+
+  /**
+   * Getter for durabilityPerHit.
+   *
+   * @return speed
+   */
+  public float getSpeed() {
+    return speed;
+  }
+
+  /**
+   * Getter for durabilityPerHit.
+   *
+   * @return speed
+   */
+  public float getStamina() {
+    return speed;
+  }
+
+
 }
