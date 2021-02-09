@@ -66,7 +66,7 @@ public class PowerUpTest {
       assertEquals(expectedDruability, testBoat.getDurability(), 
         "Speed: Durability does not match.");
 
-      float expectedSpeed = 3;
+      float expectedSpeed = 18;
       assertEquals(expectedSpeed, testBoat.getSpeed(), 
         "Speed: Speed does not match.");
   }
@@ -80,7 +80,7 @@ public class PowerUpTest {
       assertEquals(expectedDruability, testBoat.getDurability(), 
         "Health: Durability does not match.");
 
-      float expectedSpeed = 0;
+      float expectedSpeed = 15;
       assertEquals(expectedSpeed, testBoat.getSpeed(), 
         "Health: Speed does not match.");
   }
@@ -94,7 +94,7 @@ public class PowerUpTest {
       assertEquals(expectedDruability, testBoat.getDurability(), 
         "Stamina: Durability does not match.");
 
-      float expectedSpeed = 0;
+      float expectedSpeed = 15;
       assertEquals(expectedSpeed, testBoat.getSpeed(), 
         "Stamina: Speed does not match.");
 
@@ -112,11 +112,11 @@ public class PowerUpTest {
       assertEquals(expectedDruability, testBoat.getDurability(), 
         "Drag: Durability does not match.");
 
-      float expectedSpeed = 0;
+      float expectedSpeed = 15;
       assertEquals(expectedSpeed, testBoat.getSpeed(), 
         "Drag: Speed does not match.");
 
-      float expectedDrag = 1;
+      float expectedDrag = 0.038f;
       assertEquals(expectedDrag, testBoat.getDrag(), 
         "Drag: Drag does not match.");
   }
@@ -130,11 +130,11 @@ public class PowerUpTest {
       assertEquals(expectedDruability, testBoat.getDurability(), 
         "Rotation: Durability does not match.");
 
-      float expectedSpeed = 0;
+      float expectedSpeed = 15;
       assertEquals(expectedSpeed, testBoat.getSpeed(), 
         "Rotation: Speed does not match.");
 
-      float expectedRotation = 1;
+      float expectedRotation = 2.2f;
       assertEquals(expectedRotation, testBoat.getRotation(), 
         "Rotation: Rotation speed does not match.");
   }

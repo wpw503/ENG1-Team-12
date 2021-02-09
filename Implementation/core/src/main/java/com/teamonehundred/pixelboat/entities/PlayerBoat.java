@@ -305,7 +305,7 @@ public class PlayerBoat extends Boat {
    * @return speed
    */
   public float getSpeed() {
-    return speed;
+    return maxSpeed;
   }
 
   /**
@@ -314,7 +314,7 @@ public class PlayerBoat extends Boat {
    * @return stamina
    */
   public float getStamina() {
-    return speed;
+    return stamina;
   }
 
   /**
