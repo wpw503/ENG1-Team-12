@@ -67,8 +67,8 @@ public class PowerUpTest {
         "Speed: Durability does not match.");
 
       float expectedSpeed = 3;
-      assertEquals(expectedDruability, testBoat.getSpeed(), 
-        "Speed: Durability does not match.");
+      assertEquals(expectedSpeed, testBoat.getSpeed(), 
+        "Speed: Speed does not match.");
   }
 
   @Test
@@ -78,28 +78,63 @@ public class PowerUpTest {
       testBoat.hasCollidedSpeed();
       float expectedDruability = 1;
       assertEquals(expectedDruability, testBoat.getDurability(), 
-        "Speed: Durability does not match.");
+        "Health: Durability does not match.");
 
       float expectedSpeed = 0;
-      assertEquals(expectedDruability, testBoat.getSpeed(), 
-        "Speed: Durability does not match.");
+      assertEquals(expectedSpeed, testBoat.getSpeed(), 
+        "Health: Speed does not match.");
   }
 
   @Test
   public void testPowerUpStamina() {
       PlayerBoat testBoat = new PlayerBoat(40, 40);
       
-      testBoat.hasCollidedSpeed();
+      testBoat.hasCollidedStamina();
       float expectedDruability = 1;
       assertEquals(expectedDruability, testBoat.getDurability(), 
-        "Speed: Durability does not match.");
+        "Stamina: Durability does not match.");
 
       float expectedSpeed = 0;
-      assertEquals(expectedDruability, testBoat.getSpeed(), 
-        "Speed: Durability does not match.");
+      assertEquals(expectedSpeed, testBoat.getSpeed(), 
+        "Stamina: Speed does not match.");
 
       float expectedStamina = 1;
-      assertEquals(expectedDruability, testBoat.getStamina(), 
-        "Speed: Durability does not match.");
+      assertEquals(expectedStamina, testBoat.getStamina(), 
+        "Stamina: Stamina does not match.");
   }
 
+  @Test
+  public void testPowerUpDrag() {
+      PlayerBoat testBoat = new PlayerBoat(40, 40);
+      
+      testBoat.hasCollidedDrag();
+      float expectedDruability = 1;
+      assertEquals(expectedDruability, testBoat.getDurability(), 
+        "Drag: Durability does not match.");
+
+      float expectedSpeed = 0;
+      assertEquals(expectedSpeed, testBoat.getSpeed(), 
+        "Drag: Speed does not match.");
+
+      float expectedDrag = 1;
+      assertEquals(expectedDrag, testBoat.getDrag(), 
+        "Drag: Drag does not match.");
+  }
+
+  @Test
+  public void testPowerUpRotation() {
+      PlayerBoat testBoat = new PlayerBoat(40, 40);
+      
+      testBoat.hasCollidedRotation();
+      float expectedDruability = 1;
+      assertEquals(expectedDruability, testBoat.getDurability(), 
+        "Rotation: Durability does not match.");
+
+      float expectedSpeed = 0;
+      assertEquals(expectedSpeed, testBoat.getSpeed(), 
+        "Rotation: Speed does not match.");
+
+      float expectedRotation = 1;
+      assertEquals(expectedRotation, testBoat.getRotation(), 
+        "Rotation: Rotation speed does not match.");
+  }
