@@ -130,3 +130,27 @@ body {
     from {opacity: 0;}
     to {opacity: 1;}
 }
+
+.simplelink {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
+
+.req-img, .board {
+  width: 100%;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
+}
+
+.row {
+  display: flex;
+}
+
+div #chng, #ci, #imp, #test {
+  padding-left: 40px;
+  padding-right: 40px;
+}

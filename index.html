@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Dragon Boat Racing 2020 by Team 100</title>
+        <title>Dragon Boat Racing by Team 12 and Team 11</title>
         <meta charset="utf-8" />
         <link rel="icon" href= />
         <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,600;1,300&display=swap" rel="stylesheet">
@@ -17,21 +17,23 @@
             <img src="images/new_logo_t.png" alt="Team 100 Logo" id="logo" />
 
             <div id="top-info">
-                ENG1 Cohort 2 Team 12 Project Website
+                ENG1 Cohort 2 Team 12 and Team 11
             </div>
         </div>
-       
+
         <div class="nav">
             <ul>
-                <li class="navlinks active" id="docbtn">Docs</li>
-                <li class="navlinks" id="picbtn">Snapshots of Plan</li>
+                <li class="navlinks active" id="docbtn">Assessment 1</li>
+                <li class="navlinks active" id="docbtn2">Assessment 2</li>
             </ul>
         </div>
 
         <div class="main">
 
+          <!-- ASSESSMENT 1 DOCUMENTS -->
+
             <div class="section" id="docs">
-            
+
                 <h4>Requirements</h4>
                 <ul>
                     <li><a href="Documentation/Req1.pdf">Requirements Document</a></li>
@@ -45,6 +47,7 @@
                 <h4>Method</h4>
                 <ul>
                     <li><a href="Documentation/Plan1.pdf">Method Selection & Planning Document</a></li>
+                    <li><a id="picbtn" class="simplelink">Snapshots of Plan</a></li>
                 </ul>
 
                 <h4>Risk Assessment</h4>
@@ -61,45 +64,539 @@
                 <ul>
                     <li><a href="https://github.com/wpw503/ENG1-Team-12/releases/download/0.0.4/PixelBoat-0.0.4.jar">The Game</a></li>
                 </ul>
-                
+
                 <h4>Releases and Full Project ZIP</h4>
                 <ul>
                     <li><a href="https://github.com/wpw503/ENG1-Team-12/releases">All Releases</a></li>
                     <li><a href="https://github.com/wpw503/ENG1-Team-12/raw/main/Team100.zip">ZIP</a></li>
                 </ul>
-                
+
                 <h4>Java Doc</h4>
                 <ul>
                     <li><a href="docs/index.html">Java Doc</a></li>
                 </ul>
-                
+
             </div>
+
+            <!-- ASSESSMENT 2 DOCUMENTS -->
+
+            <div class="section" id="docs2">
+
+              <h4>Change Report</h4>
+              <ul>
+                  <li><a id="chngbtn" class="simplelink">Change report</a></li>
+                  <li><a href="Documentation2/Change2.pdf" target="_blank">View PDF file</a></li>
+              </ul>
+
+              <h4>Implementation</h4>
+              <ul>
+                  <li><a id="impbtn" class="simplelink">Implementation</a></li>
+                  <li><a href="Documentation2/Impl2.pdf" target="_blank">View PDF file</a></li>
+              </ul>
+
+              <h4>Testing</h4>
+              <ul>
+                  <li><a id="testbtn" class="simplelink">Software Testing Report</a></li>
+                  <li><a href="Documentation2/test/index.html" target="_blank">Test Report</a></li>
+                  <li><a href="Documentation2/TestingMat.pdf" target="_blank">Testing Material PDF</a></li>
+                  <li><a href="Documentation2/Test2.pdf" target="_blank">View PDF file</a></li>
+              </ul>
+
+              <h4>Continuous Integration</h4>
+              <ul>
+                  <li><a id="cibtn" class="simplelink">Continuous Integration Report</a></li>
+                  <li><a href="Documentation2/CI2.pdf" target="_blank">View PDF file</a></li>
+              </ul>
+
+                <h4>Requirements - <span style="color:#bf2e02">updated</span></h4>
+                <ul>
+                    <li><a href="Documentation2/Req1.pdf" target="_blank">View PDF file</a></li>
+                    <li><a href="Documentation2/ReqTable.pdf" target="_blank">View Requirements Table</a></li>
+                </ul>
+
+                <h4>Architecture - <span style="color:#bf2e02">updated</a></h4>
+                <ul>
+                    <li><a href="Documentation2/Arch1.pdf" target="_blank">View PDF file</a></li>
+                </ul>
+
+                <h4>Method Selection and Planning - <span style="color:#bf2e02">updated</span></h4>
+                <ul>
+                    <li><a href="Documentation2/Plan1.pdf" target="_blank">View PDF file</a></li>
+                    <li><a href="Documentation2/Gantt.pdf" target="_blank">View Gantt Chart</a></li>
+                </ul>
+
+                <h4>Risk Assessment and Mitigation - <span style="color:#bf2e02">updated</span></h4>
+                <ul>
+                    <li><a href="Documentation2/Risk1.pdf" target="_blank">View PDF file</a></li>
+                </ul>
+
+                <h4>User Manual</h4>
+                <ul>
+                    <li><a href="Documentation2/Manual.pdf" target="_blank">View PDF file</a></li>
+                </ul>
+
+                <h4>Executables</h4>
+                <ul>
+                    <li><a href="?">The Game</a></li>
+                </ul>
+
+                <h4>Releases and Full Project ZIP</h4>
+                <ul>
+                    <li><a href="?">All Releases</a></li>
+                    <li><a href="?">ZIP</a></li>
+                </ul>
+
+                <h4>Java Doc</h4>
+                <ul>
+                    <li><a href="?">Java Doc</a></li>
+                </ul>
+
+            </div>
+
+            <!-- TEAM 11 CONTENT -->
+
+            <!-- Implementation -->
+
+            <div class="section" id="imp">
+
+              <h1>Implementation</h1></br>
+
+              <h2>Difficulty</h2></br>
+
+                <p>UR_LEVELS refers to the new requirement that the game must allow players to choose between different levels of difficulty: Easy, Normal and Hard.</p>
+                <p>There are 3 different difficulty levels implemented into the game. They are Easy, Medium (Normal) and Hard. The difficulty you wish to play on
+                  can be selected in the settings screen on the main menu and then that difficulty is implemented when you start a game.</p>
+                <p>When changing between difficulty settings four values are changed to different values depending on the selected difficulty level.
+                  BOAT_TARGET_SPEED which represents the AI boat's maximum speed and is set to the lowest value of 0.80 when easy difficulty is selected, is
+                  increased for medium to 0.88 and is highest when hard difficulty is selected at 0.99. OBSTACLE_COUNT which represents the number of obstacles
+                  that are spawned randomly throughout the map, this is set to the lowest value of 50 when on easy and is increased on medium to 100 and set to the
+                  max value of 200 when on hard. LEG_OBSTACLE_MODIFIER which adds a modifier to the number of obstacles spawned per leg depending on difficulty, on
+                  easy up to 2x by the final leg, medium up to 3x by the final leg and on hard up to 4x by the final leg. The final variable changed when altering
+                  difficulty is POWER_UP_COUNT, this represents the number of powerups spawned in a game and is set to its highest value when on easy at 50 and is
+                  decreased to 25 for medium and hard difficulty.</p>
+                <p>Values for this are stored in Difficulty.java but used where necessary, including in AIBoat.java, and BoatRace.java. This implements the
+                  Difficulty class from the game architecture.</p></br>
+
+                <h2>Game Save</h2></br>
+
+                <p>UR_SAVE denotes the requirement to provide facilities that would allow players to save the state of the game at any point and resume the saved game later.</p>
+                <p>The game can be saved and specific values are stored into a save file to record the required data about the race which can be loaded at a later
+                  time for the player to resume their game. The values saved are the current leg number that the player is on, the number of boats in the race
+                  currently, the spec of the boat that the player is using, the times for the previous legs of the player and the times of the previous legs for
+                  each ai boat.</p>
+                <p>In order to save the game data representing the current leg (stored as an integer), boat count (stored as an integer), players boat spec (stored
+                  as an integer), players leg times (stored as a list of integers) and AI leg times (stored as a list of a list of integers for each boat) are all
+                  collected and serialised so that they can be saved to a binary file. This file can be loaded and the data will be de-serialised so that the player
+                   can resume their race by loading in the saved values of each aspect of the race into the current game.</p>
+                <p>This is implemented in the SaveManager.java file and implements the SaveManager class from the game architecture. Data is saved to the state.sav
+                  file.</p></br>
+
+                <h2>Power-ups</h2></br>
+
+                <p>UR_POWER_UP is a new requirement to implement five power-up packs, which could be found floating down the river and be picked up by boats to
+                  improve some of their characteristics.</p>
+                <p>There are 5 unique power-ups implemented into the game, they are Repair (refills a portion of the players lost durability), Stamina (refills a
+                  portion of the players lost stamina), Boost (Gives the player a temporary speed boost), Time (reduces the time taken on the current leg) and
+                  Teleport ( jumps the player forward a set distance). When a boat collides with one of the powerups they collect it and its related effect is
+                  immediately applied to the player's boat. Each powerup has a unique look so that players can tell which powerup they are collecting.</p>
+                <p>Power-ups are implemented as an extension of the MovableObject class and their collision is implemented using the CollisionObject class. In this
+                  way power-ups act as an obstacle as they are spawned randomly throughout the map and float around with random direction until they are collided
+                  with by a player. The main difference is that when collided with instead of reducing the player's speed and durability instead they help the player.</p>
+                <p>This was implemented in the Powerup.java file. This implements the Powerup class from the game architecture.</p></br>
+
+                <h2>Other Changes</h2></br>
+
+                <p>There are some other changes to the game that help to improve the experience overall. These are listed below.</p><ul style="font-size:15px;">
+                  <li>Added a short delay after stopping accelerating as without the delay a player could rapidly press the accelerate button on and off and travel
+                    at close to full speed while barely losing any stamina. This was done in order to prevent a player exploiting this in order to win easily
+                    (UR_TIRED_OVER_TIME).</li>
+                  <li>Created a new, more robust UI system which the old menus were refactored to use, to make them easier to navigate and more responsive to user
+                    input. This was done to improve the user experience overall whilst using the menus (UR_ACCESSIBILITY). This was implemented throughout the UI
+                    Package from the game architecture.</li>
+                  <li>The AI was completely replaced with a more optimised version, and collisions are now looked up against a Quadtree rather than a List, which
+                    resulted in the game using approximately 100x less CPU time and improving performance overall (UR_PERFORMANCE). The AI was also tweaked to make
+                    smarter and more aggressive decisions such that it would play better in general (UR_EXCITEMENT). This was implemented in the AIBoat Class from
+                    the game architecture.</li>
+                  <li>Minor changes including reformatting the code inline with the Google Java Style Guide, reducing the number of public and protected fields,
+                    updating the project to Java 8, unwrapping complicated if statements, and removing unused code.</li></ul>
+                  </br>
+
+                  <h2>Unimplemented Features</h2></br>
+
+                  <p>No features are unimplemented, and all user requirements defined by the client have been fulfilled to an acceptable level.</p></br></br>
+
+            </div>
+
+            <!-- Change Report -->
+
+            <div class="section" id="chng">
+
+                <h1>Change Report</h1></br>
+
+                <h2>Change Management</h2>
+
+                <p>First of all, we went through documentation provided by Team 12 in order to get familiar with their approaches and methods, as well as to
+                  identify both unimplemented and new features that must be added to the game. Then, we divided tasks between all members of the team to let
+                  everyone contribute to the project. Each member of the team was primarily responsible for one deliverable which they made changes to. </p>
+                <p>Every week we had a team meeting where we discussed what had been changed or added and what was yet to be done, as well as assigned new tasks.
+                  In our own Discord server, members of the team could ask questions or discuss new changes anytime. It allowed members to have a clear understanding
+                  of all changes and decisions, and to have an opportunity to express their opinion about a certain change.</p>
+                <p>To keep track of all changes and make sure that all of them are necessary and justified, we created a change log in our GitHub repository to
+                  record all significant changes along with the date when they were made and their details. It enabled the team to react to new changes quickly,
+                  for example, to identify the cause of an error in the code or approve/disapprove a change. Additionally, GitHub allows you to view the commit
+                  history of any branch, as well as get detailed information about each commit, which is particularly helpful for keeping track of all changes
+                  and actions of contributors.</p>
+                <p>Furthermore, we continued to use Google Drive and some of the office tools that come with it, namely Google Docs and Google Sheets. One of the
+                  main advantages of Google tools is the ability to view edit history of a document and restore older versions of it, which is especially useful
+                  for change management.</p></br>
+
+                <h2>Changes made to Assessment1 deliverables<h2></br>
+
+                <h3>Requirements:</h3>
+
+                <p>Once the new requirements for Assessment 2 were released, we analyzed them and defined any associated risks and possible alternatives.
+                  We added three new user requirements to Requirements document, namely UR_LEVELS, UR_SAVE and UR_POWER_UP. All of them were set by the customer
+                  and listed on VLE. Additionally, we defined new Functional requirements and added them to the spreadsheet created by Team 12.</p>
+                <p>UR_LEVELS refers to the new requirement that the game must allow players to choose between different levels of difficulty: Easy, Normal and Hard. </p>
+                <p>UR_SAVE denotes the requirement to provide facilities that would allow players to save the state of the game at any point and resume the saved
+                  game later.</p>
+                <p>Lastly, UR_POWER_UP is a new requirement to implement five power-up packs, which could be found floating down the river and be picked up by boats to
+                  improve some of their characteristics.</p>
+                <p>All of the new requirements were set and defined by the customer, meaning that they are necessary for the game to be complete and successful.</p>
+              </br>
+              <div class="row">
+                <div class="column">
+                  <img src="images/assessment2/ur.png" class="req-img"></br>
+                  <span style="font-size:14px; font-style:italic">Updated User Requirements Table</span>
+                </div>
+                <div class="column">
+                  <img src="images/assessment2/fr.png" class="req-img"></br>
+                  <span style="font-size:14px; font-style:italic">Updated Functional Requirements Table</span>
+                </div>
+              </div>
+                </br>
+                <h3>Architecture:</h3></br>
+
+                <b>Abstract architecture</b>
+
+                <p>We decided to add a new entity to the abstract architecture, namely class <i>Powerup</i> which represents the power-ups that float down the river
+                  and can be picked up by boats. <i>Powerup</i> inherits from the abstract class <i>MoveableObject</i>, since it is supposed to be moving along the lane and
+                  is similar to the <i>Obstacle</i> class. Like <i>Obstacle</i>, it also implements the <i>CollisionObject</i> interface, although certain functions within the Interface
+                  were changed such that any object colliding with some other object, <i>other</i>, will know the type of <i>other</i> and can react accordingly (ie.
+                  Power-ups won’t damage the boat, obstacles will). Classes <i>SaveManager</i> and <i>Difficulty</i> were also added.
+</p>
+                </br>
+                <img src="images/assessment2/abstract2.png">
+              </br></br>
+                <b>Concrete architecture</b>
+
+                <p>The concrete architecture itself has not changed much as an outline of classes, although actual implementation details differ significantly.
+                  Much of the superfluous and unnecessary code has been removed or re-implemented in a cleaner or more efficient way.</p>
+                <p>Major changes to the code include:<ol style="font-size:15px">
+                <li>The addition of the <i>Powerup</i> class which behaves similarly to the <i>Obstacle</i> class but grants bonuses to the boats rather than penalising them.
+                  Required for UR_POWER_UP.</li>
+                <li>All <i>CollisionObject</i> instances now have a “value” that the AI uses to decide whether it should steer away from it or towards it, which allows
+                  the AI to play more competitively.</li>
+                <li>The original artificial intelligence has been stripped out and replaced with one which is much more competitive with the player, and far
+                  better optimised.  As beating these constitutes 90% of the gameplay, this helps with UR_LEVELS, UR_EXCITEMENT, and UR_PERFORMANCE.</li>
+                <li>The <i>Difficulty</i> class has been added, which is implemented as a Singleton and tracks the global difficulty setting.  This is accessed by many
+                  classes and allows changes to difficulty to be made quickly and centrally. Required for UR_LEVELS</li>
+                <li>A rudimentary UI system has been implemented, including <i>Buttons</i>, <i>Switches</i>, <i>Scenes</i>, <i>Labels</i>, and <i>Images</i>. This
+                  represents a significant improvement over the original approach which was to manually define these in game states themselves.</li>
+                <li>Many classes have had variables and functions removed where they have been unnecessary, primarily in <i>Scene</i>* classes and in <i>BoatRace</i> where a
+                  lot of sprites were stored, and references to single objects allow for the removal of checks against entire lists to find one instance of a class.</li>
+                <li>The project itself has been updated to Java 8 to take advantage of new (2014) language features for quicker and cleaner development.</li>
+                <li>The project has been refactored from snake_case to camelCase for fields and variables as this is Java convention and less confusing.</li>
+                <li>Large if-statements connected by <i&amp;&amp;</i> have been removed to improve readability as well as performance in some cases.</li>
+                <li>Almost every class field has been moved from the protected to private access level to prevent accidental change of values by external
+                  functions that should not be able to access these.</li>
+                <li>The entire game now calculates the time between frames and uses this for movement-related calculations rather than assuming the game runs
+                  at 60 frames per second, ensuring consistent movement even if the game is performing poorly.  Whilst it doesn’t directly improve performance,
+                  it should make the game feel smoother if it does perform poorly, somewhat helping mitigate if UR_PERFORMANCE is not met.</li>
+                <li>All non-inner classes have been made public so that they can be used in unit testing, and because exposing classes is generally a lot safer
+                  than exposing fields.</li>
+                </ol></p></br>
+
+                <h3>Methods and Plans:</h3></br>
+
+                <b>Method and Tool Selection</b>
+
+                <p>Both our team and Team 12 have opted to follow an agile development methodology, specifically Scrum. The Scrum framework is designed for
+                  smaller teams, making it perfect for us and our project. In Scrum, goals are broken down into small tasks which are completed within a set
+                  amount of time known as a sprint. We decided to have small week-long sprints as we had official supervised practical sessions once every week.</p>
+                <p>Most of the tools used by Team 12 coincided with our choice. Just like Team 12 we used the following tools for completing the tasks in our project:</p>
+                <ul style="font-size:15px"><li>Google Drive for storing documents and other files</li>
+                <li>Discord for communication</li>
+                <li>GitHub for source control</li>
+                <li>Google Docs for writing up documents</li></ul>
+                <p>Additionally, we used PlantUML for creating class diagrams and Javadoc for generating HTML documentation of the source code.</p>
+                <p>For task management we decided to use GitHub Projects. It is a kanban board-style to-do list allowing for the creation of boards and cards with
+                  tasks, which all developers can access and modify. This was ideal for our chosen development methodology as it allows for tasks to be broken
+                  down into smaller parts and put on a board where anyone can pick and develop them, then move to the “completed” board. We favoured GitHub Pages
+                  over Trello, which was used by Team 12, as we didn’t need any additional features provided by Trello (e.g. colour coding and labelling) and having
+                   everything in one place was more convenient for us.</p>
+                <p>In addition, we supplemented the Method Selection and Planning document with additional information such as information about the selected tools,
+                   justification, and possible alternatives to some tools.</p></br>
+                <div class="row">
+                  <div class="column">
+                    <img src="images/assessment2/board.png" class="board"></br>
+                    <span style="font-size:14px; font-style:italic">GitHub Projects board for documentation as of 04/02/2021</span>
+                  </div>
+                </div></br></br>
+
+                <b>Team Management Approach and Plan</b>
+                <p>We decided not to change the plan and team management approach written by Team 12. Instead, we added our own approach and plan as an extension.</p>
+                <p>Our approaches are quite similar due to the fact that both our teams used Scrum development framework along with Discord as the main way of communication.
+                  Unlike Team 12, who split their team into sub-teams for tackling different parts of the assignment, we divided tasks between individual members of the team.
+                  In the approach of Team 12, each task had a leader as well as one or many collaborators which ensured good implementation and involved frequent
+                  communication. In our approach, each member of the team was primarily responsible for one task such as writing and updating one of the deliverables or
+                  implementing a specific feature of the game. One of the advantages of our method is that everyone had to focus on one or few specific tasks, which allowed
+                  for more thorough and deep research and better understanding of each task.</p>
+                <p>For Assessment 2 we created a new Gantt chart to keep all things separate and focus on the new tasks. We decided to keep Gantt Chart created by Team 12
+                  and supplemented the document with our own Gantt Chart as well as screenshots evidencing our work on the assignment.</p>
+                <p>We deleted some of the content provided by Team 12, namely sections ‘Key Event List’ and ‘Announcements’, as it overran the page limit allowed for Method
+                  Selections and Planning deliverable and went beyond what was required.</p></br>
+                  <div class="row">
+                    <div class="column">
+                      <img src="images/assessment2/gantt.png" class="board"></br>
+                      <span style="font-size:14px; font-style:italic">Gantt Chart for Assessment2 as of 14/02/2021</span>
+                    </div>
+                  </div></br></br>
+
+                <h3>Risk Assessment and Mitigation:</h3></br>
+
+                <b>Our Approach and Presentation</b>
+                <p>Coincidentally, Team 12 had a similar approach of assessing and presenting risks. We both used Low/Moderate/High scale to assess the likelihood
+                  and severity of possible risks, as well as tabular format to present them. This system is clear and easy to understand, which makes it perfect
+                  for small projects like ours.</p>
+                <p>Team 12 and our team both divided risks into three categories: “Project”, “Product” and “Business”. “Project” category was assigned to the risks
+                  that might affect our project schedule and progressing speed. “Product” category is for the risks that may potentially affect the quality of the
+                  game, for example, any hardware or software issues. “Business” category was assigned to the risks that may affect the success of our product in
+                  the market, in our case - success of using the game for promotional activities organized by The University of York Communications Office.</p>
+                <p>In order to identify the risks associated with the new requirements for Assessment 2, we first reviewed Assessment 1 requirements, specifically
+                  those that had not been implemented. Then, we went through our project plan to determine all possible factors that can affect the quality of the
+                  final product.</p>
+                <p>Furthermore, we chose a different format of presenting IDs of the risks, since the old format, used by Team 12, took up too much space and yet
+                  was not informative, making it inconvenient for us. We also removed the ‘Backup Owner’ column, since having one risk owner was enough for our team.</p>
+                </br>
+                <b>Risks and Mitigation</b>
+                <p>We decided to keep all the risks identified by Team 12 as they all were possible and coincided with the risks that had been found by our team.
+                  Additionally, we supplemented the table with other risks that we identified while working on Assessment 1&2 as well as after reviewing the new
+                  requirements for Assessment 2 (R10-R21):</p></br>
+                  <img src="images/assessment2/risk-table.png" style="width:55%"></br></br>
+
+            </div>
+
+            <!-- CI Report -->
+
+            <div class="section" id="ci">
+              <h1> Contnuous Integration Report</h1></br>
+
+              <h2>Continuous Integration Methods and Approaches</h2></br>
+
+              <p>Our approach to Continuous Integration is to use two separate workflows for testing and building, both running whenever code enters the
+                development or master branch of the project by merge or pull request.</p>
+              <p>This is well-suited to our project with regards to both our development methodology and the size of the project itself.  As we are using
+                the Scrum framework, changes to the codebase are small in size and rapidly produced, and should always be ready for a release build.  Our CI
+                methodology allows for this as any code that enters the main parts of the branch must pass a test that confirms it builds, and will report on
+                whether or not it passes unit tests.  Furthermore, the codebase is small in scope meaning that only two workflows are required to ensure
+                relatively complete code coverage.  If the project was larger, it is possible that there would be multiple CI workflows for individual Java
+                modules or components of the project, but the simplicity of the project means that this would be unnecessary.</p>
+              <p>By separating out the continuous integration into two discrete stages, we can assure that code entering the main branches of the project will
+                always be buildable.  If a commit causes the project to not compile, it should not be allowed into the main branches as we try to maintain a
+                build that works. The second stage checks whether all unit tests are passing.  This test will not stop code from entering a main branch as it’s
+                technically still a passable build, but a label on the repository should serve as a warning to any users trying to pull a specific build if it
+                contains bugs.</p></br>
+
+              <h2>Continuous Integration Infrastructure</h2></br>
+
+              <p>Our approach to Continuous Integration utilises GitHub Actions with two Gradle workflows.  Our project already uses Gradle as a build system,
+                so it was the easiest to configure out of all available options.</p>
+              <p>We use two separate GitHub actions as part of our approach to Continuous Integration which help to ensure code quality.  Both run the code on
+                a Linux virtual machine owned by GitHub, providing a development environment similar to what members of the team have so compatibility should not
+                be an issue.</p>
+              <p>The first action compiles the code with Gradle, for any commits entering the development branch or pull requests into the master branch.  This
+                uses the exact same process that developers on the project should already be using to build and compile their copies of code, so there should be
+                no cases of it working on one machine but not another.  It ensures that code entering the two branches will always build for whoever is trying to
+                clone it.</p>
+              <p>The second action compiles and runs a number of JUnit 5 unit tests using Gradle, for any commits or pull requests into the master branch.  Like
+                the compilation workflow, this should use the exact same approach that anyone else working on the project should be using to test the codebase.
+                Unlike the compilation workflow, this should not stop code from entering the branch, but will update a badge on the repository’s README.md file
+                which states whether or not the unit tests (and compilation workflow) are passing.</p>
+              <p>Using these two actions, we can ensure that all code in the master branch will compile to a stable and functional build.  Whilst not all builds
+                will be significant enough to be classified as releases, all commits in the master branch should always represent an improvement.</p></br>
+
+            </div>
+
+            <!-- Testing Report -->
+
+            <div class="section" id="test">
+              <h1>Software Testing Report</h1></br>
+
+              <h2>Testing Methods and Approaches</h2></br>
+
+              <p>Our chosen testing methodology is a combination of dynamic testing and analysis using JUnit5 as a testing framework, and some static testing.
+                As we have full access to the source code, this is the most appropriate testing methodology as it provides as much coverage as required, including
+                or niche internal cases and cases only encountered during gameplay.</p>
+              <p>Using JUnit 5, we have created a number of unit tests for a majority of the game’s classes and functions.  These allow for simple testing, such as
+                checking that a value can’t exceed its maximum or minimum, as well as more complex testing such as two objects colliding which invokes multiple
+                functions where all must pass in order for the test to succeed.  This allows us to ensure that the quality of code is high across the whole
+                codebase, and that adding a new feature won’t break some core functionality by accident.  Additionally, it allows us to detect errors in the
+                code that may not be apparent in a quick gameplay test, but would become much more apparent given further testing.</p>
+              <p>As well as unit testing to test our algorithms and functionality, we also use gray-box testing wherein a developer or someone with some knowledge
+                of the source code and internal workings of the game plays it to ensure that the actual gameplay experience is what we expect.  This can pick up
+                errors that unit testing cannot detect as whilst the algorithms may all execute properly, there may be a logical error somewhere in the code or
+                some sort of numerical error that grows exponentially as it’s used in the code.  Furthermore, it allows us to tweak the gameplay to ensure it is
+                as engaging and enjoyable as possible for the end user.</p></br>
+
+              <h2>Test Results</h2></br>
+
+              <h3>Unit Tests</h3></br>
+
+              <p>Below is a brief explanation of the purpose of each of the unit tests and their results when run including which parts passed and where there
+                were errors.</p>
+
+              <p><u>These tests relate to functions and mechanics of the game:</u></p>
+
+              <p><b>TestAI</b></br>
+                This test has five components which each test different parts of the AI’s capabilities. The tests cover the AI’s ability to locate other AI boats
+                involved in the race using ray casting, to locate obstacles on the race course using ray casting, to locate powerups on the race course using ray
+                casting, that the AI boats can be hidden when set ho hidden and that the AI boat is set shown when set to shown. The results of these tests are
+                listed below:</p>
+                <p>
+                AI boat locates AI Boat with ray cast: Passed in 0.001 seconds</br>
+                AI boat locates obstacle with ray cast: Passed in 0.002 seconds</br>
+                AI boat locates powerup with ray cast: Passed in 0.002 seconds</br>
+                AI boat is hidden when set to hidden: Passed in 0.001 seconds</br>
+                AI boat is shown when set to shown: Passed in 0.017 seconds</br>
+                All tests passed in 0.025 seconds.</br></p>
+
+                <p><b>TestBoat</b></br>
+                This test has nine components to test that the player's boat is working correctly. The tests cover that the players boats durability cannot exceed
+                a maximum value of 1.0 and cannot fall below a minimum value of 0.0, the boats stamina cannot exceed a maximum value of 1.0 and cannot fall below a
+                minimum value of 0.0. The tests also tests the player’s boats collision with other AI boats, obstacles on the track and the boats collision with
+                the powerups available. The results of these tests are listed below:</p>
+                <p>
+                Boat health has a maximum value of 1.0f: Passed in 0.003 seconds</br>
+                Boat health has a minimum value of 0.0f: Passed in 0.002 seconds</br>
+                Boat stamina has a maximum value of 1.0f: Passed in 0.002 seconds</br>
+                Boat stamina has a minimum value of 0.0f: Passed in 0.001 seconds</br>
+                Boat collides with other boats: Passed in 0.016 seconds</br>
+                Boat collides with obstacles: Passed in 0.003 seconds</br>
+                Boat collides with boost powerup: Passed in 0.001 seconds</br>
+                Boat collides with stamina powerup: Passed in 0.002 seconds</br>
+                Boat collides with repair powerup: Passed in 0.002 seconds</br>
+                All tests passed in 0.033 seconds.</p>
+
+                <p><b>TestCollisionBounds</b></br>
+                This test has three components to test the collision mechanic on items in the game. The three things tested in this unit test are that basic
+                rectangles can collide, that collision of multiple rectangles together functions properly and that collision of rotated rectangles functions as
+                intended. The results of the tests are listed below:</p>
+                <p>
+                AABB collision of rects: Passed in 0.002 seconds</br>
+                AABB collision of multiple rects per collider: Passed in 0.006 seconds</br>
+                AABB collision of rotated collider: Passed in 0.023 seconds</br>
+                All tests passed in 0.031 seconds.</p>
+
+                <p><b>TestDifficulty</b></br>
+                This test has five components to test that the difficulty settings are functioning correctly. These tests are that the target speed of AI boats
+                is set correctly on all three difficulties, that the obstacle count is set correctly on all three difficulties and that the powerup count is set
+                correctly on all three difficulties. The other two tests check that the difficulty can not be incremented past hard difficulty and can not be
+                decremented below easy difficulty. The results of the tests are listed below:<p>
+                <p>
+                Target speed returns properly: Passed in 0.000 seconds</br>
+                Obstacle count returns properly: Passed in 0.001 seconds</br>
+                Power up count returns properly: Passed in 0.006 seconds</br>
+                Difficulty will not increment past hard: Passed in 0.010 seconds</br>
+                Difficulty will not decrement below easy: Passed in 0.001 seconds</br>
+                All tests passed in 0.018 seconds.</p>
+
+                <p><b>TestGameObject</b></br>
+                This test has two components to test that objects in the game can be hidden and shown when required. The test results are listed below:</p>
+                <p>
+                GameObject hidden when requested: Passed in 0.015 seconds</br>
+                GameObject shown when requested: Passed in 0.001 seconds</br>
+                All tests passed in 0.017 seconds.</p>
+
+                <p><b>TestMain</b></br>
+                This test simulates a headless libGDX environment so that textures can be made without actually starting the application which allows us to run
+                tests on these objects without the game running.</p>
+                <p>
+                <b>TestMovableObject</b></br>
+                This test has four components to test that the movement of objects in the game functions correctly. These tests check that objects cannot surpass
+                their maximum speed by normal acceleration and that they cannot surpass their maximum speed by using code to manually increase the speed, it is
+                also tested that an object will move in a straight line at the correct speed when using set values and that an object moves at an angle at the
+                correct speed with set values and a rotation. The results of the tests are listed below:</p>
+                <p>
+                Object cannot naturally accelerate faster than max speed: Passed in 0.001 seconds</br>
+                Object cannot programmatically accelerate faster than max speed: Passed in 0.002 seconds</br>
+                Object moves in a straight line at the right speed: Passed in 0.015 seconds</br>
+                Object moves at an angle at the right speed: Passed in 0.001 seconds</br>
+                All tests passed in 0.020 seconds.</p>
+
+                <p><u>These tests relate to the UI of the game</u></p>
+
+                <p><b>TestButton</b></br>
+                This test has one component that checks that the button can detect when a mouse is hovering over it. The result of the test is listed below:</p>
+                <p>
+                Button hover state works when mouse is over button: Passed in 0.015 seconds</br>
+                Test passed in 0.015 seconds.</p>
+
+                <p><b>TestSwitch</b></br>
+                This test has one component that checks that the switch can detect when a mouse is hovering over it. The result of this test is listed below:</p>
+                <p>
+                Switch hover state works when mouse is over button: Passed in 0.014 seconds</br>
+                Test passed in 0.014 seconds.</p>
+
+
+                <p><u>Test Completeness and Correctness</u></p>
+                <p>All of the unit tests for the game cover mechanics of the game that can be objectively tested with a known result beforehand. This was done as
+                  this is the best way to test that a function/component of the game is working as intended on a mechanical level whilst taking out any human
+                  error and keeping it as unbiased as possible. It is also impossible to test how the game feels as that requires a player to interact with the
+                  game and form an opinion based on their experience.</p></br>
+                <img src="images/assessment2/test.png"></br>
+
+                <p>Test Report can be found <a href="Documentation2/test/index.html" target="_blank">here</a>.<p></br>
+
+                <h3>Gray-Box Testing</h3></br>
+                <p>In addition to automated tests we performed a number of manual tests to further assess the fulfilment of requirements that can only be evaluated
+                  by a player, for example, NFR_SATISFACTION, as well as other aspects of the game such as aesthetic appeal of the game graphics and other UI
+                  related aspects like presence of the tutorial, info display etc. These features cannot be tested by unit testing, since there is no specific
+                  input or expected output that can confirm the correctness and realization of given requirements.</p>
+                  <p>Manual testing results can be found <a href="Documentation2/TestingMat.pdf" target="_blank">here</a>.<p>
+                </br></br>
+
+            </div>
+
+            <!-- TEAM 12 SNAPHOTS -->
 
             <div class="section" id="pics">
                 <h4>Week 1</h4>
-                
+
                 <img src="images/week1.png" alt="Week 1 Gantt Chart" class="gantt" />
-                
+
                 <h4>Week 2 & 3</h4>
-                
+
                 <img src="images/week2.png" alt="Week 2/3 Gantt Chart" class="gantt" />
-                
+
                 <h4>Week 4</h4>
-                
+
                 <img src="images/week4.png" alt="Week 4 Gantt Chart" class="gantt" />
-                
+
                 <h4>Week 5 & 6</h4>
-                
+
                 <img src="images/week5or6.png" alt="Week 5/6 Gantt Chart" class="gantt" />
-                
+
                 <h4>Week 7</h4>
-                
+
                 <img src="images/week7.png" alt="Week 7 Gantt Chart" class="gantt" />
-                
+
                 <h4>Week 8</h4>
-                
+
                 <img src="images/week8.png" alt="Week 8 Gantt Chart" class="gantt" />
             </div>
+
+
 
         </div>
 
