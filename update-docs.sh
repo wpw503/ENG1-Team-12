@@ -51,7 +51,7 @@ git config --local user.email "13720823+Frinksy@users.noreply.github.com" &&
 git config --local user.name "Frinksy Workflow" &&
 echo Stage all changes &&
 git add docs/ &&
-git add UML/PNG/ && git add UML/SVG/ &&
+git add . &&
 echo Check for changes
 
 if git diff --staged --quiet ; then

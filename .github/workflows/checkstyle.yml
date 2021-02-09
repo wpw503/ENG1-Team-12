@@ -5,9 +5,6 @@ name: Checkstyle with Gradle
 
 on:
   pull_request:
-    paths:
-      - 'Implementation/**'
-      - '.github/workflows/**'
     branches: [ main ]
 
 
